@@ -41,10 +41,16 @@ var all = {
     }
   },
 
+//GB added after registering w google:
+  // GOOGLE_ID: '626085391000-vbd4dkua39odasb6sjrq0tn3es8uboet.apps.googleusercontent.com';
+
+  // GOOGLE_SECRET: 'xLVoqMI3oBedcUinLLzEYcfk';
+
+
   google: {
-    clientID:     process.env.GOOGLE_ID || 'id',
-    clientSecret: process.env.GOOGLE_SECRET || 'secret',
-    callbackURL:  process.env.DOMAIN + '/auth/google/callback'
+    clientID:     '626085391000-vbd4dkua39odasb6sjrq0tn3es8uboet.apps.googleusercontent.com',
+    clientSecret: 'xLVoqMI3oBedcUinLLzEYcfk',
+    callbackURL:  'http://localhost:9000/auth/google/callback'
   }
 };
 
