@@ -4,8 +4,8 @@ var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
 var GoogleSchema = new Schema({
-  "id": string,
-  "threadId": string,
+  "id": String,
+  "threadId": String
   // "labelIds": [
   //   string
   // ],
@@ -27,7 +27,7 @@ var GoogleSchema = new Schema({
   //   ]
   // },
   // "sizeEstimate": integer,
-  "raw": bytes
+  // "raw": bytes
 });
 
 module.exports = mongoose.model('Google', GoogleSchema);
