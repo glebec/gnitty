@@ -5,7 +5,10 @@ angular.module('gnittyApp', [
   'ngResource',
   'ngSanitize',
   'ngRoute',
-  'ui.bootstrap'
+  'ui.bootstrap',
+  'gnittyApp.directives',
+  'gnittyApp.controllers',
+  'gnittyApp.charts'
 ])
   .config(function ($routeProvider, $locationProvider, $httpProvider) {
     $routeProvider
@@ -49,7 +52,12 @@ angular.module('gnittyApp', [
       Auth.isLoggedInAsync(function(loggedIn) {
         if (next.authenticate && !loggedIn) {
           $location.path('/login');
+
         }
       });
     });
   });
+
+angular.module('d3', []);
+angular.module('gnittyApp.directives', ['d3']);
+angular.module('gnittyApp.controllers', ['d3']);
