@@ -7,7 +7,8 @@ angular.module('gnittyApp', [
   'ngRoute',
   'ui.bootstrap',
   'gnittyApp.directives',
-  'gnittyApp.controllers'
+  'gnittyApp.controllers',
+  'gnittyApp.charts'
 ])
   .config(function ($routeProvider, $locationProvider, $httpProvider) {
     $routeProvider
@@ -47,7 +48,6 @@ angular.module('gnittyApp', [
 
   .run(function ($rootScope, $location, Auth) {
     // Redirect to login if route requires auth and you're not logged in
-          console.log('inside run');
     $rootScope.$on('$routeChangeStart', function (event, next) {
       Auth.isLoggedInAsync(function(loggedIn) {
         if (next.authenticate && !loggedIn) {
@@ -57,6 +57,7 @@ angular.module('gnittyApp', [
       });
     });
   });
+
 angular.module('d3', []);
 angular.module('gnittyApp.directives', ['d3']);
 angular.module('gnittyApp.controllers', ['d3']);
