@@ -9,6 +9,7 @@ var errors = require('./components/errors');
 module.exports = function(app) {
 
   // Insert routes below
+  app.use('/api/alchemy', require('./api/alchemy'));
   app.use('/:userId/messages', require('./api/google'));
   app.use('/api/things', require('./api/thing'));
   app.use('/api/users', require('./api/user'));

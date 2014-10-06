@@ -5,6 +5,18 @@ angular.module('gnittyApp')
     $scope.getCurrentUser = Auth.getCurrentUser;
     console.log($scope.getCurrentUser());
 
+    $http.post('/api/alchemy', {
+        text: 'AGREEEDD! DAMN YOU CELEBRANTS OF COLUMBUS DAY!!!!!!!!!!! DAMN YOU TO HELL!!',
+        // text: 'msgText', //this comes from all gmail messages
+        outputMode: 'json'
+        }).success(function(returnedJSON) {
+          $scope.results = returnedJSON;
+          console.log($scope.results);
+          console.log($scope.results.status);
+          // $scope.results.docSemtiment.type gives positive, neg, neutral
+          // $scope.results.docSentiment.score gives strength of sentiment (0.0 is neutral)
+        });
+
 // Alchemy Notes:
 
 // Calls to TextGetTextSentiment should be made using HTTP POST.
@@ -13,20 +25,22 @@ angular.module('gnittyApp')
 
 //Note - since our data is not from a public webpage, we have to actually upload it.
 
-  function postIt ($http, $scope) {
-    $http.post('http://access.alchemyapi.com/calls/text/TextGetTextSentiment', {
-      apikey: alchemy.apiKey,
-      text: 'AGREEEDD! DAMN YOU CELEBRANTS OF COLUMBUS DAY!!!!!!!!!!! DAMN YOU TO HELL!!!!!! :-D',
-      // text: 'msgText', //this comes from all gmail messages
-      outputMode: json
-      }).success(function(returnedJSON) {
-        $scope.results = returnedJSON;
-        console.log($scope.results);
-        console.log($scope.results.status);
-        // $scope.results.type gives positive, neg, neutral
-        // $scope.results.score gives strength of sentiment (0.0 is neutral)
-      });
-  };
+    $scope.postIt = function () {
+      console.log('posting...');
+      $http.post('/api/alchemy', {
+        // 'http://access.alchemyapi.com/calls/text/TextGetTextSentiment', {
+        // apikey: alchemy.apiKey,
+        text: 'AGREEEDD! DAMN YOU CELEBRANTS OF COLUMBUS DAY!!!!!!!!!!! DAMN YOU TO HELL!!!!!! :-D',
+        // text: 'msgText', //this comes from all gmail messages
+        outputMode: 'json'
+        }).success(function(returnedJSON) {
+          $scope.results = returnedJSON;
+          console.log($scope.results);
+          console.log($scope.results.status);
+          // $scope.results.docSemtiment.type gives positive, neg, neutral
+          // $scope.results.docSentiment.score gives strength of sentiment (0.0 is neutral)
+        });
+    };
 
     $scope.awesomeThings = [];
 
