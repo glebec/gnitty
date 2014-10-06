@@ -42,6 +42,10 @@ var all = {
     }
   },
 
+  alchemy: {
+    apiKey: localEnv.alchemyKey
+  },
+
   google: {
     clientID: localEnv.googleID,
     clientSecret: localEnv.googleSecret,
