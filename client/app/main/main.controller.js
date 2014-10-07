@@ -5,18 +5,6 @@ angular.module('gnittyApp')
     $scope.getCurrentUser = Auth.getCurrentUser;
     console.log($scope.getCurrentUser());
 
-    $http.post('/api/alchemy', {
-        text: 'AGREEEDD! DAMN YOU CELEBRANTS OF COLUMBUS DAY!!!!!!!!!!! DAMN YOU TO HELL!!',
-        // text: 'msgText', //this comes from all gmail messages
-        outputMode: 'json'
-        }).success(function(returnedJSON) {
-          $scope.results = returnedJSON;
-          console.log($scope.results);
-          console.log($scope.results.status);
-          // $scope.results.docSemtiment.type gives positive, neg, neutral
-          // $scope.results.docSentiment.score gives strength of sentiment (0.0 is neutral)
-        });
-
 // Alchemy Notes:
 
 // Calls to TextGetTextSentiment should be made using HTTP POST.
@@ -36,9 +24,15 @@ angular.module('gnittyApp')
         }).success(function(returnedJSON) {
           $scope.results = returnedJSON;
           console.log($scope.results);
-          console.log($scope.results.status);
           // $scope.results.docSemtiment.type gives positive, neg, neutral
           // $scope.results.docSentiment.score gives strength of sentiment (0.0 is neutral)
+        });
+      $http.post('/api/alchemy/keywords', {
+        text: 'AGREEEDD! DAMN YOU CELEBRANTS OF COLUMBUS DAY!!!!!!!!!!! DAMN YOU TO HELL!!!!!! :-D',
+        outputMode: 'json'
+      }).success(function(returnedJSON) {
+          $scope.results = returnedJSON;
+          console.log($scope.results);
         });
     };
 
