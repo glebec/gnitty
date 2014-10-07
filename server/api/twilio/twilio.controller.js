@@ -7,10 +7,10 @@ var client = require('twilio')(accountSid, authToken);
 
 exports.send = function(req, res) {
   client.messages.create({
-      body: "Did you know that you sent 47 emails on June 6, 1999? View more info here.",
-      to: "+15402557850",
-      from: "+15403242991"
-      // mediaUrl: "http://www.example.com/hearts.png"
+      body: req.body.body,
+      to: req.body.to,
+      from: "+15403242991",
+      mediaUrl: req.body.mediaUrl
   }, function(error, message) {
       if (error) {
         console.log(error.message);

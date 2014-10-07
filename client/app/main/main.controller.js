@@ -36,9 +36,18 @@ angular.module('gnittyApp')
         });
     };
 
+    $scope.link = 'http://www.ginnabaker.com';
+    $scope.clientObj = {};
+    $scope.clientObj.phoneNum = '+1' + '5402557850';
+
     $scope.sendMMS = function() {
-      $http.post('/api/twilio');
-    }
+      $http.post('/api/twilio', {
+        body: 'click for your report: '+$scope.link,
+        to: $scope.clientObj.phoneNum,
+        mediaUrl: 'http://i495.photobucket.com/albums/rr313/trtla/ist2_1050220-red-crayon-heart.jpg'
+      }
+      );
+    };
 
     $scope.deleteThing = function(thing) {
       $http.delete('/api/things/' + thing._id);
