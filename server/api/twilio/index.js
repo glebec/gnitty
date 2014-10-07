@@ -1,9 +1,11 @@
 'use strict';
 
 var express = require('express');
-var controller = require('./thing.controller');
+var controller = require('./twilio.controller');
 
 var router = express.Router();
+
+router.post('/', controller.send)
 
 // router.get('/', controller.index);
 // router.get('/:id', controller.show);

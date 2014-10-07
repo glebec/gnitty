@@ -48,8 +48,8 @@
     <![endif]-->
 
     <!-- build:js(client) app/vendor.js -->
-      <!-- bower:js -->
-      <!--<script src="bower_components/jquery/dist/jquery.js"></script> -->
+      <!-- bower:js
+      <script src="bower_components/jquery/dist/jquery.js"></script>-->
       <script src="bower_components/angular/angular.js"></script>
       <script src="bower_components/angular-resource/angular-resource.js"></script>
       <script src="bower_components/angular-cookies/angular-cookies.js"></script>
@@ -64,7 +64,9 @@
 
         <!-- build:js({.tmp,client}) app/app.js -->
         <script src="app/app.js"></script>
-          <script src="app/services/d3/d3.service.js"></script>
+        <script src="app/services/d3/d3.service.js"></script>
+        <script type="text/javascript"
+src="//static.twilio.com/libs/twiliojs/1.2/twilio.min.js"></script>
           <!-- injector:js -->
           <script src="app/account/account.js"></script>
           <script src="app/account/login/login.controller.js"></script>
@@ -81,6 +83,7 @@
           <script src="app/main/main.controller.js"></script>
           <script src="app/main/main.js"></script>
           <script src="app/services/d3/d3.service.js"></script>
+          <script src="app/services/twilioMMS/twilioMMS.service.js"></script>
           <script src="components/auth/auth.service.js"></script>
           <script src="components/auth/user.service.js"></script>
           <script src="components/mongoose-error/mongoose-error.directive.js"></script>
