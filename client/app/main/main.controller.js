@@ -31,8 +31,15 @@ angular.module('gnittyApp')
         text: 'AGREEEDD! DAMN YOU CELEBRANTS OF COLUMBUS DAY!!!!!!!!!!! DAMN YOU TO HELL!!!!!! :-D',
         outputMode: 'json'
       }).success(function(returnedJSON) {
-          $scope.results = returnedJSON;
-          console.log($scope.results);
+          $scope.keywords = returnedJSON;
+          console.log($scope.keywords);
+        });
+      $http.post('/api/alchemy/concepts', {
+        text: 'AGREEEDD! DAMN YOU CELEBRANTS OF COLUMBUS DAY!!!!!!!!!!! DAMN YOU TO HELL!!!!!! :-D',
+        outputMode: 'json'
+      }).success(function(returnedJSON) {
+          $scope.concepts = returnedJSON;
+          console.log($scope.concepts);
         });
     };
 

@@ -10,11 +10,9 @@ exports.sentiment = function(req,res) {
   alchemy.sentiment(req.body.text, {}, function(err, response) {
     console.log(req.body.text);
     if (err) throw err;
-    // See http://www.alchemyapi.com/api/sentiment/htmlc.html for format of returned object
     var sentiment = response.docSentiment;
     console.log(sentiment);
     res.json(sentiment);
-    // Do something with data
   });
 };
 
@@ -28,6 +26,17 @@ exports.keywords = function(req, res) {
     res.json(keywords);
   });
 };
+
+exports.concepts = function(req, res) {
+  alchemy.concepts(req.body.text, {}, function(err, response) {
+  console.log(req.body.text);
+  if (err) throw err;
+  var concepts = {
+    c: response.concepts
+  };
+  res.json(concepts);
+});
+}
 
 function handleError(res, err) {
   return res.send(500, err);
