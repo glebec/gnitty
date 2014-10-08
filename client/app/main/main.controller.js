@@ -1,17 +1,36 @@
 'use strict';
 
 angular.module('gnittyApp')
-  .controller('MainCtrl', function ($scope, $http, Auth) {
-    $scope.getCurrentUser = Auth.getCurrentUser;
-    console.log($scope.getCurrentUser());
+  .controller('MainCtrl', function ($scope, $http, Auth, gAPI) {
+    // We are not currently using in-app sign-in, so this is not needed.
+    // $scope.getCurrentUser = Auth.getCurrentUser;
+    // console.log($scope.getCurrentUser());
 
-// Alchemy Notes:
+    // initialize google api in case already signed in, etc. TODO: fix this
+    // gAPI.handleClientLoad();
 
-// Calls to TextGetTextSentiment should be made using HTTP POST.
-// HTTP POST calls should include the Content-Type header: application/x-www-form-urlencoded //?
-// Posted text documents can be a maximum of 50 kilobytes. Larger documents will result in a "content-exceeds-size-limit" error response.
+    // Scope wires together ng-click login call to google API service
+    // gAPI.login() returns a promise which resolves with .then()
+    // data returned currently contains an email property with user's address
+    $scope.login = function() {
+      gAPI.login().then(
+        function (data) { console.log( 'your address is ' + data.email ); },
+        function (err) { console.log( 'Failed: ' + err ); }
+      );
+    };
 
-//Note - since our data is not from a public webpage, we have to actually upload it.
+    // checkAuth
+    $scope.checkAuth = function() {
+      gAPI.checkAuth();
+    };
+
+    // Alchemy Notes:
+
+    // Calls to TextGetTextSentiment should be made using HTTP POST.
+    // HTTP POST calls should include the Content-Type header: application/x-www-form-urlencoded //?
+    // Posted text documents can be a maximum of 50 kilobytes. Larger documents will result in a "content-exceeds-size-limit" error response.
+
+    // Note - since our data is not from a public webpage, we have to actually upload it.
 
     $scope.postIt = function () {
       console.log('posting...');

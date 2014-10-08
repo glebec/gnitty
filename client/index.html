@@ -21,84 +21,8 @@
       <!-- endinjector -->
     <!-- endbuild -->
 
-    <script type="text/javascript">
-      console.log('beginning auth api script');
-      // These shoud eventually be set in a service / pulled from environment
-      var CLIENT_ID = '626085391000-vbd4dkua39odasb6sjrq0tn3es8uboet.apps.googleusercontent.com';
-      var SCOPES = ['https://www.googleapis.com/auth/gmail.readonly'];
-      var USER = 'me';
-
-      // When client loads (from script src in index.js head), start auth flow
-      function handleClientLoad() {
-        window.setTimeout(checkAuth, 1);
-        console.log('triggered handleClientLoad');
-      }
-
-      // temporarily hard-coding this to trigger
-      // handleClientLoad();
-
-      /*
-      after handleClientLoad (+ 1 sec), check if user is authorized.
-      CLIENT_ID and SCOPES are set above, but should eventually be
-      pulled from the environment config (/server) files. If auth,
-      start the handleAuthResult function below.
-      */
-      function checkAuth() {
-        gapi.auth.authorize(
-          {'client_id': CLIENT_ID, 'scope': SCOPES, 'immediate': true},
-          handleAuthResult
-        );
-      }
-
-      // Called when authorization server replies (checkAuth above).
-      // @param {Object} authResult Authorization result.
-      function handleAuthResult(authResult) {
-        var authButton = document.getElementById('authorizeButton');
-        var outputNotice = document.getElementById('notice');
-        authButton.style.display = 'none';
-        outputNotice.style.display = 'block';
-        if (authResult && !authResult.error) {
-          // Access token has been successfully retrieved, requests can be sent to the API.
-          gapi.client.load('gmail', 'v1', function() {
-            listThreads(USER, function(resp) {
-              var threads = resp.threads;
-              console.log(threads);
-              for (var i = 0; i < threads.length; i++) {
-                var thread = threads[i];
-                console.log(i);
-                console.log(thread);
-                console.log(thread['id']);
-              }
-            });
-          });
-        } else {
-          // No access token could be retrieved, show the button to start the authorization flow.
-          authButton.style.display = 'block';
-          outputNotice.style.display = 'none';
-          authButton.onclick = function() {
-              gapi.auth.authorize(
-                  {'client_id': CLIENT_ID, 'scope': SCOPES, 'immediate': false},
-                  handleAuthResult);
-          };
-        }
-      }
-
-      /**
-       * Get a page of Threads.
-       *
-       * @param  {String} userId User's email address. The special value 'me'
-       * can be used to indicate the authenticated user.
-       * @param  {Function} callback Function called when request is complete.
-       */
-      function listThreads(userId, callback) {
-        var request = gapi.client.gmail.users.threads.list({
-          'userId': userId
-        });
-        request.execute(callback);
-      }
-    </script>
-
-    <script type="text/javascript" src="https://apis.google.com/js/client.js?onload=handleClientLoad"></script>
+    <!-- external API calls -->
+    <script type="text/javascript" src="https://apis.google.com/js/client.js"></script>
 
   </head>
   <body ng-app="gnittyApp">
@@ -157,11 +81,10 @@ src="//static.twilio.com/libs/twiliojs/1.2/twilio.min.js"></script>
           <script src="app/d3charts/d3charts.controller.js"></script>
           <script src="app/d3charts/d3charts.js"></script>
           <script src="app/d3charts/d3pie.js"></script>
-          <script src="app/gmailapi/gmailapi/gmailapi.controller.js"></script>
-          <script src="app/gmailapi/gmailapi/gmailapi.js"></script>
           <script src="app/main/main.controller.js"></script>
           <script src="app/main/main.js"></script>
           <script src="app/services/d3/d3.service.js"></script>
+          <script src="app/services/gAPI/gAPI.service.js"></script>
           <script src="app/services/twilioMMS/twilioMMS.service.js"></script>
           <script src="components/auth/auth.service.js"></script>
           <script src="components/auth/user.service.js"></script>
