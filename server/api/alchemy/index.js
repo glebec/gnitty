@@ -8,6 +8,7 @@ var router = express.Router();
 
 router.post('/', alchemy.sentiment);
 router.post('/keywords', alchemy.keywords);
+router.post('/concepts', alchemy.concepts);
 
 // router.get('/', controller.index);
 // router.get('/:id', controller.show);
