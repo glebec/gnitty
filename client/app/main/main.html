@@ -13,16 +13,19 @@
 
 <input type="button" id="authorizeButton" value="Authorize"/>
 <p id="notice">check browser console for output</p>
+<button ng-click="postIt()">POST</button>
+<button ng-click="sendMMS()">Send MMS</button>
 
-    <script type="text/javascript">
-      var gmail = Gmail();
-      console.log(gmail.get.user_email());
-    </script>
-    <button ng-click="postIt()">POST</button>
-    <button ng-click="sendMMS()">Send MMS</button>
+
+<!-- <script type="text/javascript">
+  var gmail = Gmail();
+  console.log(gmail.get.user_email());
+</script> -->
 
 <footer>
   <p> gNitty is a secure service run on the "No Assholery" rule.  gNitty does not store your emails or share your information with third parties.  It's free, and it always will be.</p>
 
   <p>Copyright Ginna Baker, Gabriel Lebec, and Tayyab Shaikh 2014.</p>
 </footer>
+
+
