@@ -76,7 +76,10 @@ angular.module('gnittyApp')
           _this.onMessages( function (resp) {
             console.log('response object:', resp);
             function logOut (obj) {
-              var plain = b64.decode(obj.payload.parts[0].body.data);
+              console.log(obj);
+              var plain = (obj.payload.mimeType === 'text/plain') ?
+                b64.decode( obj.payload.body.data ) :
+                b64.decode( obj.payload.parts[0].body.data );
               console.log(
                 '=======\nNew message:\n======='+
                 '\n\n>>>>>'+plain+'<<<<<\n'
