@@ -80,6 +80,15 @@ angular.module('gnittyApp')
             for (var i = 0; i < messages.length; i++) {
               console.log(messages[i]);
             }
+            console.log('showing ' + messages.length + ' message objects:');
+            for (var i = 0; i < messages.length; i++) {
+              var request = gapi.client.gmail.users.messages.get({
+                'userId': USER,
+                'id': messages[i].id
+              });
+              request.execute(function (resp) {console.log(resp);} );
+            }
+
           });
         });
       } else {
