@@ -1,8 +1,15 @@
 'use strict';
 
 angular.module('gnittyApp')
-  .controller('D3chartsCtrl', ['$scope', function($scope){
+  .controller('D3chartsCtrl', ['$scope', '$http', function($scope){
     console.log("D3chartsCtrl working");
+     $http.get('/api/stats/foruser'+userID).
+        success(function(data) {
+          $scope.statistics = data;
+          console.log($scope.statistics);
+          });
+        };
+
      $scope.options = {
                 chart: {
                     type: 'scatterChart',
