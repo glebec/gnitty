@@ -41,7 +41,7 @@ angular.module('gnittyApp')
         gapi.client.load('oauth2', 'v2', function() {
           var request = gapi.client.oauth2.userinfo.get();
           request.execute( function (resp) {
-            console.log('auth response:', resp);
+            console.log('authorized user info:', resp);
             data.email = resp.email;
             deferred.resolve(data);
           });
@@ -73,15 +73,22 @@ angular.module('gnittyApp')
       if (authResult && !authResult.error) {
         // Access token has been successfully retrieved, requests can be sent to the API.
         gapi.client.load('gmail', 'v1', function() {
-          _this.listThreads(USER, function(resp) {
-            var threads = resp.threads;
-            console.log(threads);
-            for (var i = 0; i < threads.length; i++) {
-              var thread = threads[i];
-              console.log(i);
-              console.log(thread.id);
-              console.log(thread);
+          _this.onMessages( function (resp) {
+            console.log('response object:', resp);
+            var messages = resp.messages;
+            console.log('fetched ' + messages.length + ' message ID(s):');
+            for (var i = 0; i < messages.length; i++) {
+              console.log(messages[i]);
             }
+            console.log('showing ' + messages.length + ' message objects:');
+            for (var i = 0; i < messages.length; i++) {
+              var request = gapi.client.gmail.users.messages.get({
+                'userId': USER,
+                'id': messages[i].id
+              });
+              request.execute(function (resp) {console.log(resp);} );
+            }
+
           });
         });
       } else {
@@ -89,10 +96,10 @@ angular.module('gnittyApp')
       }
     };
 
-    // list user threads from earlier demo
-    this.listThreads = function (userId, callback) {
-      var request = gapi.client.gmail.users.threads.list({
-        'userId': userId
+    // execute a callback on the messages request. Response has .messages prop.
+    this.onMessages = function (callback) {
+      var request = gapi.client.gmail.users.messages.list({
+        'userId': USER
       });
       request.execute(callback);
     };
