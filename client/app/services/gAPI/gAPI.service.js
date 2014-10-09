@@ -77,7 +77,10 @@ angular.module('gnittyApp')
             console.log('response object:', resp);
             function logOut (obj) {
               var plain = b64.decode(obj.payload.parts[0].body.data);
-              console.log('=======\nNew message:\n=======\n\n', plain, '\n');
+              console.log(
+                '=======\nNew message:\n======='+
+                '\n\n>>>>>'+plain+'<<<<<\n'
+              );
             }
             var messages = resp.messages;
             // console.log('fetched ' + messages.length + ' message ID(s):');
