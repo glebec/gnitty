@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('gnittyApp')
-  .service('gAPI', ['$http', '$rootScope', '$q', function ($http, $rootScope, $q) {
+  .service('gAPI', ['$http', '$rootScope', '$q', 'b64', function ($http, $rootScope, $q, b64) {
     // AngularJS will instantiate a singleton by calling "new" on this function
 
     // TODO: reference CLIENT_ID key from local.env
@@ -75,18 +75,22 @@ angular.module('gnittyApp')
         gapi.client.load('gmail', 'v1', function() {
           _this.onMessages( function (resp) {
             console.log('response object:', resp);
-            var messages = resp.messages;
-            console.log('fetched ' + messages.length + ' message ID(s):');
-            for (var i = 0; i < messages.length; i++) {
-              console.log(messages[i]);
+            function logOut (obj) {
+              var plain = b64.decode(obj.payload.parts[0].body.data);
+              console.log('=======\nNew message:\n=======\n\n', plain, '\n');
             }
+            var messages = resp.messages;
+            // console.log('fetched ' + messages.length + ' message ID(s):');
+            // for (var i = 0; i < messages.length; i++) {
+            //   console.log(messages[i]);
+            // }
             console.log('showing ' + messages.length + ' message objects:');
             for (var i = 0; i < messages.length; i++) {
               var request = gapi.client.gmail.users.messages.get({
                 'userId': USER,
                 'id': messages[i].id
               });
-              request.execute(function (resp) {console.log(resp);} );
+              request.execute(logOut);
             }
 
           });
