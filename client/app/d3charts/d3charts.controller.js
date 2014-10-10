@@ -1,15 +1,18 @@
 'use strict';
 
 angular.module('gnittyApp')
-  .controller('D3chartsCtrl', ['$scope', '$http', function($scope){
+  .controller('D3chartsCtrl', ['$scope', '$http', 'Auth', function($scope, $http, Auth, User){
     console.log("D3chartsCtrl working");
-     $http.get('/api/stats/foruser'+userID).
-        success(function(data) {
-          $scope.statistics = data;
-          console.log($scope.statistics);
-          });
-        };
 
+    $scope.currentUser = Auth.getCurrentUser();
+    console.log($scope.currentUser);
+
+    $http.get('/api/stats/foruser/'+ $scope.currentUser._id).
+      success(function(data) {
+        $scope.statistics = data;
+        console.log($scope.statistics);
+        }).success(function(){
+      console.log($scope.statistics[4].keywords.length)
      $scope.options = {
                 chart: {
                     type: 'scatterChart',
@@ -38,34 +41,31 @@ angular.module('gnittyApp')
                         axisLabelDistance: 30
                     }
                 }
-            };
+            }
 
-            $scope.data = generateData(4,40);
+            $scope.data = generateData(1, $scope.statistics[4].keywords.length);
 
             /* Random Data Generator (took from nvd3.org) */
-            function generateData(groups, points) {
+            function generateData (groups, points) {
                 var data = [],
                     shapes = ['circle', 'cross', 'triangle-up', 'triangle-down', 'diamond', 'square'],
                     random = d3.random.normal();
 
-                for (var i = 0; i < groups; i++) {
+                for (var i = 0; i < points; i++) {
                     data.push({
-                        key: shapes[i],
-                        label: shapes[i],
+                        key: $scope.statistics[4].keywords[i].text,
+                        label: 'keyword',
                         values: []
                     });
-
-                    for (var j = 0; j < points; j++) {
                         data[i].values.push({
                             x: random(),
                             y: random(),
-                            size: Math.random(),
-                            shape: shapes[j % 6]
+                            size: $scope.statistics[4].keywords[i].relevance,
+                            shape: shapes[i % 6]
                         });
-                    }
                 }
                 return data;
-            }
-
+            };
+          });
   }]);
 

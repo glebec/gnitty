@@ -3,8 +3,7 @@
 angular.module('gnittyApp')
   .controller('MainCtrl', function ($scope, $http, Auth, gAPI) {
     // We are not currently using in-app sign-in, so this is not needed.
-    // $scope.getCurrentUser = Auth.getCurrentUser;
-    // console.log($scope.getCurrentUser());
+    $scope.getCurrentUser = Auth.getCurrentUser;
 
     // initialize google api in case already signed in, etc. TODO: fix this
     // gAPI.handleClientLoad();
@@ -35,47 +34,49 @@ angular.module('gnittyApp')
     $scope.postIt = function () {
       console.log('posting...');
       $http.post('/api/alchemy', {
-        // 'http://access.alchemyapi.com/calls/text/TextGetTextSentiment', {
-        // apikey: alchemy.apiKey,
         text: 'AGREEEDD! DAMN YOU CELEBRANTS OF COLUMBUS DAY!!!!!!!!!!! DAMN YOU TO HELL!!!!!! :-D',
         // text: 'msgText', //this comes from all gmail messages
         outputMode: 'json'
         }).success(function(returnedJSON) {
-          $scope.results = returnedJSON;
-          console.log($scope.results);
-          // $scope.results.docSemtiment.type gives positive, neg, neutral
-          // $scope.results.docSentiment.score gives strength of sentiment (0.0 is neutral)
+          $scope.sentiment = returnedJSON;
+          console.log($scope.sentiment);
+          // $scope.sentiment.docSemtiment.type gives positive, neg, neutral
+          // $scope.sentiment.docSentiment.score gives strength of sentiment (0.0 is neutral)
         });
       $http.post('/api/alchemy/keywords', {
         text: 'AGREEEDD! DAMN YOU CELEBRANTS OF COLUMBUS DAY!!!!!!!!!!! DAMN YOU TO HELL!!!!!! :-D',
         outputMode: 'json'
       }).success(function(returnedJSON) {
           $scope.keywords = returnedJSON;
-          console.log($scope.keywords);
+          console.log($scope.keywords.k);
         });
       $http.post('/api/alchemy/concepts', {
         text: 'AGREEEDD! DAMN YOU CELEBRANTS OF COLUMBUS DAY!!!!!!!!!!! DAMN YOU TO HELL!!!!!! :-D',
         outputMode: 'json'
       }).success(function(returnedJSON) {
           $scope.concepts = returnedJSON;
-          console.log($scope.concepts);
+          $http.post('/api/stats', {
+            user: {
+              _id: $scope.getCurrentUser()._id
+            },
+            concepts: $scope.concepts.c,
+            keywords: $scope.keywords.k,
+            sentiment: $scope.sentiment
+          });
         });
     };
 
     $scope.link = 'http://www.ginnabaker.com';
     $scope.clientObj = {};
     $scope.clientObj.phoneNum = '+1' + '5402557850';
+    $scope.mediaUrl = 'http://i495.photobucket.com/albums/rr313/trtla/ist2_1050220-red-crayon-heart.jpg';
 
     $scope.sendMMS = function() {
       $http.post('/api/twilio', {
         body: 'click for your report: '+$scope.link,
         to: $scope.clientObj.phoneNum,
-        mediaUrl: 'http://i495.photobucket.com/albums/rr313/trtla/ist2_1050220-red-crayon-heart.jpg'
-      }
-      );
+        mediaUrl: $scope.mediaUrl
+      });
     };
 
-    $scope.deleteThing = function(thing) {
-      $http.delete('/api/things/' + thing._id);
-    };
   });
