@@ -6,19 +6,12 @@ angular.module('gnittyApp')
 
     // TODO: reference CLIENT_ID key from local.env
     // gapi object is loaded in index.html script header from external resource
-    var _this = this,
+    // 'me' is a special user string indicating the authenticated user
+    var _thisService = this,
         CLIENT_ID = '626085391000-vbd4dkua39odasb6sjrq0tn3es8uboet.apps.googleusercontent.com',
         SCOPES   = ['https://www.googleapis.com/auth/gmail.readonly'],
         USER     = 'me',
         deferred = $q.defer();
-
-    // runs on main controller load to initialize, prevent popup blockers, etc.
-    // TODO: fix this
-    // this.handleClientLoad = function() {
-    //   gapi.client.setApiKey(apiKey);
-    //   gapi.auth.init(function() {});
-    //   window.setTimeout(checkAuth, 1);
-    // };
 
     // attempts authorization.
     // called by the controller; auth takes params and a callback.
@@ -57,51 +50,31 @@ angular.module('gnittyApp')
         'client_id': CLIENT_ID,
         'scope': SCOPES,
         'immediate': false,
-      }, this.handleAuthResultOld);
+      }, this.collectEmails);
     };
 
-    // this.handleAuthClick = function(event) {
-    //   gapi.auth.authorize({
-    //     'client_id': CLIENT_ID,
-    //     'scope': SCOPES,
-    //     'immediate': false,
-    //   }, this.handleAuthResult);
-    //   return false;
-    // };
-
-    this.handleAuthResultOld = function (authResult) {
+    // Initiate GMail client request for messages
+    this.collectEmails = function (authResult) {
       if (authResult && !authResult.error) {
-        // Access token has been successfully retrieved, requests can be sent to the API.
-        gapi.client.load('gmail', 'v1', function() {
-          _this.onMessages( function (resp) {
+        // Access token has been successfully retrieved,
+        // requests can be sent to the API.
+        gapi.client.load('gmail', 'v1', function () {
+          _thisService.onMessages( function (resp) {
             console.log('response object:', resp);
-            function logOut (obj) {
-              console.log(obj);
-              var plain = (obj.payload.mimeType === 'text/plain') ?
-                b64.decode( obj.payload.body.data ) :
-                b64.decode( obj.payload.parts[0].body.data );
-              console.log(
-                '=======\nNew message:\n======='+
-                '\n\n>>>>>'+plain+'<<<<<\n'
-              );
-            }
             var messages = resp.messages;
-            // console.log('fetched ' + messages.length + ' message ID(s):');
-            // for (var i = 0; i < messages.length; i++) {
-            //   console.log(messages[i]);
-            // }
             console.log('showing ' + messages.length + ' message objects:');
             for (var i = 0; i < messages.length; i++) {
               var request = gapi.client.gmail.users.messages.get({
                 'userId': USER,
                 'id': messages[i].id
               });
-              request.execute(logOut);
+              request.execute(_thisService.logOut);
             }
 
           });
         });
       } else {
+        // If no authorization token is found (e.g. third-party cookie blocker)
         console.log('no token retrieved', authResult);
       }
     };
@@ -113,5 +86,53 @@ angular.module('gnittyApp')
       });
       request.execute(callback);
     };
+
+    //
+    this.logOut = function (gmailObj) {
+      console.log( gmailObj ); // for dev purposes
+      // parsed will eventually represent parsed email object
+      var parsed = {};
+      var id = gmailObj.id;
+      var headers = _thisService.getHeaders( gmailObj );
+      parsed.size = gmailObj.sizeEstimate;
+      parsed.from = headers.From;
+      parsed.date = headers.Date;
+      parsed.subject = headers.Subject;
+      // Get the actual message text (as plaintext, if multipart)
+      parsed.plain = ( gmailObj.payload.mimeType === 'text/plain') ?
+        b64.decode( gmailObj.payload.body.data ) : // base-64 decode plaintext
+        b64.decode( gmailObj.payload.parts[0].body.data ); // decode multipart
+      // logging out for dev purposes
+      console.log(
+        '=======\n'+
+        'New message\n'+
+        'ID: ' + id + '\n'+
+        'Size: ' + parsed.size + '\n'+
+        'Subject: ' + parsed.subject + '\n'+
+        'From: ' + parsed.from + '\n'+
+        'Date: ' + parsed.date + '\n'+
+        '======='+
+        '\n\n>>>>>' + parsed.plain + '<<<<<\n'
+      );
+    };
+
+    this.getHeaders = function getHeaders (gmailObj) {
+      // headers delivered as unsorted array of objs with 'name' and 'val' keys
+      var rawHeaders = gmailObj.payload.headers;
+      var returnHeaders = {};
+      // convert the objects with 'name' and 'value' keys to obj with name:val
+      for (var i = 0; i < rawHeaders.length; i++) {
+        returnHeaders[ rawHeaders[i].name ] = rawHeaders[i].value;
+      }
+      return returnHeaders;
+    };
+
+    // runs on main controller load to initialize, prevent popup blockers, etc.
+    // TODO: fix this
+    // this.handleClientLoad = function() {
+    //   gapi.client.setApiKey(apiKey);
+    //   gapi.auth.init(function() {});
+    //   window.setTimeout(checkAuth, 1);
+    // };
 
   }]);
