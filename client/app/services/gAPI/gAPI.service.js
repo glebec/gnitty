@@ -89,31 +89,38 @@ angular.module('gnittyApp')
 
     //
     this.logOut = function (gmailObj) {
-      console.log( gmailObj ); // for dev purposes
-      // parsed will eventually represent parsed email object
-      var parsed = {};
-      var id = gmailObj.id;
-      var headers = _thisService.getHeaders( gmailObj );
-      parsed.size = gmailObj.sizeEstimate;
-      parsed.from = headers.From;
-      parsed.date = headers.Date;
-      parsed.subject = headers.Subject;
-      // Get the actual message text (as plaintext, if multipart)
-      parsed.plain = ( gmailObj.payload.mimeType === 'text/plain') ?
-        b64.decode( gmailObj.payload.body.data ) : // base-64 decode plaintext
-        b64.decode( gmailObj.payload.parts[0].body.data ); // decode multipart
-      // logging out for dev purposes
+      var parsed = _thisService.parseMessage(gmailObj);
+      // for dev purposes
+      console.log( gmailObj );
       console.log(
         '=======\n'+
         'New message\n'+
-        'ID: ' + id + '\n'+
+        'ID: ' + parsed.id + '\n'+
         'Size: ' + parsed.size + '\n'+
-        'Subject: ' + parsed.subject + '\n'+
+        'Subject: ' + parsed.subj + '\n'+
         'From: ' + parsed.from + '\n'+
         'Date: ' + parsed.date + '\n'+
         '======='+
         '\n\n>>>>>' + parsed.plain + '<<<<<\n'
       );
+    };
+
+    this.parseMessage = function parseMessage (gmailObj) {
+      var parsed = {};
+      // directly-accessible values
+      parsed.id      = gmailObj.id;
+      parsed.size    = gmailObj.sizeEstimate;
+      // header-based values require conversion for easy access
+      var headers    = _thisService.getHeaders( gmailObj );
+      parsed.from    = headers.From;
+      parsed.date    = headers.Date;
+      parsed.subj    = headers.Subject;
+      // Get the actual message text (as plaintext, even if multipart)
+      parsed.plain   = ( gmailObj.payload.mimeType === 'text/plain') ?
+        b64.decode( gmailObj.payload.body.data ) : // base-64 decode plaintext
+        b64.decode( gmailObj.payload.parts[0].body.data ); // decode multipart
+      // email parsing complete
+      return parsed;
     };
 
     this.getHeaders = function getHeaders (gmailObj) {
