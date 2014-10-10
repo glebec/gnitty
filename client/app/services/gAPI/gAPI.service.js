@@ -118,13 +118,13 @@ angular.module('gnittyApp')
 
     this.getHeaders = function getHeaders (gmailObj) {
       // headers delivered as unsorted array of objs with 'name' and 'val' keys
-      var rawHeaders = gmailObj.payload.headers;
-      var returnHeaders = {};
-      // convert the objects with 'name' and 'value' keys to obj with name:val
-      for (var i = 0; i < rawHeaders.length; i++) {
-        returnHeaders[ rawHeaders[i].name ] = rawHeaders[i].value;
+      // converting to a single hash with name:val pairs
+      // collision doesn't matter as we only need from/to/etc. which are unique
+      function convert (output, header) {
+        output[ header.name ] = header.value;
+        return output;
       }
-      return returnHeaders;
+      return gmailObj.payload.headers.reduce( convert, {});
     };
 
     // runs on main controller load to initialize, prevent popup blockers, etc.
