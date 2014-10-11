@@ -7,19 +7,15 @@
 angular.module('gnittyApp')
   .service('b64', function() {
 
+    // native atob supported in newer browsers, otherwise use manual function
+    var decoder = (typeof window && window.atob) ? window.atob : base64decode;
+
     // string replacement for url-safe decoding as per gmail API docs
     // decodeURI + deprecated escape is a hacky way to do UTF-8 conversion
-    this.decode = function (str) {
+    this.decode = function decode (str) {
       str = str.replace(/_/g, '/').replace(/-/g, '+');
-      return decodeURIComponent(escape(whichMethod(str)));
+      return decodeURIComponent( escape( decoder(str) ) );
     };
-
-    // native is only supported in newer browsers, otherwise use script below
-    function whichMethod (str) {
-      return ( typeof window && window.atob ) ?
-        window.atob(str) :
-        base64decode(str);
-    }
 
     // client-side script from http://phpjs.org/functions/base64_decode/
     // original by: Tyler Akins (http://rumkin.com)
