@@ -12,9 +12,9 @@ describe('Service: b64', function () {
   }));
 
   it('should decode a b64 email body', function () {
-    var encoded = 'VGhpcyBpcyBhIHN0cmluZyB3aXRoIHB1bmN0dWF0aW9uICIgISAtIF8gLyAnIGNoYXJzLg==';
-    var plaintext = 'This is a string with punctuation " ! - _ / \' chars.';
-    expect(b64.decode(encoded)).toEqual(plaintext);
+    var encoded = 'VGhpcyBpcyBhIHN0cmluZyB3aXRoIHB1bmN0dWF0aW9uICIgQCArICEgLSBfIC8gJyAqIGNoYXJzLg==';
+    var plaintext = 'This is a string with punctuation " @ + ! - _ / \' * chars.';
+    expect( b64.decode(encoded) ).toEqual( plaintext );
   });
 
 });
