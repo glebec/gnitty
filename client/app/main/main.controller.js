@@ -31,30 +31,36 @@ angular.module('gnittyApp')
 
     // Note - since our data is not from a public webpage, we have to actually upload it.
 
-    $scope.postIt = function () {
-      console.log('posting...');
+    $scope.allEmailBodies = 'AGREEEDD! DAMN YOU CELEBRANTS OF COLUMBUS DAY!!!!!!!!!!! DAMN YOU TO HELL!!!!!! :-D';
+
+    $scope.sendToAlchemy = function (emails) {
       $http.post('/api/alchemy', {
-        text: 'AGREEEDD! DAMN YOU CELEBRANTS OF COLUMBUS DAY!!!!!!!!!!! DAMN YOU TO HELL!!!!!! :-D',
-        // text: 'msgText', //this comes from all gmail messages
+        text: $scope.allEmailBodies,
         outputMode: 'json'
         }).success(function(returnedJSON) {
           $scope.sentiment = returnedJSON;
           console.log($scope.sentiment);
-          // $scope.sentiment.docSemtiment.type gives positive, neg, neutral
-          // $scope.sentiment.docSentiment.score gives strength of sentiment (0.0 is neutral)
         });
       $http.post('/api/alchemy/keywords', {
-        text: 'AGREEEDD! DAMN YOU CELEBRANTS OF COLUMBUS DAY!!!!!!!!!!! DAMN YOU TO HELL!!!!!! :-D',
+        text: $scope.allEmailBodies,
         outputMode: 'json'
       }).success(function(returnedJSON) {
           $scope.keywords = returnedJSON;
           console.log($scope.keywords.k);
         });
       $http.post('/api/alchemy/concepts', {
-        text: 'AGREEEDD! DAMN YOU CELEBRANTS OF COLUMBUS DAY!!!!!!!!!!! DAMN YOU TO HELL!!!!!! :-D',
+        text: $scope.allEmailBodies,
         outputMode: 'json'
       }).success(function(returnedJSON) {
           $scope.concepts = returnedJSON;
+          console.log($scope.concepts.c);
+      });
+    };
+
+    $scope.postIt = function () {
+      console.log('posting...');
+      $scope.sendToAlchemy($scope.allEmailBodies)
+        }.success(function() {
           $http.post('/api/stats', {
             user: {
               _id: $scope.getCurrentUser()._id
@@ -63,8 +69,8 @@ angular.module('gnittyApp')
             keywords: $scope.keywords.k,
             sentiment: $scope.sentiment
           });
+          console.log("saved");
         });
-    };
 
     $scope.link = 'http://www.ginnabaker.com';
     $scope.clientObj = {};

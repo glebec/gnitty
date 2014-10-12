@@ -13,7 +13,6 @@ module.exports = function(app) {
   app.use('/api/twilio', require('./api/twilio'));
   app.use('/api/alchemy', require('./api/alchemy'));
   app.use('/:userId/messages', require('./api/google'));
-  // app.use('/api/things', require('./api/thing'));
   app.use('/api/users', require('./api/user'));
 
   app.use('/auth', require('./auth'));

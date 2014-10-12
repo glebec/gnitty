@@ -2,7 +2,6 @@
 
 angular.module('gnittyApp')
   .controller('D3chartsCtrl', ['$scope', '$http', 'Auth', function($scope, $http, Auth, User){
-    console.log("D3chartsCtrl working");
 
     $scope.currentUser = Auth.getCurrentUser();
     console.log($scope.currentUser);
@@ -10,9 +9,8 @@ angular.module('gnittyApp')
     $http.get('/api/stats/foruser/'+ $scope.currentUser._id).
       success(function(data) {
         $scope.statistics = data;
-        console.log($scope.statistics);
         }).success(function(){
-      console.log($scope.statistics[4].keywords.length)
+      console.log($scope.statistics[0].keywords.length)
      $scope.options = {
                 chart: {
                     type: 'scatterChart',
@@ -28,13 +26,13 @@ angular.module('gnittyApp')
                     },
                     transitionDuration: 1000,
                     xAxis: {
-                        axisLabel: 'X Axis',
+                        axisLabel: '',
                         tickFormat: function(d){
                             return d3.format('.02f')(d);
                         }
                     },
                     yAxis: {
-                        axisLabel: 'Y Axis',
+                        axisLabel: '',
                         tickFormat: function(d){
                             return d3.format('.02f')(d);
                         },
@@ -43,7 +41,7 @@ angular.module('gnittyApp')
                 }
             }
 
-            $scope.data = generateData(1, $scope.statistics[4].keywords.length);
+            $scope.data = generateData(1, $scope.statistics[0].keywords.length);
 
             /* Random Data Generator (took from nvd3.org) */
             function generateData (groups, points) {
@@ -53,14 +51,14 @@ angular.module('gnittyApp')
 
                 for (var i = 0; i < points; i++) {
                     data.push({
-                        key: $scope.statistics[4].keywords[i].text,
+                        key: $scope.statistics[0].keywords[i].text,
                         label: 'keyword',
                         values: []
                     });
                         data[i].values.push({
-                            x: random(),
-                            y: random(),
-                            size: $scope.statistics[4].keywords[i].relevance,
+                            x: i+.2,
+                            y: i+.2,
+                            size: $scope.statistics[0].keywords[i].relevance,
                             shape: shapes[i % 6]
                         });
                 }
@@ -68,4 +66,3 @@ angular.module('gnittyApp')
             };
           });
   }]);
-
