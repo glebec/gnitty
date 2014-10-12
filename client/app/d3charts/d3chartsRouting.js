@@ -5,6 +5,6 @@ angular.module('gnittyApp')
     $routeProvider
       .when('/d3charts', {
         templateUrl: 'app/d3charts/d3charts.html',
-        controller: 'D3chartsCtrl'
+        controller: 'KeywordChartCtrl'
       });
   });
