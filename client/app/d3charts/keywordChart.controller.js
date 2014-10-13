@@ -10,10 +10,6 @@ angular.module('gnittyApp')
       success(function(data) {
         $scope.statistics = data;
         }).success(function(){
-//raw email scatter chart
-
-
-//keyword bubble chart
       console.log($scope.statistics[0].keywords.length)
      $scope.options = {
                 chart: {
