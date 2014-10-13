@@ -37,40 +37,41 @@ angular.module('gnittyApp')
       $http.post('/api/alchemy', {
         text: $scope.allEmailBodies,
         outputMode: 'json'
-        }).success(function(returnedJSON) {
-          $scope.sentiment = returnedJSON;
-          console.log($scope.sentiment);
-        });
+      }).success(function(returnedJSON) {
+        $scope.sentiment = returnedJSON;
+        console.log($scope.sentiment);
+      });
       $http.post('/api/alchemy/keywords', {
         text: $scope.allEmailBodies,
         outputMode: 'json'
       }).success(function(returnedJSON) {
-          $scope.keywords = returnedJSON;
-          console.log($scope.keywords.k);
-        });
+        $scope.keywords = returnedJSON;
+        console.log($scope.keywords.k);
+      });
       $http.post('/api/alchemy/concepts', {
         text: $scope.allEmailBodies,
         outputMode: 'json'
       }).success(function(returnedJSON) {
-          $scope.concepts = returnedJSON;
-          console.log($scope.concepts.c);
+        $scope.concepts = returnedJSON;
+        console.log($scope.concepts.c);
       });
     };
 
     $scope.postIt = function () {
       console.log('posting...');
       $scope.sendToAlchemy($scope.allEmailBodies)
-        }.success(function() {
-          $http.post('/api/stats', {
-            user: {
-              _id: $scope.getCurrentUser()._id
-            },
-            concepts: $scope.concepts.c,
-            keywords: $scope.keywords.k,
-            sentiment: $scope.sentiment
-          });
-          console.log("saved");
+      .success(function() {
+        $http.post('/api/stats', {
+          user: {
+            _id: $scope.getCurrentUser()._id
+          },
+          concepts: $scope.concepts.c,
+          keywords: $scope.keywords.k,
+          sentiment: $scope.sentiment
         });
+        console.log('saved');
+      });
+    };
 
     $scope.link = 'http://www.ginnabaker.com';
     $scope.clientObj = {};
