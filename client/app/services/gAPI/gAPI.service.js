@@ -68,7 +68,7 @@ angular.module('gnittyApp')
                 'userId': USER,
                 'id': messages[i].id
               });
-              request.execute(_thisService.logOut);
+              request.execute(_thisService.logMessage);
             }
 
           });
@@ -88,16 +88,17 @@ angular.module('gnittyApp')
     };
 
     //
-    this.logOut = function (gmailObj) {
+    this.logMessage = function (gmailObj) {
       var parsed = _thisService.parseMessage(gmailObj);
       // for dev purposes
       console.log( gmailObj );
+      console.log( parsed );
       console.log(
         '=======\n'+
         'New message\n'+
         'ID: ' + parsed.id + '\n'+
         'Size: ' + parsed.size + '\n'+
-        'Subject: ' + parsed.subj + '\n'+
+        'Subject: ' + parsed.subject + '\n'+
         'From: ' + parsed.from + '\n'+
         'Date: ' + parsed.date + '\n'+
         '======='+
@@ -105,16 +106,29 @@ angular.module('gnittyApp')
       );
     };
 
+    // convert a gapi-delivered email object to a more js-convenient form
     this.parseMessage = function parseMessage (gmailObj) {
+      // eventual return value.
       var parsed = {};
+      // header-based values require conversion for easy access.
+      function getHeaders (gmailObj) {
+        // headers delivered as unsorted array of objs w 'name' and 'val' keys.
+        // converting to a single hash with name:val properties.
+        // collision doesn't matter as we only need unique from/to/etc.
+        function convert (output, header) {
+          output[ header.name ] = header.value;
+          return output;
+        }
+        return gmailObj.payload.headers.reduce( convert, {});
+      }
+      var headers    = getHeaders( gmailObj );
+      parsed.from    = headers.From;
+      parsed.date    = new Date( headers.Date );
+      parsed.subject = headers.Subject;
       // directly-accessible values
       parsed.id      = gmailObj.id;
       parsed.size    = gmailObj.sizeEstimate;
-      // header-based values require conversion for easy access
-      var headers    = _thisService.getHeaders( gmailObj );
-      parsed.from    = headers.From;
-      parsed.date    = headers.Date;
-      parsed.subj    = headers.Subject;
+      parsed.labels  = gmailObj.labelIds;
       // Get the actual message text (as plaintext, even if multipart)
       parsed.plain   = ( gmailObj.payload.mimeType === 'text/plain') ?
         b64.decode( gmailObj.payload.body.data ) : // base-64 decode plaintext
@@ -123,23 +137,11 @@ angular.module('gnittyApp')
       return parsed;
     };
 
-    this.getHeaders = function getHeaders (gmailObj) {
-      // headers delivered as unsorted array of objs with 'name' and 'val' keys
-      // converting to a single hash with name:val pairs
-      // collision doesn't matter as we only need from/to/etc. which are unique
-      function convert (output, header) {
-        output[ header.name ] = header.value;
-        return output;
-      }
-      return gmailObj.payload.headers.reduce( convert, {});
-    };
-
     // runs on main controller load to initialize, prevent popup blockers, etc.
     // TODO: fix this
-    // this.handleClientLoad = function() {
-    //   gapi.client.setApiKey(apiKey);
-    //   gapi.auth.init(function() {});
-    //   window.setTimeout(checkAuth, 1);
-    // };
+    this.handleClientLoad = function() {
+      gapi.auth.init(function() {});
+      // window.setTimeout(checkAuth, 1);
+    };
 
   }]);
