@@ -21,20 +21,24 @@ angular.module('gnittyApp')
                 bottom: 60,
                 left: 55
             },
+            title: {
+                enable: true,
+                text: 'Emails Received'
+            },
             x: function(d){return d.label;},
             y: function(d){return d.value;},
-            showValues: true,
+            // showValues: true,
             valueFormat: function(d){
-                return d3.format(',.4f')(d);
+                return d3.format(',.0f')(d);
             },
-            transitionDuration: 1000,
-            xAxis: {
-                axisLabel: 'X Axis'
-            },
-            yAxis: {
-                axisLabel: 'Y Axis',
-                axisLabelDistance: 30
-            }
+            transitionDuration: 1000
+            // xAxis: {
+            //     axisLabel: ''
+            // },
+            // yAxis: {
+            //     axisLabel: '',
+            //     axisLabelDistance: 30
+            // }
         }
     };
 
@@ -43,36 +47,20 @@ angular.module('gnittyApp')
                 key: "Cumulative Return",
                 values: [
                     {
-                        "label" : "A" ,
-                        "value" : -29.765957771107
+                        "label" : "You",
+                        "value" : 3000
                     } ,
                     {
-                        "label" : "B" ,
-                        "value" : 0
+                        "label" : "Average American",
+                        "value" : 5579
                     } ,
                     {
-                        "label" : "C" ,
-                        "value" : 32.807804682612
+                        "label" : "John Oliver",
+                        "value" : 13724
                     } ,
                     {
-                        "label" : "D" ,
-                        "value" : 196.45946739256
-                    } ,
-                    {
-                        "label" : "E" ,
-                        "value" : 0.19434030906893
-                    } ,
-                    {
-                        "label" : "F" ,
-                        "value" : -98.079782601442
-                    } ,
-                    {
-                        "label" : "G" ,
-                        "value" : -13.925743130903
-                    } ,
-                    {
-                        "label" : "H" ,
-                        "value" : -5.1387322875705
+                        "label" : "Oprah",
+                        "value" : 23000
                     }
                 ]
             }
