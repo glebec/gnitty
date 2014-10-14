@@ -6,7 +6,6 @@ var mongoose = require('mongoose'),
 var StatsSchema = new Schema({
   date: Date,
   user: {
-    name: String,
     _id: String
     },
   email: {
@@ -15,11 +14,7 @@ var StatsSchema = new Schema({
     sender: String,
     recip: String
   },
-  sentiment: {
-    score: Number,
-    type: String,
-    mixed: String,
-  },
+  sentiment: {},
   keywords: [{
     relevance: Number,
     text: String

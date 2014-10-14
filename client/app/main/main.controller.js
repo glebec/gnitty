@@ -1,11 +1,10 @@
 'use strict';
 
 angular.module('gnittyApp')
-  .controller('MainCtrl', function ($scope, $http, Auth, gAPI, emails) {
-    // We are not currently using in-app sign-in, so this is not needed.
+.controller('MainCtrl', function ($scope, $http, Auth, gAPI, emails, postAlchemy) {
+    console.log(postAlchemy);
     $scope.getCurrentUser = Auth.getCurrentUser;
-
-    // initialize google api in case already signed in, etc.
+    // initialize google api in case already signed in, etc. TODO: fix this
     // gAPI.handleClientLoad();
 
     // Scope wires together ng-click login call to google API service
@@ -23,58 +22,23 @@ angular.module('gnittyApp')
       gAPI.checkAuthThenFetch();
     };
 
-    // show stored data
-    $scope.showEmails = function() {
-      console.log('data stored in email service:', emails.data);
-    };
-
-    // Alchemy Notes:
-
-    // Calls to TextGetTextSentiment should be made using HTTP POST.
-    // HTTP POST calls should include the Content-Type header: application/x-www-form-urlencoded //?
-    // Posted text documents can be a maximum of 50 kilobytes. Larger documents will result in a "content-exceeds-size-limit" error response.
-
-    // Note - since our data is not from a public webpage, we have to actually upload it.
-
     $scope.allEmailBodies = 'AGREEEDD! DAMN YOU CELEBRANTS OF COLUMBUS DAY!!!!!!!!!!! DAMN YOU TO HELL!!!!!! :-D';
 
-    $scope.sendToAlchemy = function (emails) {
-      $http.post('/api/alchemy', {
-        text: $scope.allEmailBodies,
-        outputMode: 'json'
-      }).success(function(returnedJSON) {
-        $scope.sentiment = returnedJSON;
-        console.log($scope.sentiment);
-      });
-      $http.post('/api/alchemy/keywords', {
-        text: $scope.allEmailBodies,
-        outputMode: 'json'
-      }).success(function(returnedJSON) {
-        $scope.keywords = returnedJSON;
-        console.log($scope.keywords.k);
-      });
-      $http.post('/api/alchemy/concepts', {
-        text: $scope.allEmailBodies,
-        outputMode: 'json'
-      }).success(function(returnedJSON) {
-        $scope.concepts = returnedJSON;
-        console.log($scope.concepts.c);
-      });
-    };
-
     $scope.postIt = function () {
-      console.log('posting...');
-      $scope.sendToAlchemy($scope.allEmailBodies)
-      .success(function() {
-        $http.post('/api/stats', {
-          user: {
-            _id: $scope.getCurrentUser()._id
-          },
-          concepts: $scope.concepts.c,
-          keywords: $scope.keywords.k,
-          sentiment: $scope.sentiment
-        });
-        console.log('saved');
+      postAlchemy.sendToAlchemy($scope.allEmailBodies, function(analysis) {
+        console.log(analysis);
+        var save = function(analysis) {
+          $http.post('/api/stats', {
+            user: {
+              _id: $scope.getCurrentUser()._id
+            },
+            concepts: analysis.concepts,
+            keywords: analysis.keywords,
+            sentiment: analysis.sentiment
+          });
+        };
+        save(analysis);
+        console.log('saving...')
       });
     };
 
