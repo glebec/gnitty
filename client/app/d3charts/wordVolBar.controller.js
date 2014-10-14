@@ -46,17 +46,34 @@ angular.module('gnittyApp')
                         "label" : "You",
                         "value" : 41638
                     } ,
+                    // {
+                    //     "label" : "Average American",
+                    //     "value" : 41638
+                    // } ,
                     {
-                        "label" : "Average American",
-                        "value" : 5579
+                        "label" : "The Old Man and the Sea",
+                        "value" : 31750
                     } ,
                     {
-                        "label" : "John Oliver",
-                        "value" : 13724
-                    } ,
+                        "label" : "The Great Gatsby",
+                        "value" : 45500
+                    },
                     {
-                        "label" : "Oprah",
-                        "value" : 23000
+                        "label" : "To Kill a Mockingbird",
+                        "value" : 100388
+                    },
+
+                    {
+                      "label" : "Jane Eyre",
+                      "value" : 183858
+                    },
+                    {
+                        "label" : "Harry Potter and the Order of the Phoenix",
+                        "value" : 257154
+                    },
+                    {
+                        "label" : "Les Miserables",
+                        "value" : 530982
                     }
                 ]
             }
