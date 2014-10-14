@@ -13,6 +13,12 @@ angular.module('gnittyApp')
         USER     = 'me',
         deferred = $q.defer();
 
+    // runs on main controller load to initialize, prevent popup blockers, etc.
+    this.handleClientLoad = function() {
+      gapi.auth.init(function() {});
+      // window.setTimeout(checkAuth, 1);
+    };
+
     // attempts authorization.
     // called by the controller; auth takes params and a callback.
     // returns a deferred promise to handle async loading.
@@ -68,7 +74,7 @@ angular.module('gnittyApp')
                 'userId': USER,
                 'id': messages[i].id
               });
-              request.execute(_thisService.logOut);
+              request.execute(_thisService.logMessage);
             }
 
           });
@@ -87,17 +93,17 @@ angular.module('gnittyApp')
       request.execute(callback);
     };
 
-    //
-    this.logOut = function (gmailObj) {
+    // logs message info out for dev checking
+    this.logMessage = function (gmailObj) {
       var parsed = _thisService.parseMessage(gmailObj);
-      // for dev purposes
-      console.log( gmailObj );
+      // console.log( gmailObj );
+      console.log( parsed );
       console.log(
         '=======\n'+
         'New message\n'+
         'ID: ' + parsed.id + '\n'+
         'Size: ' + parsed.size + '\n'+
-        'Subject: ' + parsed.subj + '\n'+
+        'Subject: ' + parsed.subject + '\n'+
         'From: ' + parsed.from + '\n'+
         'Date: ' + parsed.date + '\n'+
         '======='+
@@ -105,41 +111,45 @@ angular.module('gnittyApp')
       );
     };
 
+    // convert a gapi-delivered email object to a more js-convenient form
     this.parseMessage = function parseMessage (gmailObj) {
+      // console.log( gmailObj );
       var parsed = {};
-      // directly-accessible values
+      // header-based values require conversion for easy access.
+      function getHeaders (gmailObj) {
+        // headers delivered as unsorted array of objs w 'name' and 'val' keys.
+        // converting to a single hash with name:val properties.
+        // collision doesn't matter as we only need unique from/to/etc.
+        function convert (output, header) {
+          output[ header.name ] = header.value;
+          return output;
+        }
+        return gmailObj.payload.headers.reduce( convert, {} );
+      }
+      var headers    = getHeaders( gmailObj );
+      parsed.from    = headers.From;
+      parsed.date    = new Date( headers.Date );
+      parsed.subject = headers.Subject;
+      // directly-accessible values:
       parsed.id      = gmailObj.id;
       parsed.size    = gmailObj.sizeEstimate;
-      // header-based values require conversion for easy access
-      var headers    = _thisService.getHeaders( gmailObj );
-      parsed.from    = headers.From;
-      parsed.date    = headers.Date;
-      parsed.subj    = headers.Subject;
-      // Get the actual message text (as plaintext, even if multipart)
-      parsed.plain   = ( gmailObj.payload.mimeType === 'text/plain') ?
-        b64.decode( gmailObj.payload.body.data ) : // base-64 decode plaintext
-        b64.decode( gmailObj.payload.parts[0].body.data ); // decode multipart
+      parsed.labels  = gmailObj.labelIds;
+      // Get the actual message body as base-64 plaintext:
+      function b64text () {
+        switch ( gmailObj.payload.mimeType ) {
+          case 'text/plain':
+            return gmailObj.payload.body.data;
+          case 'multipart/alternative':
+            return gmailObj.payload.parts[0].body.data;
+          case 'multipart/mixed':
+            return gmailObj.payload.parts[0].parts[0].body.data;
+          default: return '';
+        }
+      }
+      // convert b64text to UTF-8
+      parsed.plain = b64.decode( b64text() );
       // email parsing complete
       return parsed;
     };
-
-    this.getHeaders = function getHeaders (gmailObj) {
-      // headers delivered as unsorted array of objs with 'name' and 'val' keys
-      // converting to a single hash with name:val pairs
-      // collision doesn't matter as we only need from/to/etc. which are unique
-      function convert (output, header) {
-        output[ header.name ] = header.value;
-        return output;
-      }
-      return gmailObj.payload.headers.reduce( convert, {});
-    };
-
-    // runs on main controller load to initialize, prevent popup blockers, etc.
-    // TODO: fix this
-    // this.handleClientLoad = function() {
-    //   gapi.client.setApiKey(apiKey);
-    //   gapi.auth.init(function() {});
-    //   window.setTimeout(checkAuth, 1);
-    // };
 
   }]);
