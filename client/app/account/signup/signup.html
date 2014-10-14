@@ -1,11 +1,15 @@
 <div ng-include="'components/navbar/navbar.html'"></div>
 
 <div class="container">
-  <div class="row">
-    <div class="col-sm-12">
-      <h1>Sign up</h1>
-    </div>
-    <div class="col-sm-12">
+      <div class='panel panel-default'>
+        <div class='panel-heading'>
+
+          <div class='panel-title'>
+            <h1>Register</h1>
+          </div>
+
+  </div>
+    <div class='panel-body'>
       <form class="form" name="form" ng-submit="register(form)" novalidate>
 
         <div class="form-group" ng-class="{ 'has-success': form.name.$valid && submitted,
@@ -53,22 +57,18 @@
             {{ errors.password }}
           </p>
         </div>
+      </div>
 
-        <div>
+        <div class='panel-footer'>
           <button class="btn btn-inverse btn-lg btn-login" type="submit">
             Sign up
           </button>
-          <a class="btn btn-default btn-lg btn-register" href="/login">
-            Login
-          </a>
-        </div>
 
         <hr>
-        <div>
           <a class="btn btn-google-plus" href="" ng-click="loginOauth('google')">
             <i class="fa fa-google-plus"></i> Connect with Google+
           </a>
-        </div>
+        </div> <!-- class footer -->
       </form>
     </div>
   </div>
