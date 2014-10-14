@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('gnittyApp')
-  .service('gAPI', ['$http', '$rootScope', '$q', 'b64', function ($http, $rootScope, $q, b64) {
+  .service('gAPI', ['$http', '$rootScope', '$q', 'b64', 'emails', function ($http, $rootScope, $q, b64, emails) {
     // AngularJS will instantiate a singleton by calling "new" on this function
 
     // TODO: reference CLIENT_ID key from local.env
@@ -51,12 +51,21 @@ angular.module('gnittyApp')
     };
 
     // TODO: make this deferred; enable immediate mode without breaking
-    this.checkAuth = function () {
+    this.checkAuthThenFetch = function () {
       gapi.auth.authorize({
         'client_id': CLIENT_ID,
         'scope': SCOPES,
         'immediate': false,
       }, this.collectEmails);
+    };
+
+    // convenience method for building GAPI message reqs to be executed later
+    this.msgReq = function (id) {
+      var request = gapi.client.gmail.users.messages.get({
+        'userId' : USER,
+        'id' : id
+      });
+      return request;
     };
 
     // Initiate GMail client request for messages
@@ -66,17 +75,28 @@ angular.module('gnittyApp')
         // requests can be sent to the API.
         gapi.client.load('gmail', 'v1', function () {
           _thisService.onMessages( function (resp) {
-            console.log('response object:', resp);
             var messages = resp.messages;
-            console.log('showing ' + messages.length + ' message objects:');
+            // batching requests to send as a single http request
+            var batch = gapi.client.newBatch();
+            // add message requests to batch using msg id as batch req id
             for (var i = 0; i < messages.length; i++) {
-              var request = gapi.client.gmail.users.messages.get({
-                'userId': USER,
-                'id': messages[i].id
-              });
-              request.execute(_thisService.logMessage);
+              var id = messages[i].id;
+              var request = _thisService.msgReq( id );
+              batch.add( request, {id: id} );
             }
-
+            // execute the batch request as a promise and handle the result
+            batch.then(
+              function (resp) {
+                var responses = resp.result;
+                // get gmails, parse and store in 'emails' AJS service
+                for (var id in responses) {
+                  var gmailObj = responses[id].result;
+                  emails.data[id] = _thisService.parseMessage(gmailObj);
+                }
+                console.log('emails fetched and stored');
+              },
+              function (err) { console.log('batch error: ', err); }
+            );
           });
         });
       } else {
@@ -88,27 +108,28 @@ angular.module('gnittyApp')
     // execute a callback on the messages request. Response has .messages prop.
     this.onMessages = function (callback) {
       var request = gapi.client.gmail.users.messages.list({
-        'userId': USER
+        'userId': USER,
+        'maxResults': 100
       });
-      request.execute(callback);
+      request.execute( callback );
     };
 
     // logs message info out for dev checking
     this.logMessage = function (gmailObj) {
-      var parsed = _thisService.parseMessage(gmailObj);
       // console.log( gmailObj );
+      var parsed = _thisService.parseMessage(gmailObj);
       console.log( parsed );
-      console.log(
-        '=======\n'+
-        'New message\n'+
-        'ID: ' + parsed.id + '\n'+
-        'Size: ' + parsed.size + '\n'+
-        'Subject: ' + parsed.subject + '\n'+
-        'From: ' + parsed.from + '\n'+
-        'Date: ' + parsed.date + '\n'+
-        '======='+
-        '\n\n>>>>>' + parsed.plain + '<<<<<\n'
-      );
+      // console.log(
+      //   '=======\n'+
+      //   'New message\n'+
+      //   'ID: ' + parsed.id + '\n'+
+      //   'Size: ' + parsed.size + '\n'+
+      //   'Subject: ' + parsed.subject + '\n'+
+      //   'From: ' + parsed.from + '\n'+
+      //   'Date: ' + parsed.date + '\n'+
+      //   '======='+
+      //   '\n\n>>>>>' + parsed.plain + '<<<<<\n'
+      // );
     };
 
     // convert a gapi-delivered email object to a more js-convenient form

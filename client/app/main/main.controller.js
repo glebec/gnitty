@@ -1,12 +1,12 @@
 'use strict';
 
 angular.module('gnittyApp')
-  .controller('MainCtrl', function ($scope, $http, Auth, gAPI) {
+  .controller('MainCtrl', function ($scope, $http, Auth, gAPI, emails) {
     // We are not currently using in-app sign-in, so this is not needed.
     $scope.getCurrentUser = Auth.getCurrentUser;
 
     // initialize google api in case already signed in, etc.
-    gAPI.handleClientLoad();
+    // gAPI.handleClientLoad();
 
     // Scope wires together ng-click login call to google API service
     // gAPI.login() returns a promise which resolves with .then()
@@ -18,9 +18,14 @@ angular.module('gnittyApp')
       );
     };
 
-    // checkAuth
-    $scope.checkAuth = function() {
-      gAPI.checkAuth();
+    // fetch emails and store in email service
+    $scope.checkAuthThenFetch = function() {
+      gAPI.checkAuthThenFetch();
+    };
+
+    // show stored data
+    $scope.showEmails = function() {
+      console.log('data stored in email service:', emails.data);
     };
 
     // Alchemy Notes:
