@@ -2,8 +2,8 @@
 
 angular.module('gnittyApp')
 .controller('MainCtrl', function ($scope, $http, Auth, gAPI, emails, postAlchemy) {
-    console.log(postAlchemy);
     $scope.getCurrentUser = Auth.getCurrentUser;
+
     // initialize google api in case already signed in, etc. TODO: fix this
     // gAPI.handleClientLoad();
 
