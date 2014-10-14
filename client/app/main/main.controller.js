@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('gnittyApp')
-  .controller('MainCtrl', function ($scope, $http, Auth, gAPI, postAlchemy) {
+.controller('MainCtrl', function ($scope, $http, Auth, gAPI, emails, postAlchemy) {
     console.log(postAlchemy);
     $scope.getCurrentUser = Auth.getCurrentUser;
     // initialize google api in case already signed in, etc. TODO: fix this
@@ -17,9 +17,14 @@ angular.module('gnittyApp')
       );
     };
 
-    // checkAuth
-    $scope.checkAuth = function() {
-      gAPI.checkAuth();
+    // fetch emails and store in email service
+    $scope.checkAuthThenFetch = function() {
+      gAPI.checkAuthThenFetch();
+    };
+
+    // show stored data
+    $scope.showEmails = function() {
+      console.log('data stored in email service:', emails.data);
     };
 
     $scope.allEmailBodies = 'AGREEEDD! DAMN YOU CELEBRANTS OF COLUMBUS DAY!!!!!!!!!!! DAMN YOU TO HELL!!!!!! :-D';
