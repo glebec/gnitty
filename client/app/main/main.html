@@ -60,9 +60,10 @@
         <div class='row'>
           <div class='col-sm-4 col-lg-4 center'>
             <h3><p>Step 1</p></h3>
-            <button ng-click='login()' class='btn btn-primary btn-lg withripple'>Authorize User</button>
+            <input type="button" ng-click="login()" class='btn btn-primary btn-lg withripple'>Authorize User</button>
             <br />
-            <button ng-click='checkAuth()' class='btn btn-primary btn-lg withripple'>List Message IDs</button>
+            <button ng-click='checkAuthThenFetch()' class='btn btn-primary btn-lg withripple'>Fetch Messages</button>
+            <button ng-click='showEmails()' class='btn btn-primary btn-lg withripple'>List Messages</button>
           </div>
           <div class='col-sm-4 col-lg-4 center'>
             <h3><p>Step 2</p></h3>

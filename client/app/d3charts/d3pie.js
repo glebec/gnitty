@@ -1,8 +1,5 @@
 'use strict';
 
-// angular.module('gnittyApp.directives')
-//   .directive('d3Pie', ['d3', 'angularCharts', function(d3) {
-
 angular.module('gnittyApp.charts', ['d3', 'angularCharts']);
 
     function d3piectrl($scope) {

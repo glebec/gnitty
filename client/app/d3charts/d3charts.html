@@ -1,7 +1,7 @@
 <div class="col-md-12">
   <h3>Your gmail summary:</h3>
 </div>
-
+<!--
 <d3-bars data="d3Data" label="d3Label"></d3-bars>
 <div ac-chart="'pie'" ac-data="data" ac-config="config" id='chart' class='chart' ng-controller="d3piectrl"></div>
 <div ac-chart="'bar'" ac-data="data" ac-config="config" id='chart' class='chart' ng-controller="d3piectrl"></div>
@@ -9,8 +9,30 @@
 <div ac-chart="'point'" ac-data="data" ac-config="config" id='chart' class='chart' ng-controller="d3piectrl"></div>
 <div ac-chart="'area'" ac-data="data" ac-config="config" id='chart' class='chart' ng-controller="d3piectrl"></div>
 
-<test-directive></test-directive>
-<div ng-controller="wordcloudCtrl">
-  <wordcloud height="800" width="800" words="words" font-family="arial" font-size="10"></wordcloud>
+<test-directive></test-directive> -->
+<!--KEYWORD CHART -->
+<div ng-controller="emailVolBarCtrl">
+   <h4>Inbox volume</h4>
+  <nvd3 options="options" data="data"></nvd3>
 </div>
-
+<div ng-controller="wordVolBarCtrl">
+  <h4>If your emails from this year were a novel, how long would it be?</h4>
+  <nvd3 options="options" data="data"></nvd3>
+</div>
+<div ng-controller="sentPieChartCtrl">
+  <h4>Your email tone is mostly:</h4>
+  <nvd3 options="options" data="data"></nvd3>
+</div>
+<div ng-controller="sentiLineChartCtrl">
+  <!-- <h4>Sentiment over time</h4> -->
+  <nvd3 options="options" data="data"></nvd3>
+</div>
+<div>
+  <h4>Your top keywords</h4>
+  <nvd3 options="options" data="data"></nvd3>
+</div>
+<!--EMAIL SCATTER CHART -->
+<div ng-controller="emailScatterChartCtrl">
+  <h4>Your sent messages.  All of them.</h4>
+  <nvd3 options="options" data="data"></nvd3>
+</div>
