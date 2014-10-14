@@ -5,8 +5,8 @@ angular.module('gnittyApp')
     // We are not currently using in-app sign-in, so this is not needed.
     $scope.getCurrentUser = Auth.getCurrentUser;
 
-    // initialize google api in case already signed in, etc. TODO: fix this
-    // gAPI.handleClientLoad();
+    // initialize google api in case already signed in, etc.
+    gAPI.handleClientLoad();
 
     // Scope wires together ng-click login call to google API service
     // gAPI.login() returns a promise which resolves with .then()

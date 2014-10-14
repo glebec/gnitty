@@ -13,6 +13,12 @@ angular.module('gnittyApp')
         USER     = 'me',
         deferred = $q.defer();
 
+    // runs on main controller load to initialize, prevent popup blockers, etc.
+    this.handleClientLoad = function() {
+      gapi.auth.init(function() {});
+      // window.setTimeout(checkAuth, 1);
+    };
+
     // attempts authorization.
     // called by the controller; auth takes params and a callback.
     // returns a deferred promise to handle async loading.
@@ -87,11 +93,10 @@ angular.module('gnittyApp')
       request.execute(callback);
     };
 
-    //
+    // logs message info out for dev checking
     this.logMessage = function (gmailObj) {
       var parsed = _thisService.parseMessage(gmailObj);
-      // for dev purposes
-      console.log( gmailObj );
+      // console.log( gmailObj );
       console.log( parsed );
       console.log(
         '=======\n'+
@@ -108,7 +113,7 @@ angular.module('gnittyApp')
 
     // convert a gapi-delivered email object to a more js-convenient form
     this.parseMessage = function parseMessage (gmailObj) {
-      // eventual return value.
+      // console.log( gmailObj );
       var parsed = {};
       // header-based values require conversion for easy access.
       function getHeaders (gmailObj) {
@@ -119,29 +124,32 @@ angular.module('gnittyApp')
           output[ header.name ] = header.value;
           return output;
         }
-        return gmailObj.payload.headers.reduce( convert, {});
+        return gmailObj.payload.headers.reduce( convert, {} );
       }
       var headers    = getHeaders( gmailObj );
       parsed.from    = headers.From;
       parsed.date    = new Date( headers.Date );
       parsed.subject = headers.Subject;
-      // directly-accessible values
+      // directly-accessible values:
       parsed.id      = gmailObj.id;
       parsed.size    = gmailObj.sizeEstimate;
       parsed.labels  = gmailObj.labelIds;
-      // Get the actual message text (as plaintext, even if multipart)
-      parsed.plain   = ( gmailObj.payload.mimeType === 'text/plain') ?
-        b64.decode( gmailObj.payload.body.data ) : // base-64 decode plaintext
-        b64.decode( gmailObj.payload.parts[0].body.data ); // decode multipart
+      // Get the actual message body as base-64 plaintext:
+      function b64text () {
+        switch ( gmailObj.payload.mimeType ) {
+          case 'text/plain':
+            return gmailObj.payload.body.data;
+          case 'multipart/alternative':
+            return gmailObj.payload.parts[0].body.data;
+          case 'multipart/mixed':
+            return gmailObj.payload.parts[0].parts[0].body.data;
+          default: return '';
+        }
+      }
+      // convert b64text to UTF-8
+      parsed.plain = b64.decode( b64text() );
       // email parsing complete
       return parsed;
-    };
-
-    // runs on main controller load to initialize, prevent popup blockers, etc.
-    // TODO: fix this
-    this.handleClientLoad = function() {
-      gapi.auth.init(function() {});
-      // window.setTimeout(checkAuth, 1);
     };
 
   }]);
