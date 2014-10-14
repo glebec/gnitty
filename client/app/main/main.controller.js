@@ -22,6 +22,11 @@ angular.module('gnittyApp')
       gAPI.checkAuthThenFetch();
     };
 
+    // show stored data
+    $scope.showEmails = function() {
+      console.log('data stored in email service:', emails.data);
+    };
+
     $scope.allEmailBodies = 'AGREEEDD! DAMN YOU CELEBRANTS OF COLUMBUS DAY!!!!!!!!!!! DAMN YOU TO HELL!!!!!! :-D';
 
     $scope.postIt = function () {
