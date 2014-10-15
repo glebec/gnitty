@@ -31,16 +31,11 @@ angular.module('gnittyApp')
         $scope.data = [
             {
                 key: "Positive",
-                y: 5
-                // $scope.statistics[0].key
+                y: 1 - $scope.statistics[0].sentiment.score
             },
             {
                 key: "Negative",
-                y: 2
-            },
-            {
-                key: "Neutral",
-                y: 9
+                y: $scope.statistics[0].sentiment.score
             }
         ];
     });

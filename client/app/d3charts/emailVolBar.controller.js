@@ -3,13 +3,13 @@
 angular.module('gnittyApp')
   .controller('emailVolBarCtrl', ['$scope', '$http', 'Auth', function($scope, $http, Auth){
 
-    // $scope.currentUser = Auth.getCurrentUser();
-    // console.log($scope.currentUser);
-    // $http.get('/api/stats/foruser/'+ $scope.currentUser._id).
-    //   success(function(data) {
-    //     $scope.statistics = data;
-    //     }).success(function(){
-    //   console.log($scope.statistics[0].keywords.length)
+    $scope.currentUser = Auth.getCurrentUser();
+    console.log($scope.currentUser);
+    $http.get('/api/stats/foruser/'+ $scope.currentUser._id).
+      success(function(data) {
+        $scope.statistics = data;
+        }).success(function(){
+
     // avg person received = 5,579 emails
     $scope.options = {
         chart: {
@@ -65,5 +65,5 @@ angular.module('gnittyApp')
                 ]
             }
         ];
-
+      });
   }]);

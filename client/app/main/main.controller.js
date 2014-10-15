@@ -30,7 +30,7 @@ angular.module('gnittyApp')
       $scope.text = emails.getBody().join("");
     };
 
-    $scope.allEmailBodies = 'AGREEEDD! DAMN YOU CELEBRANTS OF COLUMBUS DAY!!!!!!!!!!! DAMN YOU TO HELL!!!!!! :-D';
+    // $scope.allEmailBodies = 'AGREEEDD! DAMN YOU CELEBRANTS OF COLUMBUS DAY!!!!!!!!!!! DAMN YOU TO HELL!!!!!! :-D';
 
     $scope.postIt = function () {
       postAlchemy.sendToAlchemy($scope.text, function(analysis) {
@@ -42,7 +42,8 @@ angular.module('gnittyApp')
             },
             concepts: analysis.concepts,
             keywords: analysis.keywords,
-            sentiment: analysis.sentiment
+            sentiment: analysis.sentiment,
+            dateArray: $scope.dateArray
           });
         };
         save(analysis);

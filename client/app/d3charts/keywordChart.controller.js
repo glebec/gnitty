@@ -4,7 +4,6 @@ angular.module('gnittyApp')
   .controller('KeywordChartCtrl', ['$scope', '$http', 'Auth', function($scope, $http, Auth, User){
 
     $scope.currentUser = Auth.getCurrentUser();
-    console.log($scope.currentUser);
 //raw email scatter chart
     $http.get('/api/stats/foruser/'+ $scope.currentUser._id).
       success(function(data) {
@@ -14,7 +13,7 @@ angular.module('gnittyApp')
      $scope.options = {
                 chart: {
                     type: 'scatterChart',
-                    height: 450,
+                    height: 1000,
                     color: d3.scale.category10().range(),
                     scatter: {
                         onlyCircles: true

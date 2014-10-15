@@ -3,6 +3,13 @@
 angular.module('gnittyApp')
   .controller('emailScatterChartCtrl', ['$scope', '$http', 'Auth', function($scope, $http, Auth, User){
 
+    $scope.currentUser = Auth.getCurrentUser();
+    console.log($scope.currentUser);
+    $http.get('/api/stats/foruser/'+ $scope.currentUser._id).
+      success(function(data) {
+        $scope.statistics = data;
+        }).success(function(){
+
 $scope.options = {
             chart: {
                 type: 'scatterChart',
@@ -55,13 +62,14 @@ $scope.emailDate = [];
 
                 for (var j = 0; j < points; j++) {
                     data[i].values.push({
-                        x: random() //email date here
+                        x: $scope.statistics[0].keywords[j].text //email date here
                         , y: random() //can keep this as random
-                        , size: 0.01
+                        , size: $scope.statistics[0].keywords[j].relevance
                         , shape: shapes[j % 6]
                     });
                 }
             }
             return data;
         }
+      });
 }]);
