@@ -7,7 +7,7 @@ angular.module('gnittyApp')
     // TODO: reference CLIENT_ID key from local.env
     // gapi object is loaded in index.html script header from external resource
     // 'me' is a special user string indicating the authenticated user
-    var _thisService = this,
+    var _gAPI = this,
         CLIENT_ID = '626085391000-vbd4dkua39odasb6sjrq0tn3es8uboet.apps.googleusercontent.com',
         SCOPES   = ['https://www.googleapis.com/auth/gmail.readonly'],
         USER     = 'me',
@@ -74,14 +74,14 @@ angular.module('gnittyApp')
         // Access token has been successfully retrieved,
         // requests can be sent to the API.
         gapi.client.load('gmail', 'v1', function () {
-          _thisService.onMessages( function (resp) {
+          _gAPI.onMessages( function (resp) {
             var messages = resp.messages;
             // batching requests to send as a single http request
             var batch = gapi.client.newBatch();
             // add message requests to batch using msg id as batch req id
             for (var i = 0; i < messages.length; i++) {
               var id = messages[i].id;
-              var request = _thisService.msgReq( id );
+              var request = _gAPI.msgReq( id );
               batch.add( request, {id: id} );
             }
             // execute the batch request as a promise and handle the result
@@ -91,7 +91,7 @@ angular.module('gnittyApp')
                 // get gmails, parse and store in 'emails' AJS service
                 for (var id in responses) {
                   var gmailObj = responses[id].result;
-                  emails.data[id] = _thisService.parseMessage(gmailObj);
+                  emails.data[id] = _gAPI.parseMessage(gmailObj);
                 }
                 console.log('emails fetched and stored');
               },
@@ -109,7 +109,7 @@ angular.module('gnittyApp')
     this.onMessages = function (callback) {
       var request = gapi.client.gmail.users.messages.list({
         'userId': USER,
-        'maxResults': 100
+        'maxResults': 50
       });
       request.execute( callback );
     };
@@ -117,7 +117,7 @@ angular.module('gnittyApp')
     // logs message info out for dev checking
     this.logMessage = function (gmailObj) {
       // console.log( gmailObj );
-      var parsed = _thisService.parseMessage(gmailObj);
+      var parsed = _gAPI.parseMessage(gmailObj);
       console.log( parsed );
       // console.log(
       //   '=======\n'+
@@ -164,8 +164,22 @@ angular.module('gnittyApp')
           case 'multipart/alternative':
             return gmailObj.payload.parts[0].body.data;
           case 'multipart/mixed':
-            return gmailObj.payload.parts[0].parts[0].body.data;
-          default: return '';
+            if ( gmailObj.payload.parts[0].parts ) {
+              return gmailObj.payload.parts[0].parts[0].body.data;
+            } else {
+              return '';
+            } break;
+          case 'multipart/related':
+            if ( gmailObj.payload.parts[0].parts ) {
+              return gmailObj.payload.parts[0].parts[0].body.data;
+            } else {
+              return '';
+            } break;
+          default: {
+            console.log('unhandled MIME type: ' + gmailObj.payload.mimeType);
+            console.log( gmailObj );
+            return '';
+          }
         }
       }
       // convert b64text to UTF-8
