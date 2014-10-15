@@ -2,26 +2,31 @@
 
 angular.module('gnittyApp')
   .service('gAPI', ['$http', '$rootScope', '$q', 'b64', 'emails', function ($http, $rootScope, $q, b64, emails) {
-    // AngularJS will instantiate a singleton by calling "new" on this function
 
     // TODO: reference CLIENT_ID key from local.env
     // gapi object is loaded in index.html script header from external resource
     // 'me' is a special user string indicating the authenticated user
-    var _gAPI = this,
-        CLIENT_ID = '626085391000-vbd4dkua39odasb6sjrq0tn3es8uboet.apps.googleusercontent.com',
-        SCOPES   = ['https://www.googleapis.com/auth/gmail.readonly'],
-        USER     = 'me',
-        deferred = $q.defer();
 
-    // runs on main controller load to initialize, prevent popup blockers, etc.
+    var _gAPI     = this,
+        CLIENT_ID = '626085391000-vbd4dkua39odasb6sjrq0tn3es8uboet.apps.googleusercontent.com',
+        SCOPES    = ['https://www.googleapis.com/auth/gmail.readonly'],
+        USER      = 'me',
+        deferred  = $q.defer();
+
+
+    /*-------------------------------------------------
+    Authorization, initiation, and user-centric methods
+    -------------------------------------------------*/
+
+    // Prevents popup blockers, etc. TODO: make this work in Safari etc.
     this.handleClientLoad = function() {
       gapi.auth.init(function() {});
       // window.setTimeout(checkAuth, 1);
     };
 
-    // attempts authorization.
-    // called by the controller; auth takes params and a callback.
-    // returns a deferred promise to handle async loading.
+    // Attempts authorization.
+    // gapi.auth takes parameters and a callback.
+    // Returns a deferred promise to handle async loading.
     this.login = function () {
       gapi.auth.authorize({
         'client_id': CLIENT_ID,
@@ -31,7 +36,7 @@ angular.module('gnittyApp')
       return deferred.promise;
     };
 
-    // after login triggers, auth attempt result passes to this callback.
+    // After login triggers, auth attempt result passes to this callback.
     this.handleAuthResult = function (authResult) {
       if (authResult && !authResult.error) {
         // access token retrieved; can send requests to API
@@ -50,7 +55,9 @@ angular.module('gnittyApp')
       }
     };
 
-    // TODO: make this deferred; enable immediate mode without breaking
+    // Main trigger for collecting emails.
+    // If immediate mode worked, this would skip the login window flash.
+    // TODO: make this deferred; enable immediate mode without breaking.
     this.checkAuthThenFetch = function () {
       gapi.auth.authorize({
         'client_id': CLIENT_ID,
@@ -59,16 +66,14 @@ angular.module('gnittyApp')
       }, this.collectEmails);
     };
 
-    // convenience method for building GAPI message reqs to be executed later
-    this.msgReq = function (id) {
-      var request = gapi.client.gmail.users.messages.get({
-        'userId' : USER,
-        'id' : id
-      });
-      return request;
-    };
 
-    // Initiate GMail client request for messages
+    /*----------------------------------------------------------------
+    Gmail-specific actions (convenience methods definded further down)
+    ----------------------------------------------------------------*/
+
+    // TODO: refactor heavily to separate into logical modules.
+    // Currently fetches message IDs, then batch requests actual messages,
+    // then parses them and sends them to the inject 'emails' service.
     this.collectEmails = function (authResult) {
       if (authResult && !authResult.error) {
         // Access token has been successfully retrieved,
@@ -81,7 +86,7 @@ angular.module('gnittyApp')
             // add message requests to batch using msg id as batch req id
             for (var i = 0; i < messages.length; i++) {
               var id = messages[i].id;
-              var request = _gAPI.msgReq( id );
+              var request = _gAPI.buildMessageReqFor( id );
               batch.add( request, {id: id} );
             }
             // execute the batch request as a promise and handle the result
@@ -105,42 +110,14 @@ angular.module('gnittyApp')
       }
     };
 
-    // execute a callback on the messages request. Response has .messages prop.
-    this.onMessages = function (callback) {
-      var request = gapi.client.gmail.users.messages.list({
-        'userId': USER,
-        'maxResults': 50
-      });
-      request.execute( callback );
-    };
-
-    // logs message info out for dev checking
-    this.logMessage = function (gmailObj) {
-      // console.log( gmailObj );
-      var parsed = _gAPI.parseMessage(gmailObj);
-      console.log( parsed );
-      // console.log(
-      //   '=======\n'+
-      //   'New message\n'+
-      //   'ID: ' + parsed.id + '\n'+
-      //   'Size: ' + parsed.size + '\n'+
-      //   'Subject: ' + parsed.subject + '\n'+
-      //   'From: ' + parsed.from + '\n'+
-      //   'Date: ' + parsed.date + '\n'+
-      //   '======='+
-      //   '\n\n>>>>>' + parsed.plain + '<<<<<\n'
-      // );
-    };
-
-    // convert a gapi-delivered email object to a more js-convenient form
+    // Convert a gapi-delivered email object to a more consistent form.
     this.parseMessage = function parseMessage (gmailObj) {
-      // console.log( gmailObj );
       var parsed = {};
-      // header-based values require conversion for easy access.
+      // Header-based values require conversion for easy access.
       function getHeaders (gmailObj) {
-        // headers delivered as unsorted array of objs w 'name' and 'val' keys.
+        // Headers delivered as unsorted array of objs w 'name' and 'val' keys;
         // converting to a single hash with name:val properties.
-        // collision doesn't matter as we only need unique from/to/etc.
+        // Collision doesn't matter as we only need unique from/to/etc.
         function convert (output, header) {
           output[ header.name ] = header.value;
           return output;
@@ -149,42 +126,65 @@ angular.module('gnittyApp')
       }
       var headers    = getHeaders( gmailObj );
       parsed.from    = headers.From;
-      parsed.date    = new Date( headers.Date );
       parsed.subject = headers.Subject;
-      // directly-accessible values:
+      parsed.date    = new Date( headers.Date );
+      // Directly-accessible values:
       parsed.id      = gmailObj.id;
-      parsed.size    = gmailObj.sizeEstimate;
       parsed.labels  = gmailObj.labelIds;
-      // Get the actual message body as base-64 plaintext:
+      parsed.size    = gmailObj.sizeEstimate;
+      // Find the actual message body in base-64 plaintext, depending on MIME:
       function b64text () {
-        switch ( gmailObj.payload.mimeType ) {
+        var raw = gmailObj.payload;
+        switch ( raw.mimeType ) {
           case 'text/plain':
-            return gmailObj.payload.body.data;
+            return raw.body.data;
           case 'multipart/alternative':
-            return gmailObj.payload.parts[0].body.data;
+            return raw.parts[0].body.data;
           case 'multipart/mixed':
-            if ( gmailObj.payload.parts[0].parts ) {
-              return gmailObj.payload.parts[0].parts[0].body.data;
-            } else {
-              return '';
-            } break;
+            return raw.parts[0].parts ? raw.parts[0].parts[0].body.data : '';
           case 'multipart/related':
-            if ( gmailObj.payload.parts[0].parts ) {
-              return gmailObj.payload.parts[0].parts[0].body.data;
-            } else {
-              return '';
-            } break;
+            return raw.parts[0].parts ? raw.parts[0].parts[0].body.data : '';
           default: {
-            console.log('unhandled MIME type: ' + gmailObj.payload.mimeType);
-            console.log( gmailObj );
+            console.log('unhandled MIME type: ' + raw.mimeType, gmailObj);
             return '';
           }
         }
       }
-      // convert b64text to UTF-8
+      // Convert to UTF-8 using injected b64 front-end service:
       parsed.plain = b64.decode( b64text() );
-      // email parsing complete
+      // Email parsing complete.
       return parsed;
+    };
+
+
+    /*----------------------------------------------------------
+    Convenience methods for building requests or logging objects
+    ----------------------------------------------------------*/
+
+    // Build a GAPI single-message request (by ID) to be executed later.
+    // Response's .result property is a JSON tree (which I call 'gmailObj').
+    // gapi requests can be run via .execute(callback) or .then(handler).
+    this.buildMessageReqFor = function (id) {
+      var request = gapi.client.gmail.users.messages.get({
+        'userId' : USER,
+        'id' : id
+      });
+      return request;
+    };
+
+    // Execute a callback on a messages list request. Response has .messages.
+    this.onMessages = function (callback) {
+      var request = gapi.client.gmail.users.messages.list({
+        'userId': USER,
+        'maxResults': 50
+      });
+      request.execute( callback );
+    };
+
+    // Message info logger for dev checking.
+    this.logMessage = function (gmailObj) {
+      var parsed = _gAPI.parseMessage(gmailObj);
+      console.log( gmailObj, parsed );
     };
 
   }]);
