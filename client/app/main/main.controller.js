@@ -25,6 +25,9 @@ angular.module('gnittyApp')
     // show stored data
     $scope.showEmails = function() {
       console.log('data stored in email service:', emails.data);
+      var dateArray = emails.getDates();
+      console.log(dateArray);
+      var textArray = emails.getBody();
     };
 
     $scope.allEmailBodies = 'AGREEEDD! DAMN YOU CELEBRANTS OF COLUMBUS DAY!!!!!!!!!!! DAMN YOU TO HELL!!!!!! :-D';
