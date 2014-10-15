@@ -18,8 +18,8 @@ angular.module('gnittyApp')
     };
 
     // fetch emails and store in email service
-    $scope.checkAuthThenFetch = function() {
-      gAPI.checkAuthThenFetch();
+    $scope.fetch = function() {
+      gAPI.fetch();
     };
 
     // show stored data
