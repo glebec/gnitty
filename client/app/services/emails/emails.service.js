@@ -8,7 +8,6 @@ angular.module('gnittyApp')
       var dateArr = [];
       for (var id in this.data) {
         dateArr.push(this.data[id].date);
-        // console.log(dateArr);
       }
       return dateArr;
     };
@@ -17,6 +16,6 @@ angular.module('gnittyApp')
       for (var id in this.data) {
         textArr.push(this.data[id].plain);
       }
-    return textArr;
-    }
+      return textArr;
+    };
   });
