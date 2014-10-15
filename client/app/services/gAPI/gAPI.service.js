@@ -156,6 +156,7 @@ angular.module('gnittyApp')
       parsed.size    = gmailObj.sizeEstimate;
       parsed.labels  = gmailObj.labelIds;
       // Get the actual message body as base-64 plaintext:
+      console.log(gmailObj);
       function b64text () {
         switch ( gmailObj.payload.mimeType ) {
           case 'text/plain':

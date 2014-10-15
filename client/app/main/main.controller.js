@@ -25,15 +25,15 @@ angular.module('gnittyApp')
     // show stored data
     $scope.showEmails = function() {
       console.log('data stored in email service:', emails.data);
-      var dateArray = emails.getDates();
-      console.log(dateArray);
-      var textArray = emails.getBody();
+      $scope.dateArray = emails.getDates();
+      console.log($scope.dateArray);
+      $scope.text = emails.getBody().join("");
     };
 
     $scope.allEmailBodies = 'AGREEEDD! DAMN YOU CELEBRANTS OF COLUMBUS DAY!!!!!!!!!!! DAMN YOU TO HELL!!!!!! :-D';
 
     $scope.postIt = function () {
-      postAlchemy.sendToAlchemy($scope.allEmailBodies, function(analysis) {
+      postAlchemy.sendToAlchemy($scope.text, function(analysis) {
         console.log(analysis);
         var save = function(analysis) {
           $http.post('/api/stats', {
