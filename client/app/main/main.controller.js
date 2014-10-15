@@ -27,7 +27,7 @@ angular.module('gnittyApp')
       console.log('data stored in email service:', emails.data);
       $scope.dateArray = emails.getDates();
       console.log($scope.dateArray);
-      $scope.text = emails.getBody().join("");
+      $scope.text = emails.getBody().join('');
     };
 
     $scope.allEmailBodies = 'AGREEEDD! DAMN YOU CELEBRANTS OF COLUMBUS DAY!!!!!!!!!!! DAMN YOU TO HELL!!!!!! :-D';
@@ -46,7 +46,7 @@ angular.module('gnittyApp')
           });
         };
         save(analysis);
-        console.log('saving...')
+        console.log('saving...');
       });
     };
 
