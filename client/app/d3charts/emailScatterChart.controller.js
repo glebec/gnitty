@@ -1,7 +1,7 @@
-'use strict'
+'use strict';
 
 angular.module('gnittyApp')
-  .controller('emailScatterChartCtrl', ['$scope', '$http', 'Auth', function($scope, $http, Auth, User){
+  .controller('emailScatterChartCtrl', ['$scope', '$http', 'Auth', function($scope, $http, Auth){
 
     $scope.currentUser = Auth.getCurrentUser();
     console.log($scope.currentUser);
@@ -10,7 +10,13 @@ angular.module('gnittyApp')
         $scope.statistics = data;
         }).success(function(){
 
-$scope.options = {
+      $scope.xAxisTickFormatFunction = function(){
+          return function(d){
+            return d3.time.format('%x')(new Date(d));
+          }
+      }
+
+      $scope.options = {
             chart: {
                 type: 'scatterChart',
                 height: 450,
@@ -24,28 +30,27 @@ $scope.options = {
                     return '<h3>' + key + '</h3>';
                 },
                 transitionDuration: 1000,
+                x: function(d, i) {
+                  return new Date(d.x)},
                 xAxis: {
                     axisLabel: 'Time',
-                    tickFormat: function(d){
-                        return d3.format('.02f')(d);
-                    }
+                    tickFormat: $scope.xAxisTickFormatFunction()
                 },
                 yAxis: {
                     axisLabel: '',
-                    tickFormat: function(d){
-                        return d3.format('.02f')(d);
-                    },
+                    tickFormat: "",
                     axisLabelDistance: 30
                 }
             }
-        };
+          };
+
 
 //replace 10,000 with $scope.totalEmails
-        $scope.data = generateData(1,10000);
+        $scope.data = generateData(1,$scope.statistics[0].dateArray.length);
 
 //needs 2 inputs here
-$scope.totalEmails;
-$scope.emailDate = [];
+// $scope.totalEmails = $scope.statistics[0].dateArray.length;
+// $scope.emailDate = $scope.statistics[0].dateArray;
 
         /* Random Data Generator (took from nvd3.org) */
         function generateData(groups, points) {
@@ -62,9 +67,9 @@ $scope.emailDate = [];
 
                 for (var j = 0; j < points; j++) {
                     data[i].values.push({
-                        x: $scope.statistics[0].keywords[j].text //email date here
+                        x: $scope.statistics[0].dateArray[j]//email date here
                         , y: random() //can keep this as random
-                        , size: $scope.statistics[0].keywords[j].relevance
+                        , size: 0.1
                         , shape: shapes[j % 6]
                     });
                 }

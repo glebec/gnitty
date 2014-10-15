@@ -10,7 +10,7 @@ angular.module('gnittyApp')
         $scope.statistics = data;
         }).success(function(){
       console.log($scope.statistics[0].keywords.length)
-     $scope.options = {
+      $scope.options = {
                 chart: {
                     type: 'scatterChart',
                     height: 1000,
@@ -26,19 +26,15 @@ angular.module('gnittyApp')
                     transitionDuration: 1000,
                     xAxis: {
                         axisLabel: '',
-                        tickFormat: function(d){
-                            return d3.format('.02f')(d);
-                        }
+                        tickFormat: ""
                     },
                     yAxis: {
                         axisLabel: '',
-                        tickFormat: function(d){
-                            return d3.format('.02f')(d);
-                        },
+                        tickFormat: "",
                         axisLabelDistance: 30
                     }
                 }
-            }
+            };
 
             $scope.data = generateData(1, $scope.statistics[0].keywords.length);
 
@@ -56,7 +52,7 @@ angular.module('gnittyApp')
                     });
                         data[i].values.push({
                             x: i+.2,
-                            y: i+.2,
+                            y: random,
                             size: $scope.statistics[0].keywords[i].relevance,
                             shape: shapes[i % 6]
                         });

@@ -5,6 +5,7 @@ var mongoose = require('mongoose'),
 
 var StatsSchema = new Schema({
   date: Date,
+  dateArray: {},
   user: {
     _id: String
     },
