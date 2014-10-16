@@ -1,33 +1,7 @@
-  <div style="background-color:#fafafa">
-    <div class="navbar navbar-default">
-      <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand withripple" href="javascript:void(0)">gNitty<div class="ripple-wrapper"></div></a>
-      </div>
-      <div class="navbar-collapse collapse navbar-responsive-collapse">
-          <ul class="nav navbar-nav">
-            <li ng-repeat="item in menu" ng-class="{active: isActive(item.link)}">
-                <a ng-href="{{item.link}}">{{item.title}}</a>
-            </li>
-            <li ng-show="isAdmin()" ng-class="{active: isActive('/admin')}"><a href="/admin">Admin</a></li>
-            <li ng-hide="isLoggedIn()" ng-class="{active: isActive('/login')}"><a href="/login">Login</a></li>
-            <li ng-hide="isLoggedIn()" ng-class="{active: isActive('/signup')}"><a href="/signup">Register</a></li>
-          </ul>
+    
+<div ng-include="'components/navbar/navbar.html'"></div>
 
-          <ul class="nav navbar-nav navbar-right">
-            <li><a href='/loading'>Loading Page</a></li>
-            <li><a href='/dashboard'>Dashboard Preview</a></li>
-            <li ng-show="isLoggedIn()"><p class="navbar-text">Hello {{ getCurrentUser().name }}</p> </li>
-            <li ng-show="isLoggedIn()" ng-class="{active: isActive('/settings')}"><a href="/settings"><span class="glyphicon glyphicon-cog"></span></a></li>
-            <li ng-show="isLoggedIn()" ng-class="{active: isActive('/logout')}"><a href="" ng-click="logout()">Logout</a></li>
-          </ul>
-      </div>
-  </div>
-  <div>
+  <div class='row'>
       <div class="container center animated rollIn" id='landingText'>
       <h1>gNitify your Gmail!</h1>
       <p class="lead">
@@ -35,8 +9,8 @@
         See what words and tones you employ most often.<br />
         Keep track of friends you haven't heard from in a while.</p>
       </div>
-      <img class='animated rotateInUpRight' src='http://s28.postimg.org/55p2hmol9/gmailicons.png' id='gmailIcon'/>
-</div>
+      <img class='imgMail animated rotateInUpRight' src='http://s28.postimg.org/55p2hmol9/gmailicons.png' id='gmailIcon'/>
+  </div>
 
   <div class='divider'></div>
 
@@ -95,7 +69,6 @@
                   <br />
                    <img class='displayed' src='http://s7.postimg.org/xbb85ehfv/email_icon.png' style="width:150px; height:150px"/>
                   <br />
-                  <br />
                   <p>Get data on hourly and weekly volume. Find out which friends you haven't
                     contacted in a long time. See metrics on average response time, most frequently
                     used words and phrases, email length as well as common subject lines, greetings
@@ -114,7 +87,6 @@
               <div class="panel-body">
                   <br />
                    <img class='displayed' src='http://s27.postimg.org/so4xck8wj/security_user_shield_icon.png' style="width:150px; height:150px"/>
-                  <br />
                   <br />
                   <p>gNitty is a secure service run on the "No Assholery" rule.  
                   gNitty does not store your emails or share your information with third parties.
