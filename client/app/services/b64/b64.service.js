@@ -13,6 +13,7 @@ angular.module('gnittyApp')
     // string replacement for url-safe decoding as per gmail API docs
     // decodeURI + deprecated escape is a hacky way to do UTF-8 conversion
     this.decode = function decode (str) {
+      str = str || '';
       str = str.replace(/_/g, '/').replace(/-/g, '+');
       return decodeURIComponent( escape( decoder(str) ) );
     };

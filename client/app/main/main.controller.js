@@ -26,7 +26,7 @@ angular.module('gnittyApp')
     $scope.showEmails = function() {
       console.log('data stored in email service:', emails.data);
       $scope.dateArray = emails.getDates();
-      console.log($scope.dateArray);
+      // console.log($scope.dateArray);
       $scope.text = emails.getBody().join('');
     };
 
