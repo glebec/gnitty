@@ -35,6 +35,14 @@ angular.module('gnittyApp')
     $scope.postIt = function () {
       postAlchemy.sendToAlchemy($scope.text, function(analysis) {
         console.log(analysis);
+        for (var i=0; i<analysis.keywords.length; i++) {
+          if (analysis.keywords.length>40) {
+            analysis.keywords.pop();
+          }
+          if (analysis.keywords[i].text.length>15) {
+            analysis.keywords[i].text = analysis.keywords[i].text.slice(0, 15);
+          };
+        };
         var save = function(analysis) {
           $http.post('/api/stats', {
             user: {
