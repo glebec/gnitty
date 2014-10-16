@@ -71,7 +71,7 @@ angular.module('gnittyApp')
     };
 
     // Generic authorization method grants Gmail API access to a callback.
-    this.checkAuthAndExecute = function (callback) {
+    this.checkAuthAndExecute = function checkAuthAndExecute (callback) {
       gapi.auth.authorize({
         'client_id': CLIENT_ID,
         'scope': SCOPES,
@@ -93,38 +93,56 @@ angular.module('gnittyApp')
     // To be called from the generic checkAuthAndExecute method above.
     // Fetches message IDs, then batch requests actual messages,
     // then parses them and sends them to the injected 'emails' service.
-    this.collectEmails = function () {
+    this.collectEmails = function collectEmails () {
 
-      _gAPI.requestMessageIds(100).then(
-        function handleIds (resp) {
-          var messages = resp.result.messages;
+      _gAPI.requestMessageIds( 100 )
+        .then( listSuccess, listFail );
 
-          _gAPI.batchRequest(messages).then(
-            function handleBatch (resp) {
-              console.log('Emails fetched, parsing now.');
-              var responses = resp.result;
-              // get gmails, parse and store in 'emails' AJS service
-              for (var id in responses) {
-                var gmailObj = responses[id].result;
-                emails.data[id] = _gAPI.parseMessage(gmailObj);
-              }
-              console.log('Emails parsed and stored.');
-            },
-            function failedBatch (reason) {
-              console.log('Batch error: ', reason);
-            }
-          );
+      // handler for successful response to message ID list request
+      function listSuccess (response) {
+        console.log( 'Retrieved list of emails, requesting now.' );
+        _gAPI.batchRequest( response.result.messages )
+          .then( batchSuccess, batchFail );
+      }
 
-        },
-        function failedIds (reason) {
-          console.log('Message IDs request failed: ', reason);
+      // handler for successful response to batched messages request
+      function batchSuccess (response) {
+        console.log( 'Emails fetched, parsing now.' );
+        var responses = response.result;
+        var counter = 0;
+        // get gmails, parse and store in 'emails' AJS service
+        for (var id in responses) {
+          var gmailObj = responses[id].result;
+          emails.data[id] = _gAPI.parseMessage(gmailObj);
+          counter++;
         }
-      );
+        console.log( counter + ' emails parsed and stored.' );
+      }
 
+      // error response handlers
+      function listFail (reason) {
+        console.log( 'Message IDs request failed: ', reason );
+      }
+      function batchFail (reason) {
+        console.log( 'Batch error: ', reason );
+      }
     };
 
-    // Convert a gapi-delivered email object to a more consistent form.
-    this.parseMessage = function (gmailObj) {
+    // Batch builder, specific to message requests based on IDs.
+    // Not generic enough to qualify as a convenience method, abstracted
+    // out for clarity's sake.
+    this.batchRequest = function batchRequest (messages) {
+      var batch = gapi.client.newBatch();
+      for (var i = 0; i < messages.length; i++) {
+        var id = messages[i].id;
+        var request = _gAPI.requestMessageById( id );
+        batch.add( request, {id: id} );
+      }
+      return batch;
+    };
+
+    // Convert a gapi-delivered email object to a simpler form.
+    this.parseMessage = function parseMessage (gmailObj) {
       var parsed = {};
       // Header-based values require conversion for easy access.
       function getHeaders (gmailObj) {
@@ -158,7 +176,7 @@ angular.module('gnittyApp')
           case 'multipart/related':
             return raw.parts[0].parts ? raw.parts[0].parts[0].body.data : '';
           default: {
-            console.log('unhandled MIME type: ' + raw.mimeType, gmailObj);
+            console.log( 'Gnitty ignores body of ' + raw.mimeType, gmailObj );
             return '';
           }
         }
@@ -169,19 +187,6 @@ angular.module('gnittyApp')
       return parsed;
     };
 
-    // Batch builder, specific to message requests based on IDs.
-    // Not generic enough to qualify as a convenience method, abstracted
-    // out for clarity's sake.
-    this.batchRequest = function (messages) {
-      var batch = gapi.client.newBatch();
-      for (var i = 0; i < messages.length; i++) {
-        var id = messages[i].id;
-        var request = _gAPI.requestMessageById( id );
-        batch.add( request, {id: id} );
-      }
-      return batch;
-    };
-
 
     /*-------------------------------------------------------
     Generic methods for building requests or logging objects.
@@ -190,7 +195,7 @@ angular.module('gnittyApp')
 
     // Build a GAPI single-message request (by ID) to be executed later.
     // Response's .result property is a JSON tree (which I call 'gmailObj').
-    this.requestMessageById = function (id) {
+    this.requestMessageById = function requestMessageById (id) {
       return gapi.client.gmail.users.messages.get({
         'userId' : USER,
         'id' : id
@@ -199,11 +204,11 @@ angular.module('gnittyApp')
 
     // Build a partial GAPI request for message IDs. Thread ids &c. ignored.
     // Response has .result.messages, each message has .id.
-    this.requestMessageIds = function (limit) {
+    this.requestMessageIds = function requestMessageIds (limit) {
       return gapi.client.gmail.users.messages.list({
         'userId' : USER,
-        'maxResults' : limit
-        //'fields' : 'messages/id'
+        'maxResults' : limit,
+        'fields' : 'messages/id'
       });
     };
 
@@ -219,9 +224,9 @@ angular.module('gnittyApp')
     }
 
     // Message info logger for dev checking.
-    this.logMessage = function (gmailObj) {
+    function logMessage (gmailObj) {
       var parsed = _gAPI.parseMessage(gmailObj);
       console.log( gmailObj, parsed );
-    };
+    }
 
   }]);
