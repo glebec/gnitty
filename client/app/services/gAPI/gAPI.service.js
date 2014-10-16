@@ -105,7 +105,7 @@ angular.module('gnittyApp')
 
       // Get a list of message IDs, optionally starting from a given page
       function startCollecting ( fromPage ) {
-        console.log( 'Getting list of emails from #' + getCount );
+        console.log( 'Requesting list of emails >>>>>>' );
         _gAPI.requestMessageIds( fromPage )
           .then( listSuccess, listFail );
       }
@@ -118,14 +118,14 @@ angular.module('gnittyApp')
           startCollecting( response.result.nextPageToken );
         }
         // in the meantime, begin fetching actual messages for this list
-        console.log( '>>>>> Received new list of emails; fetching.');
+        console.log( '>>>>>> Received new list of emails; fetching.');
         _gAPI.batchRequest( response.result.messages )
           .then( batchSuccess, batchFail );
       }
 
       // handler for successful response to batched messages request
       function batchSuccess (response) {
-        console.log( '========\nFetched emails; now parsing.' );
+        console.log( '________\nFetched emails; now parsing.' );
         var responses = response.result;
         // get gmails, parse and store in 'emails' AJS service
         for ( var id in responses ) {
@@ -136,7 +136,7 @@ angular.module('gnittyApp')
             emails.data[id] = parsed;
           }
         }
-        console.log( doneCount + ' total parsed & stored.\n========' );
+        console.log( doneCount + ' total parsed & stored.\n^^^^^^^^' );
       }
 
       // error response handlers
@@ -149,8 +149,7 @@ angular.module('gnittyApp')
     };
 
     // Batch builder, specific to message requests based on IDs.
-    // Not generic enough to qualify as a convenience method, abstracted
-    // out for clarity's sake.
+    // Abstracted out for clarity's sake.
     this.batchRequest = function batchRequest (messages) {
       var batch = gapi.client.newBatch();
       for (var i = 0; i < messages.length; i++) {
@@ -197,13 +196,16 @@ angular.module('gnittyApp')
           case 'multipart/related':
             return raw.parts[0].parts ? raw.parts[0].parts[0].body.data : '';
           default: {
-            console.log( 'Gnitty ignores body of ' + raw.mimeType );
+            console.log( raw.mimeType + ' body currently ignored' );
             return '';
           }
         }
       }
       // Convert to UTF-8 using injected b64 front-end service:
       parsed.plain = b64.decode( b64text() );
+      // Only use lines NOT beginning with '>' (i.e., CCs in replies) or \n
+      parsed.plain = parsed.plain.match(/^[^>\n].*/gm);
+      parsed.plain = parsed.plain ? parsed.plain.join() : '';
       // Email parsing complete.
       return parsed;
     };
@@ -226,7 +228,7 @@ angular.module('gnittyApp')
     // Build a partial GAPI request for message IDs. Thread ids &c. ignored.
     // Response has .result.messages, each message has .id.
     // Server seems to hard-code maxResults at 100, ignores higher.
-    // 'q' query field works like gmail search box; filtering out chats
+    // 'q' query field works like gmail search box. Filtering out chats.
     this.requestMessageIds = function requestMessageIds (page) {
       var params = {
         'userId' : USER,
