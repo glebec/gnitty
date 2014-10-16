@@ -4,7 +4,7 @@ angular.module('gnittyApp')
   .controller('emailScatterChartCtrl', ['$scope', '$http', 'Auth', function($scope, $http, Auth){
 
     $scope.currentUser = Auth.getCurrentUser();
-    console.log($scope.currentUser);
+
     $http.get('/api/stats/foruser/'+ $scope.currentUser._id).
       success(function(data) {
         $scope.statistics = data;
@@ -61,7 +61,7 @@ angular.module('gnittyApp')
             for (var i = 0; i < groups; i++) {
                 data.push({
                     //insert date here
-                    key: 'Email from ' + i,
+                    key: 'Email from ' + $scope.statistics[0].dateArray[i],
                     values: []
                 });
 

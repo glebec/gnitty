@@ -26,14 +26,20 @@ angular.module('gnittyApp')
     $scope.showEmails = function() {
       console.log('data stored in email service:', emails.data);
       $scope.dateArray = emails.getDates();
-      // console.log($scope.dateArray);
-      $scope.text = emails.getBody().join('');
+      console.log("dates length: ", $scope.dateArray.length);
     };
 
-    // $scope.allEmailBodies = 'AGREEEDD! DAMN YOU CELEBRANTS OF COLUMBUS DAY!!!!!!!!!!! DAMN YOU TO HELL!!!!!! :-D';
+    $scope.getText = function() {
+      // for (var i=0; i<$scope.text.length; i++) {
+      debugger;
+      $scope.joinText = emails.getBody().join('');
+      console.log($scope.joinText.length);
+      // };
+      return $scope.joinText;
+    };
 
     $scope.postIt = function () {
-      postAlchemy.sendToAlchemy($scope.text, function(analysis) {
+      postAlchemy.sendToAlchemy($scope.getText(), function(analysis) {
         console.log(analysis);
         for (var i=0; i<analysis.keywords.length; i++) {
           if (analysis.keywords.length>40) {

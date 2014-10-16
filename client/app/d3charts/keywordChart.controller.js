@@ -13,7 +13,7 @@ angular.module('gnittyApp')
       $scope.options = {
                 chart: {
                     type: 'scatterChart',
-                    height: 1000,
+                    height: 600,
                     color: d3.scale.category10().range(),
                     scatter: {
                         onlyCircles: true
@@ -47,12 +47,12 @@ angular.module('gnittyApp')
                 for (var i = 0; i < points; i++) {
                     data.push({
                         key: $scope.statistics[0].keywords[i].text,
-                        label: 'keyword',
+                        label: $scope.statistics[0].keywords[i].text,
                         values: []
                     });
                         data[i].values.push({
                             x: i+.2,
-                            y: random,
+                            y: random(),
                             size: $scope.statistics[0].keywords[i].relevance,
                             shape: shapes[i % 6]
                         });
