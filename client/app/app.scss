@@ -1,6 +1,11 @@
 $icon-font-path: "/bower_components/bootstrap-sass-official/vendor/assets/fonts/bootstrap/";
 $fa-font-path: "/bower_components/font-awesome/fonts";
 
+@import 'main/main.scss';
+@import url(http://fonts.googleapis.com/css?family=Roboto:400,300italic,300,100italic,500,400italic,700,500italic,700italic);
+@import url(http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz:400,700,300,200);
+@import url(http://fonts.googleapis.com/css?family=Lato:400,700);
+@import url("//netdna.bootstrapcdn.com/bootstrap/3.0.0-rc2/css/bootstrap-glyphicons.css");
 @import 'bootstrap-sass-official/vendor/assets/stylesheets/bootstrap';
 @import 'font-awesome/scss/font-awesome';
 

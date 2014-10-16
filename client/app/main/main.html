@@ -1,32 +1,96 @@
+    
 <div ng-include="'components/navbar/navbar.html'"></div>
 
-<header class="hero-unit" id="banner">
-  <div class="container">
-    <h1>'Allo, 'Allo!</h1>
-    <p class="lead">Gnitify your gmail</p>
-    <p class="lead">Watch your email habits as they trend over time.</p>
-    <p class="lead">See what words and tones you employ most often.</p>
-    <p class="lead">Keep track of friends you haven't heard from in a while.</p>
-    <img src="assets/images/yeoman.png" alt="I'm Yeoman">
+  <div class='row'>
+      <div class="container center animated rollIn" id='landingText'>
+      <h1>gNitify your Gmail!</h1>
+      <p class="lead">
+        Watch your email habits as they trend over time.<br />
+        See what words and tones you employ most often.<br />
+        Keep track of friends you haven't heard from in a while.</p>
+      </div>
+      <img class='imgMail animated rotateInUpRight' src='http://s28.postimg.org/55p2hmol9/gmailicons.png' id='gmailIcon'/>
   </div>
-</header>
 
-<input type="button" ng-click="login()" value="Authorize user"/>
-<input type="button" ng-click="fetch()" value="Fetch emails">
-<input type="button" ng-click="showEmails()" value="List emails">
-<button ng-click="postIt()">POST</button>
-<button ng-click="sendMMS()">Send MMS</button>
+  <div class='divider'></div>
+
+      <div class='container center boxText'>
+        <h2>Login with Gmail</h2>
+        <hr>
+        <div class='row'>
+          <div class='col-sm-4 col-lg-4 center'>
+            <h3><p>Step 1</p></h3>
+            <button ng-click="login()" class='btn btn-primary btn-lg withripple'>Authorize User</button>
+            <br />
+            <button ng-click='checkAuthThenFetch()' class='btn btn-primary btn-lg withripple'>Fetch Messages</button>
+            <button ng-click='showEmails()' class='btn btn-primary btn-lg withripple'>List Messages</button>
+          </div>
+          <div class='col-sm-4 col-lg-4 center'>
+            <h3><p>Step 2</p></h3>
+          <button ng-click="postIt()" class='btn btn-primary btn-lg withripple'>POST</button>
+        </div>
+          <div class='col-sm-4 col-lg-4 center'>
+            <h3><p>Step 3</p></h3>
+           <button ng-click="sendMMS()" class='btn btn-primary btn-lg withripple'>Send MMS</button>
+
+         </div>
+        </div>
+        <br />
+      <p id="notice"><em><h5>Check Console</h5></em></p>
+      <br />
+      </div>
+
+  <div class='divider'>
+  </div>
+
+<br />
+<section>
+  <div class='row'>
+    <div class='col-sm-1 col-lg-1'></div>
+    <div class='col-sm-4 col-lg-4'>
+          <div class="panel panel-primary">
+              <div class="panel-heading">
+                  <h3 class="panel-title">Email Intelligence</h3>
+              </div>
+              <div class="panel-body">
+                  <br />
+                   <img class='displayed' src='http://s7.postimg.org/xbb85ehfv/email_icon.png' style="width:150px; height:150px"/>
+                  <br />
+                  <p>Get data on hourly and weekly volume. Find out which friends you haven't
+                    contacted in a long time. See metrics on average response time, most frequently
+                    used words and phrases, email length as well as common subject lines, greetings
+                    and closing.
+              </div>
+          </div>
+      </div>
 
 
-<!-- <script type="text/javascript">
-  var gmail = Gmail();
-  console.log(gmail.get.user_email());
-</script> -->
+<div class='col-sm-2 col-lg-2'></div>
+   <div class='col-sm-4 col-lg-4'>
+            <div class="panel panel-primary">
+              <div class="panel-heading">
+                  <h3 class="panel-title">Free, Easy & Secure</h3>
+              </div>
+              <div class="panel-body">
+                  <br />
+                   <img class='displayed' src='http://s27.postimg.org/so4xck8wj/security_user_shield_icon.png' style="width:150px; height:150px"/>
+                  <br />
+                  <p>gNitty is a secure service run on the "No Assholery" rule.
+                  gNitty does not store your emails or share your information with third parties.
+                  Our product will always be free.
+              </div>
+          </div>
+      </div>
 
-<footer>
-  <p> gNitty is a secure service run on the "No Assholery" rule.  gNitty does not store your emails or share your information with third parties.  It's free, and it always will be.</p>
+  <div class='col-sm-1 col-lg-1'></div>
 
-  <p>Copyright Ginna Baker, Gabriel Lebec, and Tayyab Shaikh 2014.</p>
-</footer>
+  </div>
+  <section>
+
+<br />
+<br />
+
+<div ng-include="'components/footer/footer.html'"></div>
+
 
 
