@@ -14,29 +14,16 @@
 
   <div class='divider'></div>
 
-<!-- <div ng-include="'components/navbar/navbar.html'"></div>
-
-<header class="hero-unit" id="banner">
-  <div class="container center" id='landingText'>
-    <h1>gNitify your Gmail!</h1>
-    <p class="lead">
-      Watch your email habits as they trend over time.<br />
-      See what words and tones you employ most often.<br />
-      Keep track of friends you haven't heard from in a while.</p>
-    </div>
-  </div>
-</header>
- -->
-
       <div class='container center boxText'>
         <h2>Login with Gmail</h2>
         <hr>
         <div class='row'>
           <div class='col-sm-4 col-lg-4 center'>
             <h3><p>Step 1</p></h3>
-            <button ng-click='login()' class='btn btn-primary btn-lg withripple'>Authorize User</button>
+            <button ng-click="login()" class='btn btn-primary btn-lg withripple'>Authorize User</button>
             <br />
-            <button ng-click='checkAuth()' class='btn btn-primary btn-lg withripple'>List Message IDs</button>
+            <button ng-click='checkAuthThenFetch()' class='btn btn-primary btn-lg withripple'>Fetch Messages</button>
+            <button ng-click='showEmails()' class='btn btn-primary btn-lg withripple'>List Messages</button>
           </div>
           <div class='col-sm-4 col-lg-4 center'>
             <h3><p>Step 2</p></h3>
@@ -46,7 +33,7 @@
             <h3><p>Step 3</p></h3>
            <button ng-click="sendMMS()" class='btn btn-primary btn-lg withripple'>Send MMS</button>
 
-         </div>     
+         </div>
         </div>
         <br />
       <p id="notice"><em><h5>Check Console</h5></em></p>
@@ -88,9 +75,9 @@
                   <br />
                    <img class='displayed' src='http://s27.postimg.org/so4xck8wj/security_user_shield_icon.png' style="width:150px; height:150px"/>
                   <br />
-                  <p>gNitty is a secure service run on the "No Assholery" rule.  
+                  <p>gNitty is a secure service run on the "No Assholery" rule.
                   gNitty does not store your emails or share your information with third parties.
-                  Our product will always be free.  
+                  Our product will always be free.
               </div>
           </div>
       </div>
