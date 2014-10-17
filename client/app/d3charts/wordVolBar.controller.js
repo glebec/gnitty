@@ -1,7 +1,9 @@
 ;'use strict';
 
 angular.module('gnittyApp')
-  .controller('wordVolBarCtrl', ['$scope', '$http', 'Auth', function($scope, $http, Auth, User){
+  .controller('wordVolBarCtrl', ['$scope', 'stats', function($scope, stats){
+
+    //TODO: Put data in stats
 
     // avg person typed = 41,638
     // 41,638/250 words per page = 166 pages

@@ -1,13 +1,9 @@
 'use strict';
 
 angular.module('gnittyApp')
-  .controller('sentPieChartCtrl', ['$scope', '$http', 'Auth', function($scope, $http, Auth, User){
+  .controller('sentPieChartCtrl', ['$scope', 'stats', function($scope, stats){
 //TODO: REPLACE Y VALUES WITH SENTIMENT VALUES
-    $http.get('/api/stats/foruser/'+ $scope.currentUser._id).
-      success(function(data) {
-        $scope.statistics = data;
-        }).success(function(){
-          console.log($scope.statistics)
+
   $scope.options = {
             chart: {
                 type: 'pieChart',
@@ -31,12 +27,12 @@ angular.module('gnittyApp')
         $scope.data = [
             {
                 key: "Positive",
-                y: 1 - $scope.statistics[0].sentiment.score
+                y: 1 - stats.data.sentiment.score
             },
             {
                 key: "Negative",
-                y: $scope.statistics[0].sentiment.score
+                y: stats.data.sentiment.score
             }
         ];
-    });
+
 }]);

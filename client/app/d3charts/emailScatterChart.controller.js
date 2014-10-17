@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('gnittyApp')
-  .controller('emailScatterChartCtrl', ['$scope', '$http', 'Auth', function($scope, stats){
+  .controller('emailScatterChartCtrl', ['$scope', 'stats', function($scope, stats){
 
       $scope.xAxisTickFormatFunction = function(){
           return function(d){

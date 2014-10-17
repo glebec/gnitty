@@ -1,15 +1,9 @@
 'use strict';
 
 angular.module('gnittyApp')
-  .controller('KeywordChartCtrl', ['$scope', '$http', 'Auth', function($scope, $http, Auth, User){
-
-    $scope.currentUser = Auth.getCurrentUser();
-//raw email scatter chart
-    $http.get('/api/stats/foruser/'+ $scope.currentUser._id).
-      success(function(data) {
-        $scope.statistics = data;
-        }).success(function(){
-      console.log($scope.statistics[0].keywords.length)
+  .controller('KeywordChartCtrl', ['$scope', 'stats', function($scope, stats){
+      console.log('stats.data :', stats.data);
+      console.log('number of keywords:', stats.data.keywords.length);
       $scope.options = {
                 chart: {
                     type: 'scatterChart',
@@ -36,7 +30,7 @@ angular.module('gnittyApp')
                 }
             };
 
-            $scope.data = generateData(1, $scope.statistics[0].keywords.length);
+            $scope.data = generateData(1, stats.data.keywords.length);
 
             /* Random Data Generator (took from nvd3.org) */
             function generateData (groups, points) {
@@ -46,18 +40,18 @@ angular.module('gnittyApp')
 
                 for (var i = 0; i < points; i++) {
                     data.push({
-                        key: $scope.statistics[0].keywords[i].text,
-                        label: $scope.statistics[0].keywords[i].text,
+                        key: stats.data.keywords[i].text,
+                        label: stats.data.keywords[i].text,
                         values: []
                     });
                         data[i].values.push({
                             x: i+.2,
                             y: random(),
-                            size: $scope.statistics[0].keywords[i].relevance,
+                            size: stats.data.keywords[i].relevance,
                             shape: shapes[i % 6]
                         });
                 }
                 return data;
             };
-          });
+
   }]);

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('gnittyApp')
-  .controller('sentiLineChartCtrl', ['$scope', '$http', 'Auth', function($scope, $http, Auth, User){
+  .controller('sentiLineChartCtrl', ['$scope', 'stats', function($scope, stats){
 
 $scope.options = {
             chart: {

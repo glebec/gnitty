@@ -12,7 +12,6 @@ angular.module('gnittyApp')
           outputMode: 'json'
           }).success(function(sent) {
             sentiment = sent;
-            console.log(sentiment);
             APIcall2(emails);
             });
         var APIcall2 = function(emails) {
@@ -21,7 +20,6 @@ angular.module('gnittyApp')
             outputMode: 'json'
           }).success(function(keyw) {
               keywords = keyw;
-              console.log(keywords.k);
               APIcall3(emails);
             });
         };
@@ -31,7 +29,6 @@ angular.module('gnittyApp')
           outputMode: 'json'
         }).success(function(conc) {
             concepts = conc;
-            console.log(concepts.c);
             cb({
               'sentiment': sentiment,
               'keywords': keywords.k,
