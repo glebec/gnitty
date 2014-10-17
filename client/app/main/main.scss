@@ -5,7 +5,7 @@ html {
 body {
     margin: 0 0 100px; /* bottom = footer height */
     font-family: 'Roboto', sans-serif;
-    background-color: #fafafa;
+    background-color: #eeeeee;
 }
 footer {
     position: absolute;
@@ -60,6 +60,14 @@ footer {
   Home
   ========================================
 */
+
+col-1-2 {
+  width: 50%;
+  display: inline-block;
+  vertical-align: top;
+  padding-left: 15px;
+  padding-right: 15px;
+}
 
 .divider {
     width: 100%;
@@ -141,10 +149,8 @@ box-shadow: 0px 0px 16px 0 rgba(41,128,185, 0.5);
 }
 
 .dashboardSection {
-  margin-left: 20px;
-  float: right;
-  margin: 0 1.5%;
-  width: 63%;
+  margin: 0 auto;
+  width: 90%;
   margin-bottom: 20px;
 }
 
@@ -154,6 +160,16 @@ box-shadow: 0px 0px 16px 0 rgba(41,128,185, 0.5);
 
 .table {
     width: 100%;
+}
+
+#profPic {
+  border-radius: 100%;
+  width: 75px;
+  height: 75px;
+}
+
+#analyticsTop {
+  font-size: 3em;
 }
 
 /*
@@ -167,6 +183,14 @@ box-shadow: 0px 0px 16px 0 rgba(41,128,185, 0.5);
     margin-left: auto;
     margin-right: auto;
 }
+
+
+/*
+  ========================================
+  Dial Selector
+  ========================================
+*/
+
 
 
 

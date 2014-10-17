@@ -1,104 +1,57 @@
 <div ng-include="'components/navbar/navbar.html'"></div>
 
-<header></header>
+<header>
+  <div class='well'>
+    <p id='analyticsTop'><img src='http://www.gravatar.com/avatar/224933c5d7e5171922237129e871a583?d=404&s=250' id='profPic'><span style='margin-right:1.5em'></span>Welcome to your analytics dashboard!</p>
+  </div>
+</header>
 
 <div class='group'>
-  <aside class='center dashboardAside'>
-    <div class='boxText'>
-      <br />
-      <h3>User.name</h3>
-      <hr>
-        <div class='barGraph'>
-            <img src='http://placehold.it/200x200'/>
-            <p>Profile Picture</p>
-          </div>  
-      <p>Placeholder for other stats</p>
-      <p>Placeholder for other stats</p>
-      <p>Placeholder for other stats</p>
-      <p>Placeholder for other stats</p>
-      <p>Placeholder for other stats</p>
+  
 
-    </div>
-
-    <div class='boxText'>
-      <br />
-      <h3>Side Nav Bar</h3>
-      <hr>
-      <br />
-      <div class="btn-group-vertical" style='width:85%'>
-          <a href="javascript:void(0)" class="btn btn-default withripple">Button<div class="ripple-wrapper"></div></a>
-          <a href="javascript:void(0)" class="btn btn-default withripple">Button<div class="ripple-wrapper"></div></a>
-          <a href="javascript:void(0)" class="btn btn-default withripple">Button<div class="ripple-wrapper"></div></a>
-          <a href="javascript:void(0)" class="btn btn-default withripple">Button<div class="ripple-wrapper"></div></a>
-      </div>
-    </div>
-  </aside>
-
-
-  <section class='dashboardSection center boxText'>
+  <section class='dashboardSection center boxText well'>
     <h3>Analytics Dashboard</h3>
     <hr>
     <br />
+
       <section>
-        <div class='row'>
-          <div class='barGraph'>
-            <img src='http://placehold.it/200x200'/>
-            <p>Daily Email Volume</p>
-          </div>
-          <div class='barGraph'>
-            <img src='http://placehold.it/200x200'/>
-            <p>Weekly Email Volume</p>
-          </div>
-          <div class='barGraph'>
-            <img src='http://placehold.it/200x200'/>
-            <p>Yearly Email Volume</p>
-          </div>   
-        </div>
-        <div class='row'>
-          <div class='barGraph'>
-            <img src='http://placehold.it/200x200'/>
-            <p>Vocabulary Variance</p>
-          </div>
-          <div class='barGraph'>
-            <img src='http://placehold.it/200x200'/>
-            <p>Most Emailed People</p>
-          </div>
-          <div class='barGraph'>
-            <img src='http://placehold.it/200x200'/>
-            <p>Most Ignored People</p>
-          </div>   
-        </div>
-        <div class='row'>
-          <div class='barGraph'>
-            <img src='http://placehold.it/200x200'/>
-            <p>Daily Email Volume</p>
-          </div>
-          <div class='barGraph'>
-            <img src='http://placehold.it/200x200'/>
-            <p>Daily Email Volume</p>
-          </div>
-          <div class='barGraph'>
-            <img src='http://placehold.it/200x200'/>
-            <p>Daily Email Volume</p>
-          </div>   
-        </div>
+        <div ng-controller="emailVolBarCtrl">
+   <h4>Inbox volume</h4>
+  <nvd3 options="options" data="data"></nvd3>
+</div>
+<div ng-controller="wordVolBarCtrl">
+  <h4>If your emails from this year were a novel, how long would it be?</h4>
+  <nvd3 options="options" data="data"></nvd3>
+</div>
+<div ng-controller="sentPieChartCtrl">
+  <h4>Your email tone is mostly:</h4>
+  <nvd3 options="options" data="data"></nvd3>
+</div>
+<div ng-controller="sentiLineChartCtrl">
+  <!-- <h4>Sentiment over time</h4> -->
+  <nvd3 options="options" data="data"></nvd3>
+</div>
+
+<div ng-controller='KeywordChartCtrl'>
+  <h4>Your top keywords</h4>
+  <nvd3 options="options" data="data"></nvd3>
+</div>
+
+
+<!--EMAIL SCATTER CHART -->
+<div ng-controller="emailScatterChartCtrl">
+  <h4>Your sent messages.  All of them.</h4>
+  <nvd3 options="options" data="data" xAxisTickFormat="xAxisTickFormatFunction()"></nvd3>
+</div>
+
+
     </section>
   </section>
 </div>
 <br />
 
 <div class='group'>
-  <aside class='boxText center dashboardAside'>
-      <h3>Random D3 Graph</h3>
-      <hr>
-      <br />
-       <div class='barGraph'>
-            <img src='http://placehold.it/200x200'/>
-        </div>
-
-      </aside>
-
-  <section class='dashboardSection center boxText'>
+  <section class='dashboardSection center boxText well'>
         <div class="page-header">
             <h3 id="tables">Data Tables</h3>
         </div>
@@ -155,7 +108,6 @@
   </section>
 </div>
 
-</div>
-
-
 <div ng-include="'components/footer/footer.html'"></div>
+
+
