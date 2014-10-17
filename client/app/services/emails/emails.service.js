@@ -4,12 +4,15 @@ angular.module('gnittyApp')
   .service('emails', function () {
     // AngularJS will instantiate a singleton by calling "new" on this function
     this.data = {};
-    this.getDates = function() {
-      var dateArr = [];
+    this.getDatesAndLengths = function() {
+      var dateLengthArr = [];
       for (var id in this.data) {
-        dateArr.push(this.data[id].date);
+        dateLengthArr.push({
+          date:this.data[id].date,
+          tlength:this.data[id].plain.length
+      });
       }
-      return dateArr;
+      return dateLengthArr;
     };
     this.getBody = function() {
       var textArr = [];

@@ -18,29 +18,35 @@ angular.module('gnittyApp')
                     onlyCircles: true
                 },
                 showDistX: true,
-                showDistY: false,
+                showDistY: true,
+                tooltip: true,
+                showLegend: false,
                 tooltipContent: function(key) {
                     return '<h3>' + key + '</h3>';
                 },
                 transitionDuration: 1000,
                 x: function(d, i) {
                   return new Date(d.x)},
-                fisheye: 1,
+                // fisheye: 1,
                 xAxis: {
                     axisLabel: 'Dates',
-                    tickFormat: $scope.xAxisTickFormatFunction()
+                    tickFormat: $scope.xAxisTickFormatFunction(),
+
                 },
                 yAxis: {
                     axisLabel: 'Times',
-                    tickFormat: "",
+                    tickFormat: function (d){
+                        return d3.format('.02f')(d);
+                    },
                     axisLabelDistance: 30
-                }
+                },
+                forceSize: 0
             }
           };
 
 
 //replace 10,000 with totalEmails
-        $scope.data = generateData(1, stats.data.dateArray.length);
+        $scope.data = generateData(1, stats.data.dateLengthArray.length);
 
 //needs 2 inputs here
 // $scope.totalEmails = $scope.statistics[0].dateArray.length;
@@ -52,23 +58,23 @@ angular.module('gnittyApp')
                 shapes = ['circle', 'cross', 'triangle-up', 'triangle-down', 'diamond', 'square'],
                 random = d3.random.normal();
 
-            for (var i = 0; i < groups; i++) {
+            for (var i = 0; i < points; i++) {
                 data.push({
                     //insert date here
-                    key: 'Email from ' + stats.data.dateArray[i],
+                    key: 'Email from ' + stats.data.dateLengthArray[i].date,
                     values: []
                 });
-
-                for (var j = 0; j < points; j++) {
-                    data[i].values.push({
-                        x: stats.data.dateArray[j]//email date here
-                        , y: random() //can keep this as random
-                        , size: 0.1
-                        , shape: shapes[j % 6]
-                    });
-                }
+            }
+            for (var j = 0; j < points; j++) {
+                data[j].values.push({
+                    x: stats.data.dateLengthArray[j].date//email date here
+                    , y: stats.data.dateLengthArray[j].date.slice(11, 13)+"."+stats.data.dateLengthArray[j].date.slice(14, 16)
+                    , size: stats.data.dateLengthArray[j].tlength
+                    , shape: shapes[j % 6]
+                });
             };
             return data;
         }
-
 }]);
+
+// data[{key: 'Email from _date_'; values: [{x:_date, y:_time, size:0.1, shape:whatever}]}]

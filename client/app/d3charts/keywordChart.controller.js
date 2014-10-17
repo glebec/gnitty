@@ -20,6 +20,7 @@ angular.module('gnittyApp')
                         return '<h3>' + key + '</h3>';
                     },
                     transitionDuration: 1000,
+                    forceSize: 0
                     // xAxis: {
                     //     axisLabel: '',
                     //     tickFormat: ""
@@ -52,7 +53,7 @@ angular.module('gnittyApp')
                             size: stats.data.keywords[i].relevance*5,
                             shape: shapes[i % 6]
                         });
-                console.log(stats.data.keywords[i].relevance);
+                // console.log(stats.data.keywords[i].relevance);
                 }
                 return data;
             };

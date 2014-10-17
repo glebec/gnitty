@@ -29,8 +29,8 @@ angular.module('gnittyApp')
     // show stored data
     $scope.showEmails = function() {
       console.log('data stored in email service:', emails.data);
-      $scope.dateArray = emails.getDates();
-      console.log("dates length: ", $scope.dateArray.length);
+      $scope.dateLengthArray = emails.getDatesAndLengths();
+      console.log("dates length: ", $scope.dateLengthArray.length);
     };
 
     $scope.getText = function() {
@@ -53,7 +53,7 @@ angular.module('gnittyApp')
             concepts: analysis.concepts,
             keywords: analysis.keywords,
             sentiment: analysis.sentiment,
-            dateArray: $scope.dateArray
+            dateLengthArray: $scope.dateLengthArray
           };
           stats.data = statObj;
           console.log('saved object: ', stats.data);
