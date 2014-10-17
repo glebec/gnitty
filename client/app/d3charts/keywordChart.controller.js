@@ -14,19 +14,21 @@ angular.module('gnittyApp')
                     },
                     showDistX: false,
                     showDistY: false,
+                    interactive: true,
+                    tooltips: true,
                     tooltipContent: function(key) {
                         return '<h3>' + key + '</h3>';
                     },
                     transitionDuration: 1000,
-                    xAxis: {
-                        axisLabel: '',
-                        tickFormat: ""
-                    },
-                    yAxis: {
-                        axisLabel: '',
-                        tickFormat: "",
-                        axisLabelDistance: 30
-                    }
+                    // xAxis: {
+                    //     axisLabel: '',
+                    //     tickFormat: ""
+                    // },
+                    // yAxis: {
+                    //     axisLabel: '',
+                    //     tickFormat: "",
+                    //     axisLabelDistance: 30
+                    // }
                 }
             };
 
@@ -47,9 +49,10 @@ angular.module('gnittyApp')
                         data[i].values.push({
                             x: i+.2,
                             y: random(),
-                            size: stats.data.keywords[i].relevance,
+                            size: stats.data.keywords[i].relevance*5,
                             shape: shapes[i % 6]
                         });
+                console.log(stats.data.keywords[i].relevance);
                 }
                 return data;
             };

@@ -25,12 +25,13 @@ angular.module('gnittyApp')
                 transitionDuration: 1000,
                 x: function(d, i) {
                   return new Date(d.x)},
+                fisheye: 1,
                 xAxis: {
-                    axisLabel: 'Time',
+                    axisLabel: 'Dates',
                     tickFormat: $scope.xAxisTickFormatFunction()
                 },
                 yAxis: {
-                    axisLabel: '',
+                    axisLabel: 'Times',
                     tickFormat: "",
                     axisLabelDistance: 30
                 }

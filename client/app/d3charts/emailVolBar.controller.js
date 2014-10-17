@@ -21,9 +21,9 @@ angular.module('gnittyApp')
             },
             x: function(d){return d.label;},
             y: function(d){return d.value;},
-            // showValues: true,
+            showValues: true,
             valueFormat: function(d){
-                return d3.format(',.0f')(d);
+                return d3.format(',f')(d);
             },
             transitionDuration: 1000
             // xAxis: {

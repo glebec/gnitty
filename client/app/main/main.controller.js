@@ -46,7 +46,7 @@ angular.module('gnittyApp')
             analysis.keywords.pop();
           }
           if (analysis.keywords[i].text.length>15) {
-            analysis.keywords[i].text = analysis.keywords[i].text.slice(0, 15);
+            analysis.keywords[i].text = analysis.keywords[i].text.slice(0, 15)+"…";
           }
         }
           var statObj = {
