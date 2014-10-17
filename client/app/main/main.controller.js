@@ -7,6 +7,10 @@ angular.module('gnittyApp')
     // initialize google api in case already signed in, etc. TODO: fix this
     // gAPI.handleClientLoad();
 
+    // DEV TESTING ONLY, REMOVE BEFORE DEPLOYMENT
+    $scope.setLocal = function () { emails.setLocal() };
+    $scope.getLocal = function () { emails.getLocal() };
+
     // Scope wires together ng-click login call to google API service
     // gAPI.login() returns a promise which resolves with .then()
     // data returned currently contains an email property with user's address
