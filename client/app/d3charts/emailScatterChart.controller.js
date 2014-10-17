@@ -26,7 +26,7 @@ angular.module('gnittyApp')
                 x: function(d, i) {
                   return new Date(d.x)},
                 xAxis: {
-                    axisLabel: 'Time',
+                    axisLabel: 'Date',
                     tickFormat: $scope.xAxisTickFormatFunction()
                 },
                 yAxis: {

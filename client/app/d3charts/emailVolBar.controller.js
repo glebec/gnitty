@@ -19,13 +19,13 @@ angular.module('gnittyApp')
                 enable: true,
                 text: 'Emails Received'
             },
+            transitionDuration: 2000,
             x: function(d){return d.label;},
             y: function(d){return d.value;},
-            // showValues: true,
+            showValues: true,
             valueFormat: function(d){
                 return d3.format(',.0f')(d);
-            },
-            transitionDuration: 1000
+            }
             // xAxis: {
             //     axisLabel: ''
             // },
@@ -35,7 +35,6 @@ angular.module('gnittyApp')
             // }
         }
     };
-
         $scope.data = [
             {
                 key: "Cumulative Return",
