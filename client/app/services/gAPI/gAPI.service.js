@@ -88,6 +88,7 @@ angular.module('gnittyApp')
       });
     };
 
+
     /*----------------------------------------------------------------
     Gmail-specific actions (convenience methods definded further down)
     ----------------------------------------------------------------*/
@@ -103,30 +104,37 @@ angular.module('gnittyApp')
       // THE SPICE MUST FLOW
       startCollecting();
 
-      // Get a list of message IDs, optionally starting from a given page
+      // Main collection trigger chains promises
       function startCollecting ( fromPage ) {
+        getNextList ( fromPage )
+          .then( startBatch, listFail )
+          .then( parseAndSave, batchFail );
+      }
+
+      // Get a list of message IDs, optionally starting from a given page.
+      // Returns promise.
+      function getNextList ( fromPage ) {
         console.log( 'Requesting list of emails >>>>>>' );
-        _gAPI.requestMessageIds( fromPage )
-          .then( listSuccess, listFail );
+        return _gAPI.requestMessageIds( fromPage );
       }
 
-      // handler for successful response to message ID list request
-      function listSuccess (response) {
-        // recursive call to fire off more message ID list requests if needed
-        getCount += BATCH_SIZE;
-        if ( getCount < MSG_LIMIT && response.result.nextPageToken ) {
-          startCollecting( response.result.nextPageToken );
-        }
-        // in the meantime, begin fetching actual messages for this list
+      // Handler for successful response to message ID list request.
+      // Returns promise.
+      function startBatch (listResponse) {
         console.log( '>>>>>> Received new list of emails; fetching.');
-        _gAPI.batchRequest( response.result.messages )
-          .then( batchSuccess, batchFail );
+        getCount += BATCH_SIZE;
+        // Call to fire off more message ID list requests if needed.
+        if ( getCount < MSG_LIMIT && listResponse.result.nextPageToken ) {
+          startCollecting( listResponse.result.nextPageToken );
+        }
+        // …in the meantime, begin fetching actual messages for this list:
+        return _gAPI.batchRequest( listResponse.result.messages );
       }
 
-      // handler for successful response to batched messages request
-      function batchSuccess (response) {
+      // Handler for successful response to batched messages request.
+      function parseAndSave (batchResponse) {
         console.log( '________\nFetched emails; now parsing.' );
-        var responses = response.result;
+        var responses = batchResponse.result;
         // get gmails, parse and store in 'emails' AJS service
         for ( var id in responses ) {
           var gmailObj = responses[id].result;
@@ -139,17 +147,17 @@ angular.module('gnittyApp')
         console.log( doneCount + ' total parsed & stored.\n^^^^^^^^' );
       }
 
-      // error response handlers
-      function listFail (reason) {
-        console.log( 'Message IDs request failed: ', reason );
+      // Error response handlers.
+      function listFail (why) {
+        console.log( 'Message IDs req. failed: ', why );
       }
-      function batchFail (reason) {
-        console.log( 'Batch error: ', reason );
+      function batchFail (why) {
+        console.log( 'Batch error: ', why );
       }
     };
 
     // Batch builder, specific to message requests based on IDs.
-    // Abstracted out for clarity's sake.
+    // Abstracted out for clarity's sake. Returns a promise.
     this.batchRequest = function batchRequest (messages) {
       var batch = gapi.client.newBatch();
       for (var i = 0; i < messages.length; i++) {
