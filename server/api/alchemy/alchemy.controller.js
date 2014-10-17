@@ -8,10 +8,8 @@ var alchemy = new AlchemyAPI(alchemyApiKey);
 
 exports.sentiment = function(req,res) {
   alchemy.sentiment(req.body.text, {}, function(err, response) {
-    console.log(req.body.text);
     if (err) throw err;
     var sentiment = response.docSentiment;
-    console.log(sentiment);
     res.json(sentiment);
   });
 };
@@ -22,14 +20,12 @@ exports.keywords = function(req, res) {
     var keywords = {
       k: response.keywords
       };
-    console.log(keywords);
     res.json(keywords);
   });
 };
 
 exports.concepts = function(req, res) {
   alchemy.concepts(req.body.text, {}, function(err, response) {
-  console.log(req.body.text);
   if (err) throw err;
   var concepts = {
     c: response.concepts

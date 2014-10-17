@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('gnittyApp')
-.controller('MainCtrl', function ($scope, $http, Auth, gAPI, emails, postAlchemy) {
+.controller('MainCtrl', function ($scope, $http, Auth, gAPI, emails, postAlchemy, stats) {
     $scope.getCurrentUser = Auth.getCurrentUser;
 
     // initialize google api in case already signed in, etc. TODO: fix this
@@ -30,38 +30,29 @@ angular.module('gnittyApp')
     };
 
     $scope.getText = function() {
-      // for (var i=0; i<$scope.text.length; i++) {
-      debugger;
       $scope.joinText = emails.getBody().join('');
-      console.log($scope.joinText.length);
-      // };
+      console.log('characters in text: ', $scope.joinText.length);
       return $scope.joinText;
     };
 
     $scope.postIt = function () {
       postAlchemy.sendToAlchemy($scope.getText(), function(analysis) {
-        console.log(analysis);
         for (var i=0; i<analysis.keywords.length; i++) {
           if (analysis.keywords.length>40) {
             analysis.keywords.pop();
           }
           if (analysis.keywords[i].text.length>15) {
             analysis.keywords[i].text = analysis.keywords[i].text.slice(0, 15);
-          };
-        };
-        var save = function(analysis) {
-          $http.post('/api/stats', {
-            user: {
-              _id: $scope.getCurrentUser()._id
-            },
+          }
+        }
+          var statObj = {
             concepts: analysis.concepts,
             keywords: analysis.keywords,
             sentiment: analysis.sentiment,
             dateArray: $scope.dateArray
-          });
-        };
-        save(analysis);
-        console.log('saving...');
+          };
+          stats.data = statObj;
+          console.log('saved object: ', stats.data);
       });
     };
 
@@ -72,7 +63,7 @@ angular.module('gnittyApp')
 
     $scope.sendMMS = function() {
       $http.post('/api/twilio', {
-        body: 'click for your report: '+$scope.link,
+        body: 'tap for your report: '+$scope.link,
         to: $scope.clientObj.phoneNum,
         mediaUrl: $scope.mediaUrl
       });

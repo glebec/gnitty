@@ -14,7 +14,6 @@ angular.module('gnittyApp')
     this.getBody = function() {
       var textArr = [];
       for (var id in this.data) {
-        console.log(this.data[id].plain.length);
         textArr.push(this.data[id].plain);
       }
       textArr = textArr.slice(0,10);

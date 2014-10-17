@@ -1,14 +1,7 @@
 'use strict';
 
 angular.module('gnittyApp')
-  .controller('emailScatterChartCtrl', ['$scope', '$http', 'Auth', function($scope, $http, Auth){
-
-    $scope.currentUser = Auth.getCurrentUser();
-
-    $http.get('/api/stats/foruser/'+ $scope.currentUser._id).
-      success(function(data) {
-        $scope.statistics = data;
-        }).success(function(){
+  .controller('emailScatterChartCtrl', ['$scope', '$http', 'Auth', function($scope, stats){
 
       $scope.xAxisTickFormatFunction = function(){
           return function(d){
@@ -45,8 +38,8 @@ angular.module('gnittyApp')
           };
 
 
-//replace 10,000 with $scope.totalEmails
-        $scope.data = generateData(1,$scope.statistics[0].dateArray.length);
+//replace 10,000 with totalEmails
+        $scope.data = generateData(1, stats.data.dateArray.length);
 
 //needs 2 inputs here
 // $scope.totalEmails = $scope.statistics[0].dateArray.length;
@@ -61,20 +54,20 @@ angular.module('gnittyApp')
             for (var i = 0; i < groups; i++) {
                 data.push({
                     //insert date here
-                    key: 'Email from ' + $scope.statistics[0].dateArray[i],
+                    key: 'Email from ' + stats.data.dateArray[i],
                     values: []
                 });
 
                 for (var j = 0; j < points; j++) {
                     data[i].values.push({
-                        x: $scope.statistics[0].dateArray[j]//email date here
+                        x: stats.data.dateArray[j]//email date here
                         , y: random() //can keep this as random
                         , size: 0.1
                         , shape: shapes[j % 6]
                     });
                 }
-            }
+            };
             return data;
         }
-      });
+
 }]);
