@@ -8,7 +8,6 @@ angular.module('gnittyApp', [
   'ui.bootstrap',
   'gnittyApp.directives',
   'gnittyApp.controllers',
-  'gnittyApp.charts',
   'nvd3'
 ])
   .config(function ($routeProvider, $locationProvider, $httpProvider) {
