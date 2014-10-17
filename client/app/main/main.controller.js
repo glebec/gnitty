@@ -7,6 +7,10 @@ angular.module('gnittyApp')
     // initialize google api in case already signed in, etc. TODO: fix this
     // gAPI.handleClientLoad();
 
+    // DEV TESTING ONLY, REMOVE BEFORE DEPLOYMENT
+    $scope.setLocal = function () { emails.setLocal() };
+    $scope.getLocal = function () { emails.getLocal() };
+
     // Scope wires together ng-click login call to google API service
     // gAPI.login() returns a promise which resolves with .then()
     // data returned currently contains an email property with user's address
@@ -25,8 +29,8 @@ angular.module('gnittyApp')
     // show stored data
     $scope.showEmails = function() {
       console.log('data stored in email service:', emails.data);
-      $scope.dateArray = emails.getDates();
-      console.log("dates length: ", $scope.dateArray.length);
+      $scope.dateLengthArray = emails.getDatesAndLengths();
+      console.log("dates length: ", $scope.dateLengthArray.length);
     };
 
     $scope.getText = function() {
@@ -42,14 +46,14 @@ angular.module('gnittyApp')
             analysis.keywords.pop();
           }
           if (analysis.keywords[i].text.length>15) {
-            analysis.keywords[i].text = analysis.keywords[i].text.slice(0, 15);
+            analysis.keywords[i].text = analysis.keywords[i].text.slice(0, 15)+"…";
           }
         }
           var statObj = {
             concepts: analysis.concepts,
             keywords: analysis.keywords,
             sentiment: analysis.sentiment,
-            dateArray: $scope.dateArray
+            dateLengthArray: $scope.dateLengthArray
           };
           stats.data = statObj;
           console.log('saved object: ', stats.data);

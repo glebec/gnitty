@@ -33,7 +33,7 @@ $scope.options = {
                     axisLabelDistance: 30
                 },
                 callback: function(chart){
-                    console.log("!!! lineChart callback !!!");
+
                 }
             },
             title: {

@@ -24,8 +24,8 @@ angular.module('gnittyApp')
             y: function(d){return d.value;},
             showValues: true,
             valueFormat: function(d){
-                return d3.format(',.0f')(d);
-            }
+                return d3.format(',f')(d);
+            },
             // xAxis: {
             //     axisLabel: ''
             // },
