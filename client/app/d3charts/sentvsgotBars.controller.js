@@ -1,7 +1,9 @@
 'use strict';
 
 angular.module('gnittyApp')
-  .controller('SentVsGotCtrl', ['$scope', 'stats', function($scope, stats){
+  .controller('SentVsGotCtrl', ['$scope', 'stats', 'emails', function($scope, stats, emails){
+
+  // console.log(emails.splitDates());
   $scope.options = {
             chart: {
                 type: 'multiBarChart',
