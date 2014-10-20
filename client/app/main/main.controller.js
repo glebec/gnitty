@@ -11,9 +11,24 @@ angular.module('gnittyApp')
     $scope.setLocal = function () { emails.setLocal() };
     $scope.getLocal = function () { emails.getLocal() };
 
-    // fetch emails and store in email service
-    $scope.fetch = function() {
-      emails.fetch();
+    // Fetch button status
+    $scope.fetchBtnText = 'Fetch Messages';
+    // fetch emails from Gmail API and store them in the email service
+    $scope.fetch = function () {
+      $scope.fetchBtnText = 'Fetching…';
+      gAPI.fetch().then(
+        function ( emailData ) {
+          emails.data = emailData;
+          $scope.fetchBtnText = 'Finished!';
+        },
+        function ( err ) {
+          console.log( err );
+          $scope.fetchBtnText = 'OOPS…';
+        },
+        function ( update ) {
+          $scope.fetchBtnText = 'Fetching: ' + update;
+        }
+      );
     };
 
     // show stored data

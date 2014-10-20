@@ -1,17 +1,10 @@
 'use strict';
 
 angular.module('gnittyApp')
-  .service('emails', function (gAPI) {
+  .service('emails', function () {
     var _emails = this;
 
     this.data = {};
-
-    this.fetch = function () {
-      gAPI.fetch().then(
-        function ( emailData ) { _emails.data = emailData; },
-        function ( err ) { console.log( err ); }
-      );
-    };
 
     this.getDatesAndLengths = function() {
       var dateLengthArr = [];
