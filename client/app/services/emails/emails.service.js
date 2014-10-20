@@ -6,13 +6,6 @@ angular.module('gnittyApp')
 
     this.data = {};
 
-    this.fetch = function () {
-      gAPI.fetch().then(
-        function ( emailData ) { _emails.data = emailData; },
-        function ( err ) { console.log( err ); }
-      );
-    };
-
     this.getDatesAndLengths = function() {
       var dateLengthArr = [];
       for ( var id in this.data ) {
