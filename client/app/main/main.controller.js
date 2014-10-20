@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('gnittyApp')
-.controller('MainCtrl', function ($scope, $http, Auth, gAPI, emails, postAlchemy, stats) {
+.controller('MainCtrl', function ($scope, $http, Auth, emails, postAlchemy, stats) {
     $scope.getCurrentUser = Auth.getCurrentUser;
 
     // initialize google api in case already signed in, etc. TODO: fix this
@@ -11,19 +11,9 @@ angular.module('gnittyApp')
     $scope.setLocal = function () { emails.setLocal() };
     $scope.getLocal = function () { emails.getLocal() };
 
-    // Scope wires together ng-click login call to google API service
-    // gAPI.login() returns a promise which resolves with .then()
-    // data returned currently contains an email property with user's address
-    $scope.login = function() {
-      gAPI.login().then(
-        function (data) { console.log( 'your address is ' + data.email ); },
-        function (err) { console.log( 'Failed: ' + err ); }
-      );
-    };
-
     // fetch emails and store in email service
     $scope.fetch = function() {
-      gAPI.fetch();
+      emails.fetch();
     };
 
     // show stored data
