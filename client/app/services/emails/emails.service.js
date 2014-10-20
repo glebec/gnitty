@@ -1,27 +1,38 @@
 'use strict';
 
 angular.module('gnittyApp')
-  .service('emails', function () {
-    // AngularJS will instantiate a singleton by calling "new" on this function
+  .service('emails', function (gAPI) {
+    var _emails = this;
+
     this.data = {};
+
+    this.fetch = function () {
+      gAPI.fetch().then(
+        function ( emailData ) { _emails.data = emailData; },
+        function ( err ) { console.log( err ); }
+      );
+    };
+
     this.getDatesAndLengths = function() {
       var dateLengthArr = [];
-      for (var id in this.data) {
+      for ( var id in this.data ) {
         dateLengthArr.push({
           date:this.data[id].date,
           tlength:this.data[id].plain.length
-      });
+        });
       }
       return dateLengthArr;
     };
+
     this.getBody = function() {
       var textArr = [];
-      for (var id in this.data) {
-        textArr.push(this.data[id].plain);
+      for ( var id in this.data ) {
+        textArr.push( this.data[id].plain );
       }
-      textArr = textArr.slice(0,10);
+      textArr = textArr.slice( 0, 10 );
       return textArr;
     };
+
     // STRICTLY FOR DEV TESTING — REMOVE BEFORE DEPLOYMENT
     this.setLocal = function () {
       console.log ('Saving to local storage: ', this.data );
@@ -36,4 +47,5 @@ angular.module('gnittyApp')
         console.log( 'Retrieved local storage and set data: ', this.data );
       }
     };
+
   });
