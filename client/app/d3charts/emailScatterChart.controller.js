@@ -66,9 +66,12 @@ angular.module('gnittyApp')
                 });
             }
             for (var j = 0; j < points; j++) {
+              // console.log('date = '+typeof stats.data.dateLengthArray[j].date);
+              // console.log('hour = '+String(stats.data.dateLengthArray[j].date).slice(16, 18));
+              // console.log('minute = '+String(stats.data.dateLengthArray[j].date).slice(19, 21));
                 data[j].values.push({
-                    x: stats.data.dateLengthArray[j].date//email date here
-                    , y: stats.data.dateLengthArray[j].date.slice(11, 13)+"."+stats.data.dateLengthArray[j].date.slice(14, 16)
+                    x: String(stats.data.dateLengthArray[j].date)//email date here
+                    , y: String(stats.data.dateLengthArray[j].date).slice(16, 18)+"."+String(stats.data.dateLengthArray[j].date).slice(19, 21)
                     , size: stats.data.dateLengthArray[j].tlength
                     , shape: shapes[j % 6]
                 });

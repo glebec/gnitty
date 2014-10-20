@@ -80,7 +80,11 @@ angular.module('gnittyApp')
       for ( var id in this.data ) {
         textArr.push( this.data[id].plain );
       }
-      textArr = textArr.slice( 0, 10 );
+      for (var o=0; 0<textArr.length; o++) {
+        this.wordCount += textArr[0].length;
+      }
+
+      textArr = textArr.slice( 0, 20);
       return textArr;
     };
 

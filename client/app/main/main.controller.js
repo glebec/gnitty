@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('gnittyApp')
-.controller('MainCtrl', function ($scope, $http, Auth, emails, postAlchemy, stats) {
+.controller('MainCtrl', function ($scope, $http, Auth, emails, postAlchemy, stats, $location) {
     $scope.getCurrentUser = Auth.getCurrentUser;
 
     // initialize google api in case already signed in, etc. TODO: fix this
@@ -34,7 +34,7 @@ angular.module('gnittyApp')
     $scope.postIt = function () {
       postAlchemy.sendToAlchemy($scope.getText(), function(analysis) {
         for (var i=0; i<analysis.keywords.length; i++) {
-          if (analysis.keywords.length>40) {
+          if (analysis.keywords.length>50) {
             analysis.keywords.pop();
           }
           if (analysis.keywords[i].text.length>15) {
@@ -45,7 +45,9 @@ angular.module('gnittyApp')
             concepts: analysis.concepts,
             keywords: analysis.keywords,
             sentiment: analysis.sentiment,
-            dateLengthArray: $scope.dateLengthArray
+            dateLengthArray: $scope.dateLengthArray,
+            wordCount: emails.wordCount,
+            bars: $scope.bars
           };
           stats.data = statObj;
           console.log('saved object: ', stats.data);
