@@ -3,7 +3,7 @@
   <div class='row'>
       <div class="col-1-2 center" id='landingText'>
       <h1>gNitify your Gmail!</h1>
-      
+
       <p class="lead">
         Watch your email habits as they trend over time.<br />
         See what words and tones you employ most often.<br />
@@ -20,22 +20,18 @@
         <div class='row'>
           <div class='col-sm-4 col-lg-4 center'>
             <h3><p>Step 1</p></h3>
-            <button ng-click="login()" class='btn btn-primary btn-lg withripple'>Authorize User</button>
-            <br />
-            <button ng-click='fetch()' class='btn btn-primary btn-lg withripple'>Fetch Messages</button>
-            <button ng-click='showEmails()' class='btn btn-primary btn-lg withripple'>List Messages</button>
+            <button ng-click='fetch()' class='btn btn-primary btn-lg withripple'>{{fetchBtnText}}</button>
             <button ng-click='setLocal()' class='btn btn-primary btn-lg withripple'>Save to Local</button>
             <button ng-click='getLocal()' class='btn btn-primary btn-lg withripple'>Get from Local</button>
           </div>
           <div class='col-sm-4 col-lg-4 center'>
             <h3><p>Step 2</p></h3>
-          <button ng-click="postIt()" class='btn btn-primary btn-lg withripple'>POST</button>
+          <button ng-click="showEmails()" class='btn btn-primary btn-lg withripple'>LIST + POST</button>
         </div>
           <div class='col-sm-4 col-lg-4 center'>
             <h3><p>Step 3</p></h3>
            <a href="/dashboard" class='btn btn-primary btn-lg withripple'>SEE DATA!</a>
            <button ng-click="sendMMS()" class='btn btn-primary btn-lg withripple'>Send MMS</button>
-
          </div>
         </div>
         <br />

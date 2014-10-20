@@ -1,7 +1,11 @@
 'use strict';
 
 angular.module('gnittyApp')
+<<<<<<< HEAD
 .controller('MainCtrl', function ($scope, $http, Auth, emails, postAlchemy, stats, $location) {
+=======
+.controller('MainCtrl', function ($scope, $http, Auth, emails, gAPI, postAlchemy, stats) {
+>>>>>>> c3d6da2bd543155bc6e1ab2f28b271cda45862fc
     $scope.getCurrentUser = Auth.getCurrentUser;
 
     // initialize google api in case already signed in, etc. TODO: fix this
@@ -60,9 +64,9 @@ angular.module('gnittyApp')
             concepts: analysis.concepts,
             keywords: analysis.keywords,
             sentiment: analysis.sentiment,
-            dateLengthArray: $scope.dateLengthArray
-            // wordCount: emails.wordCount,
-            // bars: $scope.bars
+            dateLengthArray: $scope.dateLengthArray,
+            wordCount: emails.wordCount,
+            bars: $scope.bars
           };
           stats.data = statObj;
           console.log('saved object: ', stats.data);

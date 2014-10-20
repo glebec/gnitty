@@ -1,33 +1,35 @@
 'use strict';
 
-/*-------------------------------------------------------------------
-A service to handle Gmail API logic. A prebuilt method for controller
-consumption is gAPI.fetch(), which will inject parsed emails into the
-'emails' service (in an emails.data object). Todo: make more generic.
--------------------------------------------------------------------*/
+/*--------------------------------------------------------------------
+A service to handle Gmail API logic. A prebuilt method for external
+consumption is gAPI.fetch(), which will return a promise for an
+emaildata object (each key is a UID, each value a parsed email object).
+That promise also sends notifications counting emails fetched so far.
+----------------------------------------------------------------------*/
 
 angular.module('gnittyApp')
-  .service('gAPI', ['$http', '$rootScope', '$q', 'b64', 'emails', function ($http, $rootScope, $q, b64, emails) {
+  .service('gAPI', ['$http', '$rootScope', '$q', 'b64', function ($http, $rootScope, $q, b64) {
 
     // TODO: reference CLIENT_ID key from local.env
     // gapi object is loaded in index.html script header.
     // 'me' is a special user string indicating the authenticated user.
-    // BATCH_SIZE should be 100 or lower.
+    // BATCH_SIZE should be 100 or lower; server limits to 100 anyway.
     var _gAPI      = this,
         CLIENT_ID  = '626085391000-vbd4dkua39odasb6sjrq0tn3es8uboet.apps.googleusercontent.com',
-        SCOPES     = ['https://www.googleapis.com/auth/gmail.readonly'],
+        SCOPES     = ['profile','https://www.googleapis.com/auth/gmail.readonly'],
         USER       = 'me',
         MSG_LIMIT  = 1000,
-        BATCH_SIZE = 100,
-        deferred   = $q.defer();
+        BATCH_SIZE = 100;
 
-    // A simple controller-ready trigger for collecting emails.
+    // A controller-ready trigger for collecting emails.
     // If immediate mode worked, this would skip the login window flash.
-    // TODO: make this deferred; enable immediate mode without breaking.
-    // Result: loads parsed emails into the emails.data service object.
+    // TODO: enable immediate mode without breaking.
+    // Result: returns promise for emaildata object, for external consumption.
     this.fetch = function () {
-      _gAPI.checkAuthAndExecute(_gAPI.collectEmails);
-      return _gAPI;
+      function logErr (err) { console.log( err ); }
+      return _gAPI.checkAuth()
+        .then(_gAPI.loadGmail)
+        .then(_gAPI.collectEmails, logErr);
     };
 
 
@@ -41,115 +43,115 @@ angular.module('gnittyApp')
       // window.setTimeout(checkAuth, 1);
     };
 
-    // Attempts authorization.
-    // gapi.auth takes parameters and a callback.
-    // Returns a deferred promise to handle async loading.
-    this.login = function () {
+    // Generic authorization method.
+    // Returns a promise that resolves to the auth token on success.
+    this.checkAuth = function checkAuth () {
+      var authDeferral = $q.defer();
       gapi.auth.authorize({
         'client_id': CLIENT_ID,
         'scope': SCOPES,
         'immediate': false,
-        }, this.handleAuthResult);
-      return deferred.promise;
-    };
-
-    // After login triggers, auth attempt result passes to this callback.
-    this.handleAuthResult = function (authResult) {
-      if (authResult && !authResult.error) {
-        // access token retrieved; can send requests to API
-        // demo: fetch user's email address
-        var data = {};
-        gapi.client.load('oauth2', 'v2', function() {
-          var request = gapi.client.oauth2.userinfo.get();
-          request.execute( function (resp) {
-            console.log('authorized user info:', resp);
-            data.email = resp.email;
-            deferred.resolve(data);
-          });
-        });
-      } else {
-        deferred.reject('error');
-      }
-    };
-
-    // Generic authorization method grants Gmail API access to a callback.
-    this.checkAuthAndExecute = function checkAuthAndExecute (callback) {
-      gapi.auth.authorize({
-        'client_id': CLIENT_ID,
-        'scope': SCOPES,
-        'immediate': false,
-      }, function gmailClientLoader (authResult) {
-        if (authResult && !authResult.error) {
-          // Access token retrieved, can send API requests in callback.
-          gapi.client.load( 'gmail', 'v1', callback );
+      }, function handleAuth (authResult) {
+        if ( authResult && !authResult.error ) {
+          authDeferral.resolve( authResult );
         } else {
-          console.log( 'No token retrieved: ', authResult );
+          authDeferral.reject( authResult );
         }
       });
+      return authDeferral.promise;
     };
+
 
     /*----------------------------------------------------------------
     Gmail-specific actions (convenience methods definded further down)
     ----------------------------------------------------------------*/
 
-    // To be called from the generic checkAuthAndExecute method above.
+    // Assumes authorized access via checkAuth above. Returns a promise.
+    this.loadGmail = function loadGmail () {
+      return gapi.client.load( 'gmail', 'v1' );
+    };
+
+    // Assumes Gmail API loaded via loadGmail above.
     // Fetches message IDs, then batch requests actual messages,
-    // then parses them and sends them to the injected 'emails' service.
+    // then parses them. Returns a promise that resolves to emaildata object.
     this.collectEmails = function collectEmails () {
-      // asynchronous counters for limiting and logging
+      // Return values: a master promise, and data to resolve it with.
+      var emailDeferral = $q.defer();
+      var emailData = {};
+      // asynchronous counters for limiting and notifying
       var getCount = 0;
       var doneCount = 0;
 
-      // THE SPICE MUST FLOW
+      // Here we go!
       startCollecting();
+      return emailDeferral.promise;
 
-      // Get a list of message IDs, optionally starting from a given page
+      // Main collection trigger chains promises; will be called per-batch.
       function startCollecting ( fromPage ) {
+        getNextList ( fromPage )
+          .then( startBatch, listFail )
+          .then( parseAndSave, batchFail );
+      }
+
+      // Get a list of message IDs, optionally starting from a given page.
+      // Returns a promise.
+      function getNextList ( fromPage ) {
         console.log( 'Requesting list of emails >>>>>>' );
-        _gAPI.requestMessageIds( fromPage )
-          .then( listSuccess, listFail );
+        return _gAPI.requestMessageIds( fromPage );
       }
 
-      // handler for successful response to message ID list request
-      function listSuccess (response) {
-        // recursive call to fire off more message ID list requests if needed
-        getCount += BATCH_SIZE;
-        if ( getCount < MSG_LIMIT && response.result.nextPageToken ) {
-          startCollecting( response.result.nextPageToken );
-        }
-        // in the meantime, begin fetching actual messages for this list
+      // Handler for successful response to message ID list request.
+      // Returns a promise.
+      function startBatch (listResponse) {
         console.log( '>>>>>> Received new list of emails; fetching.');
-        _gAPI.batchRequest( response.result.messages )
-          .then( batchSuccess, batchFail );
+        getCount += BATCH_SIZE;
+        // Call to fire off more message ID list requests if needed.
+        if ( getCount < MSG_LIMIT && listResponse.result.nextPageToken ) {
+          startCollecting( listResponse.result.nextPageToken );
+        }
+        // …in the meantime, begin fetching actual messages for this list:
+        return _gAPI.batchRequest( listResponse.result.messages );
       }
 
-      // handler for successful response to batched messages request
-      function batchSuccess (response) {
+      // Handler for successful response to batched messages request.
+      // Notifies and resolves the master promise.
+      function parseAndSave (batchResponse) {
         console.log( '________\nFetched emails; now parsing.' );
-        var responses = response.result;
+        var responses = batchResponse.result;
         // get gmails, parse and store in 'emails' AJS service
         for ( var id in responses ) {
           var gmailObj = responses[id].result;
           var parsed = _gAPI.parseMessage( gmailObj );
           if ( parsed ) {
             doneCount++;
-            emails.data[id] = parsed;
+            emailData[id] = parsed;
           }
         }
+        // Send progress updates to the master promise.
+        emailDeferral.notify( doneCount );
         console.log( doneCount + ' total parsed & stored.\n^^^^^^^^' );
+        // If this is the last batch, resolve the master promise.
+        if ( getCount >= MSG_LIMIT ) emailDeferral.resolve( emailData );
       }
 
-      // error response handlers
-      function listFail (reason) {
-        console.log( 'Message IDs request failed: ', reason );
+      // Error response handlers.
+      function listFail (why) {
+        console.log( 'Message IDs req. failed: ', why );
+        emailDeferral.reject( why );
       }
-      function batchFail (reason) {
-        console.log( 'Batch error: ', reason );
+      function batchFail (why) {
+        console.log( 'Batch error: ', why );
+        emailDeferral.reject( why );
       }
     };
 
+
+    /*----------------------------------------------------------------
+    Convenience methods for the main collection function above.
+    ----------------------------------------------------------------*/
+
     // Batch builder, specific to message requests based on IDs.
-    // Abstracted out for clarity's sake.
+    // Abstracted out for clarity's sake. Returns a promise.
     this.batchRequest = function batchRequest (messages) {
       var batch = gapi.client.newBatch();
       for (var i = 0; i < messages.length; i++) {
@@ -204,7 +206,8 @@ angular.module('gnittyApp')
       // Convert to UTF-8 using injected b64 front-end service:
       parsed.plain = b64.decode( b64text() );
       // Only use lines NOT beginning with '>' (i.e., CCs in replies) or \n
-      parsed.plain = parsed.plain.match(/^[^>\n].*/gm);
+      var notCruft = /^[^>\n].*/gm;
+      parsed.plain = parsed.plain.match( notCruft );
       parsed.plain = parsed.plain ? parsed.plain.join() : '';
       // Email parsing complete.
       return parsed;
@@ -212,8 +215,8 @@ angular.module('gnittyApp')
 
 
     /*-------------------------------------------------------
-    Generic methods for building requests or logging objects.
-    Reqs can be run via .execute(callback) or .then(handler).
+    Generic methods for building request promises.
+    Can be run via .execute(callback) or .then(handler).
     -------------------------------------------------------*/
 
     // Build a GAPI single-message request (by ID) to be executed later.
@@ -229,32 +232,16 @@ angular.module('gnittyApp')
     // Response has .result.messages, each message has .id.
     // Server seems to hard-code maxResults at 100, ignores higher.
     // 'q' query field works like gmail search box. Filtering out chats.
-    this.requestMessageIds = function requestMessageIds (page) {
+    this.requestMessageIds = function requestMessageIds (page, query) {
       var params = {
         'userId' : USER,
         'maxResults' : BATCH_SIZE,
         'fields' : 'nextPageToken,messages/id',
-        'q' : '-is:chat'
+        'q' : '-is:chat '
       };
       if ( page ) params.pageToken = page;
+      if ( query ) params.q += query;
       return gapi.client.gmail.users.messages.list( params );
     };
-
-    // Array splitter for batching. Returns new arr of 'size'-long arrays.
-    function splitArray (arr, size) {
-      var newArr = [],
-          end = size;
-      for (var start = 0; start < arr.length; start += size) {
-        newArr.push( arr.slice( start, end ) );
-        end += size;
-      }
-      return newArr;
-    }
-
-    // Message info logger for dev checking.
-    function logMessage (gmailObj) {
-      var parsed = _gAPI.parseMessage(gmailObj);
-      console.log( gmailObj, parsed );
-    }
 
   }]);

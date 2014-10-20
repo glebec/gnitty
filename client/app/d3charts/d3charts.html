@@ -23,10 +23,10 @@
   <h4>Your email tone is mostly:</h4>
   <nvd3 options="options" data="data"></nvd3>
 </div>
-<div ng-controller="sentiLineChartCtrl">
-  <!-- <h4>Sentiment over time</h4> -->
+<!-- <div ng-controller="sentiLineChartCtrl">
+  <h4>Sentiment over time</h4>
   <nvd3 options="options" data="data"></nvd3>
-</div>
+</div> -->
 <div>
   <h4>Your top keywords</h4>
   <nvd3 options="options" data="data"></nvd3>
@@ -35,4 +35,8 @@
 <div ng-controller="emailScatterChartCtrl">
   <h4>Your sent messages.  All of them.</h4>
   <nvd3 options="options" data="data" xAxisTickFormat="xAxisTickFormatFunction()"></nvd3>
+</div>
+<div ng-controller="SentVsGotCtrl">
+  <h4>Number of emails sent vs. received</h4>
+  <nvd3 options="options" data="data"></nvd3>
 </div>
