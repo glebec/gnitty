@@ -66,12 +66,14 @@ angular.module('gnittyApp')
                 });
             }
             for (var j = 0; j < points; j++) {
-              // console.log('date = '+typeof stats.data.dateLengthArray[j].date);
-              // console.log('hour = '+String(stats.data.dateLengthArray[j].date).slice(16, 18));
-              // console.log('minute = '+String(stats.data.dateLengthArray[j].date).slice(19, 21));
+              stats.data.dateLengthArray[j].date = new Date(stats.data.dateLengthArray[j].date);
+              // console.log('date = ', Number(stats.data.dateLengthArray[j].date));
+              // console.log('hour = ', Number(stats.data.dateLengthArray[j].date)%(24*60*60)/(60*60));
+              //   // %(24*60*60*1000));
+              // console.log('minute = '+String(stats.data.dateLengthArray[j].date).slice(20, 22));
                 data[j].values.push({
-                    x: String(stats.data.dateLengthArray[j].date)//email date here
-                    , y: String(stats.data.dateLengthArray[j].date).slice(16, 18)+"."+String(stats.data.dateLengthArray[j].date).slice(19, 21)
+                    x: stats.data.dateLengthArray[j].date//email date here
+                    , y: Number(String(stats.data.dateLengthArray[j].date).slice(16, 18)+"."+String(stats.data.dateLengthArray[j].date).slice(19, 21))
                     , size: stats.data.dateLengthArray[j].tlength
                     , shape: shapes[j % 6]
                 });
