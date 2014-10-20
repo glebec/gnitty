@@ -35,7 +35,7 @@ angular.module('gnittyApp')
       console.log('data stored in email service:', emails.data);
       $scope.dateLengthArray = emails.getDatesAndLengths();
       console.log("dates length: ", $scope.dateLengthArray.length);
-      $scope.bars = emails.splitDates($scope.dateLengthArray);
+      // $scope.bars = emails.splitDates($scope.dateLengthArray);
       $scope.postIt();
     };
 

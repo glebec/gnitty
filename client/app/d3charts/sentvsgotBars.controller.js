@@ -38,8 +38,8 @@ angular.module('gnittyApp')
         $scope.data = generateData();
 
         function generateData() {
-            var our_layers = [{
-              key: 'received',
+         var our_layers = [{
+              key: 'emails',
               values: [{
                 x: 0,
                 y:8.5
