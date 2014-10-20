@@ -7,18 +7,13 @@
 </header>
 
 <div class='group'>
-  
-
   <section class='dashboardSection center boxText well'>
     <h3>Analytics Dashboard</h3>
     <hr>
-    <br />
-
-
     <section>
       <div class='row'>
-
-        <table style='margin:auto'>
+<!--         <iframe class="lab-work-iframe" src="app/main/radialmenu.html" width="600" height="450" scrolling="no" frameborder='0'></iframe>
+ --><table style='margin:auto'>
           <tr>
             <td></td>
             <td>
@@ -51,42 +46,50 @@
 
         </table>
       </div>
-
-      <br />
-      <br />
       
-        <div ng-show='showEmail' ng-controller="emailVolBarCtrl">
+    </section>
+  </section>
+
+    <section class='dashboardSection center boxText well' ng-hide='showEmail' >    
+        <div ng-controller="emailVolBarCtrl" class='animated zoomIn'>
            <h4>Inbox Volume</h4>
           <nvd3 options="options" data="data"></nvd3>
         </div>
-        
-        <div ng-show='showWordVol' ng-controller="wordVolBarCtrl">
+  </section>
+
+  <section class='dashboardSection center boxText well' ng-hide='showWordVol' >      
+        <div ng-controller="wordVolBarCtrl" class='animated zoomIn'>
           <h4>If your emails from this year were a novel, how long would it be?</h4>
           <nvd3 options="options" data="data"></nvd3>
         </div>
+  </section>
         
-        <div ng-show='showEmailSent' ng-controller="sentPieChartCtrl">
+    <section class='dashboardSection center boxText well' ng-hide='showEmailSent'  >      
+        <div ng-controller="sentPieChartCtrl" class='animated zoomIn'>
           <h4>Your email tone is mostly:</h4>
           <nvd3 options="options" data="data"></nvd3>
         </div>
+    </section>
 
-        <div ng-show='showSentTime' ng-controller="sentiLineChartCtrl">
+    <section class='dashboardSection center boxText well' ng-hide='showEmail' >    
+        <div ng-hide='showSentTime' ng-controller="sentiLineChartCtrl" class='animated zoomIn'>
           <!-- <h4>Sentiment over time</h4> -->
           <nvd3 options="options" data="data"></nvd3>
         </div>
 
-        <div ng-show='showTopKey' ng-controller='KeywordChartCtrl'>
+        <div ng-hide='showTopKey' ng-controller='KeywordChartCtrl' class='animated zoomIn'>
           <h4>Your top keywords</h4>
           <nvd3 options="options" data="data"></nvd3>
         </div>
+      </section>
 
-
+    <section class='dashboardSection center boxText well' ng-hide='showEmail' >    
         <!--EMAIL SCATTER CHART -->
-        <div ng-show='showEmailScatter' ng-controller="emailScatterChartCtrl">
+        <div ng-hide='showEmailScatter' ng-controller="emailScatterChartCtrl" class='animated zoomIn'>
           <h4>Your sent messages.  All of them.</h4>
           <nvd3 options="options" data="data" xAxisTickFormat="xAxisTickFormatFunction()"></nvd3>
         </div>
-
+    </section>
 
     </section>
   </section>

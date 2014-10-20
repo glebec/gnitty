@@ -6,7 +6,6 @@ body {
     margin: 0 0 100px; /* bottom = footer height */
     font-family: 'Roboto', sans-serif;
     background-color: #eeeeee;
-    background-image: url();
     -webkit-transition: all 1000ms cubic-bezier(0.250, 0.250, 0.750, 0.750); 
     -moz-transition: all 1000ms cubic-bezier(0.250, 0.250, 0.750, 0.750); 
      -o-transition: all 1000ms cubic-bezier(0.250, 0.250, 0.750, 0.750); 
@@ -125,6 +124,10 @@ box-shadow: 0px 0px 16px 0 rgba(41,128,185, 0.5);
      -moz-transition: width 1.0s ease !important;
        -o-transition: width 1.0s ease !important;
           transition: width 1.0s ease !important;
+}
+
+.panel-body {
+  color: black;
 }
 
 /*

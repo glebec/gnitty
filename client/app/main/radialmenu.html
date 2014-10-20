@@ -1,0 +1,33 @@
+
+	
+
+	<head>
+		<link rel="shortcut icon" href="../favicon.ico">
+		<link rel="stylesheet" type="text/css" href="css/normalize.css" />
+		<link rel="stylesheet" type="text/css" href="css/demo.css" />
+		<link rel="stylesheet" type="text/css" href="css/component2.css" />
+		<script src="js/modernizr-2.6.2.min.js"></script>
+	</head>
+	<body>
+		<div>
+			<!-- Top Navigation -->
+			<header>
+			<div class="component">
+				<!-- Start Nav Structure -->
+				<button class="cn-button" id="cn-button">Menu</button>
+				<div class="cn-wrapper" id="cn-wrapper">
+					<ul>
+						<li><a href ng-show='showButtons' ng-click="showEmail = !showEmail"><span>Inbox<br>Volume</span></a></li>
+						<li><a href ng-show='showButtons' ng-click="showWordVol = !showWordVol"><span>Word<br>Volume</span></a></li>
+						<li><a href ng-show='showButtons' ng-click="showEmailSent = !showEmailSent"><span>Sentiment<br>Tone</span></a></li>
+						<li><a href ng-show='showButtons' ng-click="showSentTime = !showSentTime"><span>Sentiment<br>Time</span></a></li>
+						<li><a href ng-show='showButtons' ng-click="showTopKey = !showTopKey" ><span>Top<br>Words</span></a></li>
+						<li><a href ng-show='showButtons' ng-click="showEmailScatter = !showEmailScatter" ><span>Scatter</span></a></li>
+					 </ul>
+				</div>
+				<!-- End of Nav Structure -->
+			</div>
+		</div><!-- /container -->
+		<script src="js/polyfills.js"></script>
+		<script src="js/demo2.js"></script>
+	</body>
