@@ -65,6 +65,7 @@ angular.module('gnittyApp')
       }
       console.log('datesInArray = '+datesInArray);
       console.log('bars in 80 pieces = '+bar);
+      this.bar = bar;
       return bar;
     };
 
@@ -76,7 +77,6 @@ angular.module('gnittyApp')
       for (var o=0; 0<textArr.length; o++) {
         this.wordCount += textArr[0].length;
       }
-
       textArr = textArr.slice( 0, 20);
       return textArr;
     };
