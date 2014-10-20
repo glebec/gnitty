@@ -1,8 +1,7 @@
 'use strict';
 
 angular.module('gnittyApp')
-.controller('MainCtrl', function ($scope, $http, Auth, emails, postAlchemy, stats, $location) {
-    $scope.getCurrentUser = Auth.getCurrentUser;
+.controller('MainCtrl', function ($scope, $http, gAPI, emails, postAlchemy, stats, $location) {
 
     // initialize google api in case already signed in, etc. TODO: fix this
     // gAPI.handleClientLoad();
@@ -36,7 +35,7 @@ angular.module('gnittyApp')
       console.log('data stored in email service:', emails.data);
       $scope.dateLengthArray = emails.getDatesAndLengths();
       console.log("dates length: ", $scope.dateLengthArray.length);
-      $scope.bars = emails.splitDates($scope.dateLengthArray);
+      // $scope.bars = emails.splitDates($scope.dateLengthArray);
       $scope.postIt();
     };
 
