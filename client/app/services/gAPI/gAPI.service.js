@@ -237,7 +237,7 @@ angular.module('gnittyApp')
         'userId' : USER,
         'maxResults' : BATCH_SIZE,
         'fields' : 'nextPageToken,messages/id',
-        'q' : '-is:chat '
+        'q' : '-is:chat -in:spam '
       };
       if ( page ) params.pageToken = page;
       if ( query ) params.q += query;
