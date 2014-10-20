@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('gnittyApp')
-  .service('emails', function (gAPI) {
+  .service('emails', function () {
     var _emails = this;
 
     this.data = {};
