@@ -14,35 +14,78 @@
     <hr>
     <br />
 
-      <section>
-        <div ng-controller="emailVolBarCtrl">
-   <h4>Inbox volume</h4>
-  <nvd3 options="options" data="data"></nvd3>
-</div>
-<div ng-controller="wordVolBarCtrl">
-  <h4>If your emails from this year were a novel, how long would it be?</h4>
-  <nvd3 options="options" data="data"></nvd3>
-</div>
-<div ng-controller="sentPieChartCtrl">
-  <h4>Your email tone is mostly:</h4>
-  <nvd3 options="options" data="data"></nvd3>
-</div>
-<div ng-controller="sentiLineChartCtrl">
-  <!-- <h4>Sentiment over time</h4> -->
-  <nvd3 options="options" data="data"></nvd3>
-</div>
 
-<div ng-controller='KeywordChartCtrl'>
-  <h4>Your top keywords</h4>
-  <nvd3 options="options" data="data"></nvd3>
-</div>
+    <section>
+      <div class='row'>
+
+        <table style='margin:auto'>
+          <tr>
+            <td></td>
+            <td>
+              <a href ng-show='showButtons' ng-click="showEmail = !showEmail" class="btn btn-primary btn-lg btn-default withripple animated zoomIn" data-toggle='popover'>Inbox Volume</a>
+            </td>
+            <td></td>
+          </tr>
+          <tr>
+            <td colspan='3'></td>
+          </tr>
+          <tr>
+            <td><a href ng-show='showButtons' ng-click="showWordVol = !showWordVol" class="btn btn-primary btn-lg btn-default withripple animated zoomIn" data-toggle='popover'>Word Volume</a></td>
+            <td><a href ng-click='showButtons = !showButtons' class='btn btn-primary btn-lg btn-default animated zoomIn'>Dashboard Toggle</a></td>
+            <td><a href ng-show='showButtons' ng-click="showEmailSent = !showEmailSent" class="btn btn-primary btn-lg btn-default withripple animated zoomIn" data-toggle='popover'>Sentiment Tone</a></td>
+          </tr>
+          <tr>
+            <td><a href ng-show='showButtons' ng-click="showSentTime = !showSentTime" class="btn btn-primary btn-lg btn-default withripple animated zoomIn" data-toggle='popover'>Sentiment over Time</a></td>
+            <td></td>
+            <td>
+        <a href ng-show='showButtons' ng-click="showTopKey = !showTopKey" class="btn btn-primary btn-lg btn-default withripple animated zoomIn" data-toggle='popover'>Top Keywords
+        </a></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td>     <a href ng-show='showButtons' ng-click="showEmailScatter = !showEmailScatter" class="btn btn-primary btn-lg btn-default withripple animated zoomIn" data-toggle='popover'>Email Scatter
+        </a></td>
+            <td></td>
+          </tr>
 
 
-<!--EMAIL SCATTER CHART -->
-<div ng-controller="emailScatterChartCtrl">
-  <h4>Your sent messages.  All of them.</h4>
-  <nvd3 options="options" data="data" xAxisTickFormat="xAxisTickFormatFunction()"></nvd3>
-</div>
+        </table>
+      </div>
+
+      <br />
+      <br />
+      
+        <div ng-show='showEmail' ng-controller="emailVolBarCtrl">
+           <h4>Inbox Volume</h4>
+          <nvd3 options="options" data="data"></nvd3>
+        </div>
+        
+        <div ng-show='showWordVol' ng-controller="wordVolBarCtrl">
+          <h4>If your emails from this year were a novel, how long would it be?</h4>
+          <nvd3 options="options" data="data"></nvd3>
+        </div>
+        
+        <div ng-show='showEmailSent' ng-controller="sentPieChartCtrl">
+          <h4>Your email tone is mostly:</h4>
+          <nvd3 options="options" data="data"></nvd3>
+        </div>
+
+        <div ng-show='showSentTime' ng-controller="sentiLineChartCtrl">
+          <!-- <h4>Sentiment over time</h4> -->
+          <nvd3 options="options" data="data"></nvd3>
+        </div>
+
+        <div ng-show='showTopKey' ng-controller='KeywordChartCtrl'>
+          <h4>Your top keywords</h4>
+          <nvd3 options="options" data="data"></nvd3>
+        </div>
+
+
+        <!--EMAIL SCATTER CHART -->
+        <div ng-show='showEmailScatter' ng-controller="emailScatterChartCtrl">
+          <h4>Your sent messages.  All of them.</h4>
+          <nvd3 options="options" data="data" xAxisTickFormat="xAxisTickFormatFunction()"></nvd3>
+        </div>
 
 
     </section>
@@ -50,7 +93,7 @@
 </div>
 <br />
 
-<div class='group'>
+<!-- <div class='group'>
   <section class='dashboardSection center boxText well'>
         <div class="page-header">
             <h3 id="tables">Data Tables</h3>

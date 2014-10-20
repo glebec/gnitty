@@ -4,4 +4,4 @@ CSS
 
 1. Google Material Design Bootstrap - http://fezvrasta.github.io/bootstrap-material-design/
 2. Animations - http://daneden.github.io/animate.css/
-3.
+3. Google Design - http://www.google.com/design/spec/style/color.html#color-ui-color-palette

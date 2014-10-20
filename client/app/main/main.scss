@@ -6,6 +6,11 @@ body {
     margin: 0 0 100px; /* bottom = footer height */
     font-family: 'Roboto', sans-serif;
     background-color: #eeeeee;
+    background-image: url();
+    -webkit-transition: all 1000ms cubic-bezier(0.250, 0.250, 0.750, 0.750); 
+    -moz-transition: all 1000ms cubic-bezier(0.250, 0.250, 0.750, 0.750); 
+     -o-transition: all 1000ms cubic-bezier(0.250, 0.250, 0.750, 0.750); 
+        transition: all 1000ms cubic-bezier(0.250, 0.250, 0.750, 0.750); /* linear */
 }
 footer {
     position: absolute;
@@ -44,11 +49,12 @@ footer {
 
 .navbar-default .navbar-brand {
      color: rgba(255,255,255,.84);
-     font-size: 2em;
+
 }
 
 .navbar-default .navbar-nav > li > a {
     color: rgba(255,255,255,.84);
+    font-size: 1.25em;
 }
 
 .navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus {
@@ -110,6 +116,8 @@ box-shadow: 0px 0px 16px 0 rgba(41,128,185, 0.5);
     margin-bottom: 50px;
     -webkit-animation-delay: 2s; /* Chrome, Safari, Opera */
     animation-delay: 2s;
+    -webkit-transition: all 5000ms cubic-bezier(0.250, 0.250, 0.750, 0.750); 
+    transition: all 5000ms cubic-bezier(0.250, 0.250, 0.750, 0.750);
 }
 
 .bar {
@@ -187,10 +195,23 @@ box-shadow: 0px 0px 16px 0 rgba(41,128,185, 0.5);
 
 /*
   ========================================
-  Dial Selector
+  Dash Selector
   ========================================
 */
 
+label {
+  font-size: 1.5em;
+  margin-right: 30px;
+}
+
+table {
+  border-collapse: collapse;
+}
+th,
+td {
+
+  padding: 10px 30px;
+}
 
 
 
