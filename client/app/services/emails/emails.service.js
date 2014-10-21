@@ -48,9 +48,9 @@ angular.module('gnittyApp')
       }
       //sort array of objects from smallest date to largest-most-recent date
       dateLengthArr.sort( function (a, b) {return a.date-b.date;} );
-      var latest = Number(dateLengthArr[dateLengthArr.length-1].date);
+      this.latest = Number(dateLengthArr[dateLengthArr.length-1].date);
       // console.log('earliest = '+ earliest);
-      var earliest = Number(dateLengthArr[0].date);
+      this.earliest = Number(dateLengthArr[0].date);
       // console.log('latest = '+ latest);
       var timeSpan = latest - earliest;
       // console.log('timeSpan = '+ timeSpan);
@@ -72,13 +72,13 @@ angular.module('gnittyApp')
           // console.log(delimiter);
           // console.log(Number(dateLengthArr[i].date));
           if (delimiter >= Number(dateLengthArr[i].date) &&
-            Number(dateLengthArr[i].date) > earliest) {
+            Number(dateLengthArr[i].date) > this.earliest) {
             bar[h]++;
           }
         }
         dateLengthArr = dateLengthArr.slice(bar[h], dateLengthArr.length);
         // console.log(delimiter+'='+latest+'?');
-        earliest+=barCapacity;
+        this.earliest+=barCapacity;
         // console.log('earliest'+earliest+'='+latest+'?');
         delimiter+=barCapacity;
       }

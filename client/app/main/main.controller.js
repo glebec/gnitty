@@ -47,7 +47,7 @@ angular.module('gnittyApp')
       console.log('data stored in email service: ', emails.data);
       console.log('dates length: ', emails.dateLengthArr.length);
       console.log('text length: ', emails.textArr.length);
-      // $scope.bars = emails.splitDates($scope.dateLengthArray);
+      $scope.bars = emails.splitDates($scope.dateLengthArray);
     };
 
     $scope.link = 'http://www.ginnabaker.com';
