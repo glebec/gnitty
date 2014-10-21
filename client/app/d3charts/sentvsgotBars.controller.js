@@ -25,7 +25,7 @@ angular.module('gnittyApp')
                 stacked: true,
                 xAxis: {
                     axisLabel: 'Time',
-                    showMaxMin: false,
+                    showMaxMin: true,
                     tickFormat: $scope.xAxisTickFormatFunction()
                 },
                 yAxis: {
@@ -42,8 +42,8 @@ angular.module('gnittyApp')
 
         function generateData() {
           var values = [];
-         for (var i=0; i<stats.data.bars.length; i++) {
-          values.push({x: i, y: stats.data.bars[i]});
+         for (var i=0; i<emails.bars.bars.length; i++) {
+          values.push({x: i, y: emails.bars.bars[i]});
          // var our_layers = [{
          //      key: 'emails',
          //      values: [{

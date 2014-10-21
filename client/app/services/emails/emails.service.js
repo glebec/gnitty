@@ -8,6 +8,7 @@ angular.module('gnittyApp')
     this.data = {};
     this.dateLengthArr = [];
     this.textArr = [];
+    this.bars = {};
 
     // Main setter function
     this.setData = function setData (data) {
@@ -16,6 +17,7 @@ angular.module('gnittyApp')
       var retrieved = _emails.separateDatasets();
       _emails.dateLengthArr = retrieved.dateLengthArr;
       _emails.textArr = retrieved.textArr;
+      _emails.bars = _emails.splitDates(this.dateLengthArr);
       console.log('Also derived ' + _emails.textArr.length + ' bodies and '+
         _emails.dateLengthArr.length + ' dates.');
     };
@@ -50,11 +52,8 @@ angular.module('gnittyApp')
       //sort array of objects from smallest date to largest-most-recent date
       dateLengthArr.sort( function (a, b) {return a.date-b.date;} );
       this.latest = Number(dateLengthArr[dateLengthArr.length-1].date);
-      // console.log('earliest = '+ earliest);
       this.earliest = Number(dateLengthArr[0].date);
-      // console.log('latest = '+ latest);
-      var timeSpan = latest - earliest;
-      // console.log('timeSpan = '+ timeSpan);
+      var timeSpan = this.latest - this.earliest;
       //Listed as number of milliseconds since midnight January 1, 1970 UTC
 
       //divide the timeSpan of user's ~1000 emails into 80 pieces (to become 80 bars)
@@ -65,13 +64,9 @@ angular.module('gnittyApp')
         bar[0]=1;
         bar[l] = 0;
       }
-      var delimiter = earliest+barCapacity;
+      var delimiter = this.earliest+barCapacity;
       for (var h=0; h<barNum; h++) {
         for(var i=0; i<dateLengthArr.length; i++) {
-          // console.log('h='+h+', bar'+h+' = '+bar[h]);
-          // console.log(earliest);
-          // console.log(delimiter);
-          // console.log(Number(dateLengthArr[i].date));
           if (delimiter >= Number(dateLengthArr[i].date) &&
             Number(dateLengthArr[i].date) > this.earliest) {
             bar[h]++;
@@ -90,8 +85,7 @@ angular.module('gnittyApp')
       }
       console.log('datesInArray = '+datesInArray);
       console.log('bars in 80 pieces = '+bar);
-      this.bar = bar;
-      return bar;
+      return {bar: bar, earliest: this.earliest, latest: this.latest};
     };
 
     // STRICTLY FOR DEV TESTING — REMOVE BEFORE DEPLOYMENT
