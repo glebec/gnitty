@@ -39,28 +39,24 @@ angular.module('gnittyApp')
     };
 
     this.splitDates = function (dateLengthArr) {
-      for (var j=0; j<dateLengthArr.length; j++) {
-        //convert dates from strings to date objects
-        dateLengthArr[j].date = new Date(dateLengthArr[j].date);
-      }
-        //sort array of objects from smallest date to largest-most-recent date
-        dateLengthArr.sort(function(a, b){return a.date-b.date});
-        var latest = Number(dateLengthArr[dateLengthArr.length-1].date);
-        // console.log('earliest = '+ earliest);
-        var earliest = Number(dateLengthArr[0].date);
-        // console.log('latest = '+ latest);
-        var timeSpan = latest - earliest;
-        // console.log('timeSpan = '+ timeSpan);
-        //Listed as number of milliseconds since midnight January 1, 1970 UTC
+      //sort array of objects from smallest date to largest-most-recent date
+      dateLengthArr.sort(function(a, b){return a.date-b.date});
+      var latest = Number(dateLengthArr[dateLengthArr.length-1].date);
+      // console.log('earliest = '+ earliest);
+      var earliest = Number(dateLengthArr[0].date);
+      // console.log('latest = '+ latest);
+      var timeSpan = latest - earliest;
+      // console.log('timeSpan = '+ timeSpan);
+      //Listed as number of milliseconds since midnight January 1, 1970 UTC
 
-        //divide the timeSpan of user's ~1000 emails into 80 pieces (to become 80 bars)
-        var barNum = 80;
-        var barCapacity = timeSpan/barNum;
-        var bar = [];
-        for (var l=1; l<80; l++) {
-          bar[0]=1;
-          bar[l] = 0;
-        }
+      //divide the timeSpan of user's ~1000 emails into 80 pieces (to become 80 bars)
+      var barNum = 80;
+      var barCapacity = timeSpan/barNum;
+      var bar = [];
+      for (var l=1; l<80; l++) {
+        bar[0]=1;
+        bar[l] = 0;
+      }
       var delimiter = earliest+barCapacity;
       for (var h=0; h<barNum; h++) {
         for(var i=0; i<dateLengthArr.length; i++) {
