@@ -80,6 +80,7 @@ angular.module('gnittyApp')
       var emailData = {};
       // asynchronous counters for limiting and notifying
       var getCount = 0;
+      var receivedCount = 0;
       var doneCount = 0;
 
       // Here we go!
@@ -118,6 +119,7 @@ angular.module('gnittyApp')
       function parseAndSave (batchResponse) {
         console.log( '________\nFetched emails; now parsing.' );
         var responses = batchResponse.result;
+        receivedCount += BATCH_SIZE;
         // get gmails, parse and store in 'emails' AJS service
         for ( var id in responses ) {
           var gmailObj = responses[id].result;
@@ -131,7 +133,7 @@ angular.module('gnittyApp')
         emailDeferral.notify( doneCount );
         console.log( doneCount + ' total parsed & stored.\n^^^^^^^^' );
         // If this is the last batch, resolve the master promise.
-        if ( getCount >= MSG_LIMIT ) emailDeferral.resolve( emailData );
+        if ( receivedCount >= MSG_LIMIT ) emailDeferral.resolve( emailData );
       }
 
       // Error response handlers.
