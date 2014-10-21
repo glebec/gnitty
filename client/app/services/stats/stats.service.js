@@ -23,7 +23,7 @@ angular.module('gnittyApp')
         // bars: $scope.bars
       };
       _stats.data = statObj;
-      console.log( 'saved object: ', _stats.data );
+      console.log( 'Saved to stats: ', _stats.data );
     };
 
     // STRICTLY FOR DEV TESTING — REMOVE BEFORE DEPLOYMENT
