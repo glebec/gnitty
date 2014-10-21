@@ -26,4 +26,19 @@ angular.module('gnittyApp')
       console.log( 'saved object: ', _stats.data );
     };
 
+    // STRICTLY FOR DEV TESTING — REMOVE BEFORE DEPLOYMENT
+    this.setLocal = function () {
+      console.log ( 'Saving to local storage: ', this.data );
+      localStorage.setItem( 'stats', JSON.stringify( this.data ) );
+    };
+    this.getLocal = function () {
+      var storage = JSON.parse( localStorage.getItem( 'stats' ) );
+      if ( !storage ) {
+        console.log('No / incomplete local storage found. Please fetch.');
+      } else {
+        this.data = storage;
+        console.log( 'Retrieved local storage and set data: ', this.data );
+      }
+    };
+
   });
