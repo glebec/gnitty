@@ -21,15 +21,13 @@ angular.module('gnittyApp')
         MSG_LIMIT  = 1000,
         BATCH_SIZE = 100;
 
-    // A controller-ready trigger for collecting emails.
-    // If immediate mode worked, this would skip the login window flash.
+    // A controller-ready trigger for running any number of other gAPI calls.
+    // If immediate mode worked, this would skip the login window flash…
     // TODO: enable immediate mode without breaking.
-    // Result: returns promise for emaildata object, for external consumption.
-    this.fetch = function () {
-      function logErr (err) { console.log( err ); }
+    // Result: returns promise, attach a gAPI method requiring gmail auth.
+    this.start = function () {
       return _gAPI.checkAuth()
-        .then( _gAPI.loadGmail )
-        .then( _gAPI.collectEmails, logErr );
+        .then( _gAPI.loadGmail );
     };
 
 
@@ -61,15 +59,15 @@ angular.module('gnittyApp')
       return authDeferral.promise;
     };
 
-
-    /*----------------------------------------------------------------
-    Gmail-specific actions (convenience methods definded further down)
-    ----------------------------------------------------------------*/
-
     // Assumes authorized access via checkAuth above. Returns a promise.
     this.loadGmail = function loadGmail () {
       return gapi.client.load( 'gmail', 'v1' );
     };
+
+
+    /*----------------------------------------------------------------
+    Gmail-specific actions (convenience methods definded further down)
+    ----------------------------------------------------------------*/
 
     // Assumes Gmail API loaded via loadGmail above.
     // Fetches message IDs, then batch requests actual messages,

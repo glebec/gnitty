@@ -20,32 +20,40 @@ angular.module('gnittyApp')
     $scope.fetchBtnText = 'Gnitify!';
     // fetch emails from Gmail API and store them in the email service
     $scope.fetch = function () {
-      $scope.fetchBtnText = 'Fetching…';
-      gAPI.fetch().then(
-        function fetchSuccess ( emailData ) {
-          emails.setData( emailData );
-          $scope.fetchBtnText = 'Fetched!';
-        },
-        null,
-        function fetchUpdate ( update ) {
-          $scope.fetchBtnText = 'Fetching: ' + update;
-        }
-      ).then(
-        function analyze () {
-          $scope.fetchBtnText = 'Analyzing…';
-          return postAlchemy.sendToAlchemy( emails.textArr.join('') );
-        }
-      ).then(
-        function absorbAlchemy (analysis) {
-          stats.parseAlchemyData( analysis );
-          $scope.fetchBtnText = 'Analyzed!';
-          // route to D3 charts page
-        },
-        function gnittyErr (err) {
-          console.log ( 'Fetch or alchemy call failed: ', err );
-          $scope.fetchBtnText = 'OOPS…';
-        }
-      );
+      $scope.fetchBtnText = 'Authorizing…';
+      gAPI.start().then( runFetchers );
+
+      function runFetchers () {
+        $scope.fetchBtnText = 'Fetching…';
+
+        gAPI.collectEmails().then(
+          function fetchSuccess ( emailData ) {
+            $scope.fetchBtnText = 'Fetched!';
+            emails.setData( emailData );
+          },
+          null,
+          function fetchUpdate ( update ) {
+            $scope.fetchBtnText = 'Fetching: ' + update;
+          }
+        ).then(
+          function analyze () {
+            $scope.fetchBtnText = 'Analyzing…';
+            return postAlchemy.sendToAlchemy( emails.textArr.join('') );
+          }
+        ).then(
+          function absorbAlchemy (analysis) {
+            $scope.fetchBtnText = 'Analyzed!';
+            stats.parseAlchemyData( analysis );
+            // route to D3 charts page
+          },
+          function gnittyErr (err) {
+            console.log ( 'Fetch or alchemy call failed: ', err );
+            $scope.fetchBtnText = 'OOPS…';
+          }
+        );
+
+      }
+
     };
 
     // show stored data
