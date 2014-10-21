@@ -35,7 +35,7 @@ angular.module('gnittyApp')
           $scope.fetchBtnText = 'Analyzed!';
           // route to D3 charts page
         },
-        function err (err) {
+        function gnittyErr (err) {
           console.log ( 'Fetch or alchemy call failed: ', err );
           $scope.fetchBtnText = 'OOPS…';
         }
