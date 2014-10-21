@@ -28,8 +28,8 @@ angular.module('gnittyApp')
     this.fetch = function () {
       function logErr (err) { console.log( err ); }
       return _gAPI.checkAuth()
-        .then(_gAPI.loadGmail)
-        .then(_gAPI.collectEmails, logErr);
+        .then( _gAPI.loadGmail )
+        .then( _gAPI.collectEmails, logErr );
     };
 
 
@@ -74,7 +74,7 @@ angular.module('gnittyApp')
     // Assumes Gmail API loaded via loadGmail above.
     // Fetches message IDs, then batch requests actual messages,
     // then parses them. Returns a promise that resolves to emaildata object.
-    this.collectEmails = function collectEmails () {
+    this.collectEmails = function collectEmails (query) {
       // Return values: a master promise, and data to resolve it with.
       var emailDeferral = $q.defer();
       var emailData = {};

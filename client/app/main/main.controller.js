@@ -31,12 +31,12 @@ angular.module('gnittyApp')
           $scope.fetchBtnText = 'Fetching: ' + update;
         }
       ).then(
-        function postIt () {
+        function analyze () {
           $scope.fetchBtnText = 'Analyzing…';
           return postAlchemy.sendToAlchemy( emails.textArr.join('') );
         }
       ).then(
-        function (analysis) {
+        function absorbAlchemy (analysis) {
           stats.parseAlchemyData( analysis );
           $scope.fetchBtnText = 'Analyzed!';
           // route to D3 charts page
