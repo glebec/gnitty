@@ -11,7 +11,7 @@ angular.module('gnittyApp')
     $scope.getLocal = function () { emails.getLocal(); };
 
     // Fetch button status
-    $scope.fetchBtnText = 'Fetch Messages';
+    $scope.fetchBtnText = 'Gnitify!';
     // fetch emails from Gmail API and store them in the email service
     $scope.fetch = function () {
       $scope.fetchBtnText = 'Fetching…';
