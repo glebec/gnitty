@@ -2,11 +2,17 @@
 
 angular.module('gnittyApp')
   .controller('SentVsGotCtrl', ['$scope', 'stats', 'emails', function($scope, stats, emails){
+  $scope.emails = {};
+  $scope.emails.bars = [];
+  $scope.emails.bars.earliest = new Date(emails.bars.earliest);
+  console.log($scope.emails.bars.earliest);
+  $scope.emails.bars.latest = new Date(emails.bars.latest);
+  console.log($scope.emails.bars.latest);
 
   $scope.options = {
             chart: {
                 type: 'multiBarChart',
-                height: 450,
+                height: 600,
                 margin : {
                     top: 20,
                     right: 20,
@@ -15,17 +21,18 @@ angular.module('gnittyApp')
                 },
                 clipEdge: true,
                 staggerLabels: true,
-                transitionDuration: 500,
+                transitionDuration: 1000,
+                tooltips: false,
                 stacked: true,
                 xAxis: {
                     axisLabel: 'Time',
-                    showMaxMin: true,
-                    tickFormat: function(d){
-                        return d3.format(',f')(d);
-                    }
+                    // showMaxMin: true,
+                    // tickFormat: function(d){
+                    //     return d3.format(',f')(d);
+                    // }
                 },
                 yAxis: {
-                    axisLabel: 'Emails from'+ emails.bars.earliest+"to"+emails.bars.latest,
+                    axisLabel: 'Number of emails',
                     axisLabelDistance: 40,
                     tickFormat: function(d){
                         return d3.format(',f')(d);
