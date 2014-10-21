@@ -6,7 +6,7 @@ angular.module('gnittyApp')
       keywords,
       concepts;
     var _thisService = this;
-    this.sendToAlchemy = function(emails,cb) {
+    this.sendToAlchemy = function(emails, cb) {
       $http.post('/api/alchemy', {
           text: emails,
           outputMode: 'json'
@@ -33,7 +33,7 @@ angular.module('gnittyApp')
               'sentiment': sentiment,
               'keywords': keywords.k,
               'concepts': concepts.c
-            })
+            });
         });
 
         };
