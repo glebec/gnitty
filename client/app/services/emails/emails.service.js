@@ -6,41 +6,41 @@ angular.module('gnittyApp')
 
     this.data = {};
     this.dateLengthArr = [];
+    this.textArr = [];
 
-    // Setter also takes care of updating derived values
-    this.setData = function (data) {
+    // Main setter function
+    this.setData = function setData (data) {
       _emails.data = data;
-      _emails.dateLengthArr = _emails.getDatesAndLengths();
+      // derive values based on data and cache for easy access:
+      var retrieved = _emails.separateDatasets();
+      _emails.dateLengthArr = retrieved.dateLengthArr;
+      _emails.textArr = retrieved.textArr;
+      console.log(_emails.textArr, _emails.dateLengthArr);
     };
 
-    // TODO: reduce for-in looping for performance (next two functions).
-
-    this.getDatesAndLengths = function() {
+    // Combined two for-in loops into one
+    this.separateDatasets = function separateDatasets () {
+      var datasets = {};
       var dateLengthArr = [];
+      var textArr = [];
+      var charCount = 0;
+      var textLimit = 50000; // test with Alchemy
       for ( var id in this.data ) {
+        // dates and lengths for scatterplot
         dateLengthArr.push({
           date: this.data[id].date,
           tlength: this.data[id].plain.length
         });
+        // text for Alchemy analysis
+        charCount += this.data[id].plain.length;
+        if ( charCount < textLimit ) textArr.push( this.data[id].plain );
       }
-      return dateLengthArr;
-    };
-
-    this.getBody = function() {
-      var textArr = [];
-      for ( var id in this.data ) {
-        textArr.push( this.data[id].plain );
-      }
-      // for (var o=0; 0<textArr.length; o++) {
-      //   this.wordCount += textArr[0].length;
-      // }
-      textArr = textArr.slice( 0, 20);
-      return textArr;
+      return { dateLengthArr: dateLengthArr, textArr: textArr };
     };
 
     this.splitDates = function (dateLengthArr) {
       //sort array of objects from smallest date to largest-most-recent date
-      dateLengthArr.sort(function(a, b){return a.date-b.date});
+      dateLengthArr.sort( function (a, b) {return a.date-b.date;} );
       var latest = Number(dateLengthArr[dateLengthArr.length-1].date);
       // console.log('earliest = '+ earliest);
       var earliest = Number(dateLengthArr[0].date);

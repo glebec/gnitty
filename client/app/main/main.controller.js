@@ -38,8 +38,8 @@ angular.module('gnittyApp')
       $scope.postIt();
     };
 
-    $scope.getText = function() {
-      $scope.joinText = emails.getBody().join('');
+    $scope.getText = function () {
+      $scope.joinText = emails.textArr.join('');
       console.log('characters in text: ', $scope.joinText.length);
       return $scope.joinText;
     };
