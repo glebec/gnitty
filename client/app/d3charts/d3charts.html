@@ -33,11 +33,12 @@
 </div>
 <!--EMAIL SCATTER CHART -->
 <div ng-controller="emailScatterChartCtrl">
-  <h4>Your sent messages.  All of them.</h4>
+  <h4>Your last 1,000 messages by date (x) and time (y)</h4>
   <nvd3 options="options" data="data" xAxisTickFormat="xAxisTickFormatFunction()"></nvd3>
 </div>
 <div ng-controller="SentVsGotCtrl">
-  <h4>Number of emails sent vs. received</h4>
+  <h4>Your last 1,000 emails: sent vs. received</h4>
+  <h5>Starting at , ending with </h5>
   <nvd3 options="options" data="data"></nvd3>
 </div>
 <div ng-controller="MainCtrl">

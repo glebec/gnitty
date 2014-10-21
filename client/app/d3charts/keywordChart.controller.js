@@ -2,8 +2,8 @@
 
 angular.module('gnittyApp')
   .controller('KeywordChartCtrl', ['$scope', 'stats', function($scope, stats){
-      console.log('stats.data :', stats.data);
-      console.log('number of keywords: ', stats.data.keywords.length);
+      // console.log('stats.data :', stats.data);
+      // console.log('number of keywords: ', stats.data.keywords.length);
       $scope.options = {
                 chart: {
                     type: 'scatterChart',

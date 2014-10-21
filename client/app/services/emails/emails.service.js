@@ -69,16 +69,13 @@ angular.module('gnittyApp')
       var barNum = 80;
       var barCapacity = timeSpan/barNum;
       var bar = [];
-      for (var l=1; l<80; l++) {
-        bar[0]=1;
-        bar[l] = 0;
-      }
       var delimiter = this.earliest+barCapacity;
       for (var h=0; h<barNum; h++) {
+        bar[h] = [];
         for(var i=0; i<dateLengthSentBoolArr.length; i++) {
           if (delimiter >= Number(dateLengthSentBoolArr[i].date) &&
             Number(dateLengthSentBoolArr[i].date) > this.earliest) {
-            bar[h]++;
+            bar[h].push({date: dateLengthSentBoolArr[i].date, sentBool: dateLengthSentBoolArr[i].sent});
           }
         }
         dateLengthSentBoolArr = dateLengthSentBoolArr.slice(bar[h], dateLengthSentBoolArr.length);
@@ -90,31 +87,34 @@ angular.module('gnittyApp')
 
       var datesInArray = 0;
       for(var k=0; k<80; k++) {
-        datesInArray+=bar[k];
+        datesInArray=bar.length;
       }
-      console.log('datesInArray = '+datesInArray);
-      console.log('bars in 80 pieces = '+bar);
-      return {bar: bar, earliest: this.earliest, latest: this.latest};
+      // console.log('datesInArray = ', datesInArray);
+      // console.log('bars in 80 pieces = ', bar);
+      return {bars: bar, earliest: this.earliest, latest: this.latest};
     };
 
     // STRICTLY FOR DEV TESTING — REMOVE BEFORE DEPLOYMENT
     this.setLocal = function () {
-      console.log ('Saving to local storage: ', this.data, this.dateLengthSentBoolArr, this.textArr );
+      console.log ('Saving to local storage: ', this.data, this.dateLengthSentBoolArr, this.textArr, this.bars );
       localStorage.setItem( 'emails', JSON.stringify(this.data) );
       localStorage.setItem( 'dateLengths', JSON.stringify(this.dateLengthSentBoolArr) );
+      localStorage.setItem( 'bars', JSON.stringify(this.bars));
       localStorage.setItem( 'texts', JSON.stringify(this.textArr) );
     };
     this.getLocal = function () {
       var emails = JSON.parse( localStorage.getItem('emails') );
       var dateLengths = JSON.parse( localStorage.getItem('dateLengths') );
       var texts = JSON.parse( localStorage.getItem('texts') );
-      if ( !emails || !dateLengths || !texts ) {
+      var bars = JSON.parse(localStorage.getItem('bars'));
+      if ( !emails || !dateLengths || !texts ||!bars) {
         console.log('No / incomplete local storage found. Please fetch.');
       } else {
         this.data = emails;
         this.dateLengthSentBoolArr = dateLengths;
         this.textArr = texts;
-        console.log( 'Retrieved local storage and set data: ', this.data, this.dateLengthSentBoolArr, this.textArr );
+        this.bars = bars;
+        console.log( 'Retrieved local storage and set data: ', this.data, this.dateLengthSentBoolArr, this.textArr, this.bars );
       }
     };
   });
