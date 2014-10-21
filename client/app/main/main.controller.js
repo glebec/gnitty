@@ -17,8 +17,8 @@ angular.module('gnittyApp')
       $scope.fetchBtnText = 'Fetching…';
       gAPI.fetch().then(
         function ( emailData ) {
-          emails.data = emailData;
-          $scope.fetchBtnText = 'Finished!';
+          emails.setData( emailData );
+          $scope.fetchBtnText = 'Fetched!';
         },
         function ( err ) {
           console.log( err );
@@ -31,10 +31,9 @@ angular.module('gnittyApp')
     };
 
     // show stored data
-    $scope.showEmails = function() {
-      console.log('data stored in email service:', emails.data);
-      $scope.dateLengthArray = emails.getDatesAndLengths();
-      console.log("dates length: ", $scope.dateLengthArray.length);
+    $scope.showEmails = function () {
+      console.log('data stored in email service: ', emails.data);
+      console.log('dates length: ', emails.dateLengthArr.length);
       // $scope.bars = emails.splitDates($scope.dateLengthArray);
       $scope.postIt();
     };
@@ -59,7 +58,7 @@ angular.module('gnittyApp')
             concepts: analysis.concepts,
             keywords: analysis.keywords,
             sentiment: analysis.sentiment,
-            dateLengthArray: $scope.dateLengthArray
+            dateLengthArray: emails.dateLengthArr
             // wordCount: emails.wordCount,
             // bars: $scope.bars
           };

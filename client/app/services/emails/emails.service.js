@@ -5,16 +5,37 @@ angular.module('gnittyApp')
     var _emails = this;
 
     this.data = {};
+    this.dateLengthArr = [];
+
+    // Setter also takes care of updating derived values
+    this.setData = function (data) {
+      _emails.data = data;
+      _emails.dateLengthArr = _emails.getDatesAndLengths();
+    };
+
+    // TODO: reduce for-in looping for performance (next two functions).
 
     this.getDatesAndLengths = function() {
       var dateLengthArr = [];
       for ( var id in this.data ) {
         dateLengthArr.push({
-          date:this.data[id].date,
-          tlength:this.data[id].plain.length
+          date: this.data[id].date,
+          tlength: this.data[id].plain.length
         });
       }
       return dateLengthArr;
+    };
+
+    this.getBody = function() {
+      var textArr = [];
+      for ( var id in this.data ) {
+        textArr.push( this.data[id].plain );
+      }
+      // for (var o=0; 0<textArr.length; o++) {
+      //   this.wordCount += textArr[0].length;
+      // }
+      textArr = textArr.slice( 0, 20);
+      return textArr;
     };
 
     this.splitDates = function (dateLengthArr) {
@@ -67,18 +88,6 @@ angular.module('gnittyApp')
       console.log('bars in 80 pieces = '+bar);
       this.bar = bar;
       return bar;
-    };
-
-    this.getBody = function() {
-      var textArr = [];
-      for ( var id in this.data ) {
-        textArr.push( this.data[id].plain );
-      }
-      // for (var o=0; 0<textArr.length; o++) {
-      //   this.wordCount += textArr[0].length;
-      // }
-      textArr = textArr.slice( 0, 20);
-      return textArr;
     };
 
     // STRICTLY FOR DEV TESTING — REMOVE BEFORE DEPLOYMENT
