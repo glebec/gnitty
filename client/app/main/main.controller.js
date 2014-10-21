@@ -34,6 +34,7 @@ angular.module('gnittyApp')
     $scope.showEmails = function () {
       console.log('data stored in email service: ', emails.data);
       console.log('dates length: ', emails.dateLengthArr.length);
+      console.log('text length: ', emails.textArr.length);
       // $scope.bars = emails.splitDates($scope.dateLengthArray);
       $scope.postIt();
     };
@@ -41,24 +42,7 @@ angular.module('gnittyApp')
     $scope.postIt = function () {
       postAlchemy.sendToAlchemy( emails.textArr.join('') ).then(
         function (analysis) {
-          if ( analysis.keywords.length > 50 ) {
-            analysis.keywords = analysis.keywords.slice( 0, 50 );
-          }
-          for (var i = 0; i < analysis.keywords.length; i++) {
-            if ( analysis.keywords[i].text.length > 15 ) {
-              analysis.keywords[i].text = analysis.keywords[i].text.slice(0, 15) + '…';
-            }
-          }
-          var statObj = {
-            concepts: analysis.concepts,
-            keywords: analysis.keywords,
-            sentiment: analysis.sentiment,
-            dateLengthArray: emails.dateLengthArr
-            // wordCount: emails.wordCount,
-            // bars: $scope.bars
-          };
-          stats.data = statObj;
-          console.log('saved object: ', stats.data);
+          stats.parseAlchemyData( analysis );
         },
         function (err) {
           console.log ( 'Alchemy call failed: ', err );
