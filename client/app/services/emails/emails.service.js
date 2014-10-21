@@ -40,6 +40,12 @@ angular.module('gnittyApp')
     };
 
     this.splitDates = function (dateLengthArr) {
+      // Safety typecasting, e.g. in case of stringified data from local store
+      for ( var j = 0; j < dateLengthArr.length; j++ ) {
+        if ( typeof dateLengthArr[j].date !== 'object' ) {
+          dateLengthArr[j].date = new Date( dateLengthArr[j].date );
+        }
+      }
       //sort array of objects from smallest date to largest-most-recent date
       dateLengthArr.sort( function (a, b) {return a.date-b.date;} );
       var latest = Number(dateLengthArr[dateLengthArr.length-1].date);
