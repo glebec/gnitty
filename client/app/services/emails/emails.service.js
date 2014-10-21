@@ -62,6 +62,7 @@ angular.module('gnittyApp')
       dateLengthSentBoolArr.sort( function (a, b) {return a.date-b.date;} );
       this.latest = Number(dateLengthSentBoolArr[dateLengthSentBoolArr.length-1].date);
       this.earliest = Number(dateLengthSentBoolArr[0].date);
+      var temporary = this.earliest;
       var timeSpan = this.latest - this.earliest;
       //Listed as number of milliseconds since midnight January 1, 1970 UTC
 
@@ -91,7 +92,7 @@ angular.module('gnittyApp')
       }
       // console.log('datesInArray = ', datesInArray);
       // console.log('bars in 80 pieces = ', bar);
-      return {bars: bar, earliest: this.earliest, latest: this.latest};
+      return {bars: bar, earliest: temporary, latest: this.latest};
     };
 
     // STRICTLY FOR DEV TESTING — REMOVE BEFORE DEPLOYMENT
