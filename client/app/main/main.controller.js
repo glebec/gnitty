@@ -7,8 +7,8 @@ angular.module('gnittyApp')
     // gAPI.handleClientLoad();
 
     // DEV TESTING ONLY, REMOVE BEFORE DEPLOYMENT
-    $scope.setLocal = function () { emails.setLocal() };
-    $scope.getLocal = function () { emails.getLocal() };
+    $scope.setLocal = function () { emails.setLocal(); };
+    $scope.getLocal = function () { emails.getLocal(); };
 
     // Fetch button status
     $scope.fetchBtnText = 'Fetch Messages';
@@ -16,16 +16,28 @@ angular.module('gnittyApp')
     $scope.fetch = function () {
       $scope.fetchBtnText = 'Fetching…';
       gAPI.fetch().then(
-        function ( emailData ) {
+        function fetchSuccess ( emailData ) {
           emails.setData( emailData );
           $scope.fetchBtnText = 'Fetched!';
         },
-        function ( err ) {
-          console.log( err );
-          $scope.fetchBtnText = 'OOPS…';
-        },
-        function ( update ) {
+        null,
+        function fetchUpdate ( update ) {
           $scope.fetchBtnText = 'Fetching: ' + update;
+        }
+      ).then(
+        function postIt () {
+          $scope.fetchBtnText = 'Analyzing…';
+          return postAlchemy.sendToAlchemy( emails.textArr.join('') );
+        }
+      ).then(
+        function (analysis) {
+          stats.parseAlchemyData( analysis );
+          $scope.fetchBtnText = 'Analyzed!';
+          // route to D3 charts page
+        },
+        function err (err) {
+          console.log ( 'Fetch or alchemy call failed: ', err );
+          $scope.fetchBtnText = 'OOPS…';
         }
       );
     };
@@ -36,18 +48,6 @@ angular.module('gnittyApp')
       console.log('dates length: ', emails.dateLengthArr.length);
       console.log('text length: ', emails.textArr.length);
       // $scope.bars = emails.splitDates($scope.dateLengthArray);
-      $scope.postIt();
-    };
-
-    $scope.postIt = function () {
-      postAlchemy.sendToAlchemy( emails.textArr.join('') ).then(
-        function (analysis) {
-          stats.parseAlchemyData( analysis );
-        },
-        function (err) {
-          console.log ( 'Alchemy call failed: ', err );
-        }
-      );
     };
 
     $scope.link = 'http://www.ginnabaker.com';
