@@ -46,7 +46,7 @@ angular.module('gnittyApp')
 
 
 //replace 10,000 with totalEmails
-        $scope.data = generateData(1, stats.data.dateLengthArray.length);
+        $scope.data = generateData(1, stats.data.dateLengthSentBoolArray.length);
 
 //needs 2 inputs here
 // $scope.totalEmails = $scope.statistics[0].dateArray.length;
@@ -61,20 +61,20 @@ angular.module('gnittyApp')
             for (var i = 0; i < points; i++) {
                 data.push({
                     //insert date here
-                    key: 'Email from ' + stats.data.dateLengthArray[i].date,
+                    key: 'Email from ' + stats.data.dateLengthSentBoolArray[i].date,
                     values: []
                 });
             }
             for (var j = 0; j < points; j++) {
-              stats.data.dateLengthArray[j].date = new Date(stats.data.dateLengthArray[j].date);
-              // console.log('date = ', Number(stats.data.dateLengthArray[j].date));
-              // console.log('hour = ', Number(stats.data.dateLengthArray[j].date)%(24*60*60)/(60*60));
+              stats.data.dateLengthSentBoolArray[j].date = new Date(stats.data.dateLengthSentBoolArray[j].date);
+              // console.log('date = ', Number(stats.data.dateLengthSentBoolArray[j].date));
+              // console.log('hour = ', Number(stats.data.dateLengthSentBoolArray[j].date)%(24*60*60)/(60*60));
               //   // %(24*60*60*1000));
-              // console.log('minute = '+String(stats.data.dateLengthArray[j].date).slice(20, 22));
+              // console.log('minute = '+String(stats.data.dateLengthSentBoolArray[j].date).slice(20, 22));
                 data[j].values.push({
-                    x: stats.data.dateLengthArray[j].date//email date here
-                    , y: Number(String(stats.data.dateLengthArray[j].date).slice(16, 18)+"."+String(stats.data.dateLengthArray[j].date).slice(19, 21))
-                    , size: stats.data.dateLengthArray[j].tlength
+                    x: stats.data.dateLengthSentBoolArray[j].date//email date here
+                    , y: Number(String(stats.data.dateLengthSentBoolArray[j].date).slice(16, 18)+"."+String(stats.data.dateLengthSentBoolArray[j].date).slice(19, 21))
+                    , size: stats.data.dateLengthSentBoolArray[j].tlength
                     , shape: shapes[j % 6]
                 });
             };
