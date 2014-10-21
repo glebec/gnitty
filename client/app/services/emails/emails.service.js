@@ -4,6 +4,7 @@ angular.module('gnittyApp')
   .service('emails', function () {
     var _emails = this;
 
+    // Primary data stores
     this.data = {};
     this.dateLengthArr = [];
     this.textArr = [];
@@ -88,16 +89,22 @@ angular.module('gnittyApp')
 
     // STRICTLY FOR DEV TESTING — REMOVE BEFORE DEPLOYMENT
     this.setLocal = function () {
-      console.log ('Saving to local storage: ', this.data );
-      localStorage.setItem( 'testData', JSON.stringify(this.data) );
+      console.log ('Saving to local storage: ', this.data, this.dateLengthArr, this.textArr );
+      localStorage.setItem( 'emails', JSON.stringify(this.data) );
+      localStorage.setItem( 'dateLengths', JSON.stringify(this.dateLengthArr) );
+      localStorage.setItem( 'texts', JSON.stringify(this.textArr) );
     };
     this.getLocal = function () {
-      var storage = JSON.parse( localStorage.getItem('testData') );
-      if (!storage) {
-        console.log('No local storage found. Please fetch.');
+      var emails = JSON.parse( localStorage.getItem('emails') );
+      var dateLengths = JSON.parse( localStorage.getItem('dateLengths') );
+      var texts = JSON.parse( localStorage.getItem('texts') );
+      if ( !emails || !dateLengths || !texts ) {
+        console.log('No / incomplete local storage found. Please fetch.');
       } else {
-        this.data = storage;
-        console.log( 'Retrieved local storage and set data: ', this.data );
+        this.data = emails;
+        this.dateLengthArr = dateLengths;
+        this.textArr = texts;
+        console.log( 'Retrieved local storage and set data: ', this.data, this.dateLengthArr, this.textArr );
       }
     };
   });
