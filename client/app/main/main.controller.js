@@ -51,7 +51,7 @@ angular.module('gnittyApp')
     // show stored data
     $scope.showEmails = function () {
       console.log('data stored in email service: ', emails.data);
-      console.log('dates length: ', emails.dateLengthArr.length);
+      console.log('dates length: ', emails.dateLengthSentBoolArr.length);
       console.log('text length: ', emails.textArr.length);
     };
 

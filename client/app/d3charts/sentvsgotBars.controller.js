@@ -26,7 +26,9 @@ angular.module('gnittyApp')
                 xAxis: {
                     axisLabel: 'Time',
                     showMaxMin: true,
-                    tickFormat: $scope.xAxisTickFormatFunction()
+                    tickFormat: function(d){
+                        return d3.format(',f')(d);
+                    }
                 },
                 yAxis: {
                     axisLabel: 'Emails from',
