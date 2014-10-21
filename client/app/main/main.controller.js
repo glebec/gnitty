@@ -39,15 +39,16 @@ angular.module('gnittyApp')
     };
 
     $scope.postIt = function () {
-      postAlchemy.sendToAlchemy( emails.textArr.join(''), function(analysis) {
-        if ( analysis.keywords.length > 50 ) {
-          analysis.keywords = analysis.keywords.slice( 0, 50 );
-        }
-        for (var i = 0; i < analysis.keywords.length; i++) {
-          if ( analysis.keywords[i].text.length > 15 ) {
-            analysis.keywords[i].text = analysis.keywords[i].text.slice(0, 15) + '…';
+      postAlchemy.sendToAlchemy( emails.textArr.join('') ).then(
+        function (analysis) {
+          if ( analysis.keywords.length > 50 ) {
+            analysis.keywords = analysis.keywords.slice( 0, 50 );
           }
-        }
+          for (var i = 0; i < analysis.keywords.length; i++) {
+            if ( analysis.keywords[i].text.length > 15 ) {
+              analysis.keywords[i].text = analysis.keywords[i].text.slice(0, 15) + '…';
+            }
+          }
           var statObj = {
             concepts: analysis.concepts,
             keywords: analysis.keywords,
@@ -58,7 +59,11 @@ angular.module('gnittyApp')
           };
           stats.data = statObj;
           console.log('saved object: ', stats.data);
-      });
+        },
+        function (err) {
+          console.log ( 'Alchemy call failed: ', err );
+        }
+      );
     };
 
     $scope.link = 'http://www.ginnabaker.com';
