@@ -7,8 +7,14 @@ angular.module('gnittyApp')
     // gAPI.handleClientLoad();
 
     // DEV TESTING ONLY, REMOVE BEFORE DEPLOYMENT
-    $scope.setLocal = function () { emails.setLocal(); };
-    $scope.getLocal = function () { emails.getLocal(); };
+    $scope.setLocal = function () {
+      emails.setLocal();
+      stats.setLocal();
+    };
+    $scope.getLocal = function () {
+      emails.getLocal();
+      stats.getLocal();
+    };
 
     // Fetch button status
     $scope.fetchBtnText = 'Gnitify!';
@@ -35,7 +41,7 @@ angular.module('gnittyApp')
           $scope.fetchBtnText = 'Analyzed!';
           // route to D3 charts page
         },
-        function err (err) {
+        function gnittyErr (err) {
           console.log ( 'Fetch or alchemy call failed: ', err );
           $scope.fetchBtnText = 'OOPS…';
         }

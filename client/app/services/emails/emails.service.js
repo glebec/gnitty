@@ -16,7 +16,8 @@ angular.module('gnittyApp')
       var retrieved = _emails.separateDatasets();
       _emails.dateLengthArr = retrieved.dateLengthArr;
       _emails.textArr = retrieved.textArr;
-      console.log(_emails.textArr, _emails.dateLengthArr);
+      console.log('Also derived ' + _emails.textArr.length + ' bodies and '+
+        _emails.dateLengthArr.length + ' dates.');
     };
 
     // Combined two for-in loops into one
