@@ -67,7 +67,13 @@ footer {
 
 .jumbotron {
   height: 300px;
-  h1 { margin-top: 75px; }
+  background: #696969 url("/assets/images/dotHeader.png") left top;
+  color: white;
+}
+
+.titleBlock {
+  margin-top: 75px;
+  background: rgba(0,0,0,0.4);
 }
 
 .divider {
