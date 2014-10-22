@@ -1,91 +1,59 @@
-<div ng-include="'components/navbar/navbar.html'"></div>
+<div class="jumbotron">
+  <div class="container center">
+    <h1>Gnitty</h1>
+    <p>Visualize your Gmail</p>
+  </div>
+</div>
 
-  <div class='row'>
-      <div class="col-1-2 center" id='landingText'>
-      <h1>gNitify your Gmail!</h1>
+<div class="container">
 
+  <div class="row">
+
+    <div id='landingText' class="center">
       <p class="lead">
-        Watch your email habits as they trend over time.<br />
-        See what words and tones you employ most often.<br />
-        Keep track of friends you haven't heard from in a while.</p>
-      </div>
-      <img class='col-1-2 imgMail animated bounceInRight' src='http://s28.postimg.org/55p2hmol9/gmailicons.png' id='gmailIcon'/>
+        Gain insight into the tone of your recent messages.<br />
+        Compare your inbox statistics to national averages.<br />
+        See your email habits as over time.</p>
+      <h2>Ready?</h2>
+      <button ng-click="fetch()" class="btn btn-primary btn-lg withripple">{{fetchBtnText}}</button>
+    </div>
+
+    <img class='imgMail animated bounceInRight' src='http://s28.postimg.org/55p2hmol9/gmailicons.png' id='gmailIcon'/>
+
   </div>
 
-  <div class='divider'></div>
+  <div class="row">
 
-      <div class='container center boxText well'>
-        <h2>Login with Gmail</h2>
-        <hr>
-        <div class='row'>
-          <div class='col-sm-4 col-lg-4 center'>
-            <h3><p>Step 1</p></h3>
-            <button ng-click='fetch()' class='btn btn-primary btn-lg withripple'>{{fetchBtnText}}</button>
-          </div>
-          <div class='col-sm-4 col-lg-4 center'>
-            <h3><p>Dev Tools</p></h3>
-          <button ng-click="showEmails()" class='btn btn-primary btn-lg withripple'>List Data</button>
-          <button ng-click='setLocal()' class='btn btn-primary btn-lg withripple'>Save to Local</button>
-          <button ng-click='getLocal()' class='btn btn-primary btn-lg withripple'>Get from Local</button>
+    <div class="col-xs-12 col-sm-6">
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h3 class="panel-title">Email Intelligence</h3>
         </div>
-          <div class='col-sm-4 col-lg-4 center'>
-            <h3><p>Step 2</p></h3>
-           <a href="/d3charts" class='btn btn-primary btn-lg withripple'>SEE DATA!</a>
-         </div>
+        <div class="panel-body">
+          <br />
+          <img class="displayed pull-right" src="http://s7.postimg.org/xbb85ehfv/email_icon.png" style="width:100px; height:100px" />
+          <br />
+          <p class="homeText">Pick out patterns, understand your inbox. Gnitty lets you get down to the nitty-gritty of your last 1,000 GMail messages.</p>
         </div>
       </div>
+    </div>
 
-  <div class='divider'>
+    <div class="col-xs-12 col-sm-6">
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h3 class="panel-title">Free, Easy & Secure</h3>
+        </div>
+        <div class="panel-body">
+          <br />
+          <img class="displayed pull-right" src="http://s27.postimg.org/so4xck8wj/security_user_shield_icon.png" style="width:100px; height:100px" />
+          <br />
+          <p class="homeText">Authenticated through Google, meaning you remain in control. Gnitty processes your mail in the browser, saving nothing. We do not use or share your data except to serve you interesting graphs.</p>
+        </div>
+      </div>
+    </div>
+
   </div>
 
-<br />
-<section>
-  <div class='row'>
-    <div class='col-sm-1 col-lg-1'></div>
-    <div class='col-sm-4 col-lg-4'>
-          <div class="panel panel-primary">
-              <div class="panel-heading">
-                  <h3 class="panel-title">Email Intelligence</h3>
-              </div>
-              <div class="panel-body">
-                  <br />
-                   <img class='displayed' src='http://s7.postimg.org/xbb85ehfv/email_icon.png' style="width:150px; height:150px"/>
-                  <br />
-                  <p class='homeText'>Get data on hourly and weekly volume. Find out which friends you haven't
-                    contacted in a long time. See metrics on average response time, most frequently
-                    used words and phrases, email length as well as common subject lines, greetings
-                    and closing.
-              </div>
-          </div>
-      </div>
-
-
-<div class='col-sm-2 col-lg-2'></div>
-   <div class='col-sm-4 col-lg-4'>
-            <div class="panel panel-primary">
-              <div class="panel-heading">
-                  <h3 class="panel-title">Free, Easy & Secure</h3>
-              </div>
-              <div class="panel-body">
-                  <br />
-                   <img class='displayed' src='http://s27.postimg.org/so4xck8wj/security_user_shield_icon.png' style="width:150px; height:150px"/>
-                  <br />
-                  <p class='homeText'>gNitty is a secure service run on the "No Assholery" rule.
-                  gNitty does not store your emails or share your information with third parties.
-                  Our product will always be free.
-              </div>
-          </div>
-      </div>
-
-  <div class='col-sm-1 col-lg-1'></div>
-
-  </div>
-  <section>
-
-<br />
-<br />
+</div>
 
 <div ng-include="'components/footer/footer.html'"></div>
-
-
-
