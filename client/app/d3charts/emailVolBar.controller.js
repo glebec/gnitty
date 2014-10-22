@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('gnittyApp')
-  .controller('emailVolBarCtrl', ['$scope', 'stats', function($scope, stats){
+  .controller('emailVolBarCtrl', ['$scope', 'stats', 'emails', function($scope, stats, emails){
 
     // avg person received = 5,579 emails
     // add data on line 45
@@ -25,23 +25,19 @@ angular.module('gnittyApp')
             showValues: true,
             valueFormat: function(d){
                 return d3.format(',f')(d);
-            },
-            // xAxis: {
-            //     axisLabel: ''
-            // },
-            // yAxis: {
-            //     axisLabel: '',
-            //     axisLabelDistance: 30
-            // }
+            }
         }
     };
+
+    $scope.emailsPerYear = emails.inboxVolume(emails.dateLengthSentBoolArr);
+
         $scope.data = [
             {
                 key: "Cumulative Return",
                 values: [
                     {
                         "label" : "You",
-                        "value" : 3000
+                        "value" : $scope.emailsPerYear
                     } ,
                     {
                         "label" : "Average American",

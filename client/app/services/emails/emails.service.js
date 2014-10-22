@@ -29,7 +29,7 @@ angular.module('gnittyApp')
       var dateLengthSentBoolArr = [];
       var textArr = [];
       var charCount = 0;
-      var textLimit = 50000; // test with Alchemy
+      var textLimit = 50000; // with Alchemy
 
       for ( var id in this.data ) {
         // dates and lengths for scatterplot
@@ -63,12 +63,12 @@ angular.module('gnittyApp')
       this.latest = Number(dateLengthSentBoolArr[dateLengthSentBoolArr.length-1].date);
       this.earliest = Number(dateLengthSentBoolArr[0].date);
       var temporary = this.earliest;
-      var timeSpan = this.latest - this.earliest;
+      _emails.timeSpan = this.latest - this.earliest;
       //Listed as number of milliseconds since midnight January 1, 1970 UTC
 
       //divide the timeSpan of user's ~1000 emails into 80 pieces (to become 80 bars)
       var barNum = 80;
-      var barCapacity = timeSpan/barNum;
+      var barCapacity = _emails.timeSpan/barNum;
       var bar = [];
       var delimiter = this.earliest+barCapacity;
       for (var h=0; h<barNum; h++) {
@@ -92,8 +92,36 @@ angular.module('gnittyApp')
       }
       // console.log('datesInArray = ', datesInArray);
       // console.log('bars in 80 pieces = ', bar);
-      return {bars: bar, earliest: temporary, latest: this.latest};
+
+      return {bars: bar, earliest: temporary, latest: this.latest, barCapacity: barCapacity};
     };
+
+    this.inboxVolume = function(dateLengthSentBoolArr) {
+      var indicator = 0;
+      //calculate number of received emails in partial inbox
+      for (var w=0; w<dateLengthSentBoolArr.length; w++) {
+        if (dateLengthSentBoolArr[w].sent === false) {
+          indicator ++;
+        }
+      }
+      // 31536000000 = number of milliseconds in 1 year
+      var partOfYear = _emails.timeSpan/31536000000;
+      var emailsPerYear = indicator * (1/partOfYear);
+      return emailsPerYear;
+    };
+
+    this.sentWordVol = function(dateLengthSentBoolArr) {
+      var wordsInTimeInt = 0;
+      for (var v=0; v<dateLengthSentBoolArr.length; v++) {
+        if (dateLengthSentBoolArr[v].sent === true) {
+          wordsInTimeInt += dateLengthSentBoolArr[v].tlength;
+        }
+      }
+            debugger;
+      var partOfYear = _emails.timeSpan/31536000000;
+      var wordsSentPerYear = wordsInTimeInt * (1/partOfYear);
+      return wordsSentPerYear;
+    }
 
     // STRICTLY FOR DEV TESTING — REMOVE BEFORE DEPLOYMENT
     this.setLocal = function () {

@@ -1,18 +1,18 @@
 'use strict';
 
 angular.module('gnittyApp')
-  .controller('emailScatterChartCtrl', ['$scope', 'stats', function($scope, stats){
+  .controller('emailScatterChartCtrl', ['$scope', 'stats', 'emails', function($scope, stats, emails){
 
       $scope.xAxisTickFormatFunction = function(){
           return function(d){
             return d3.time.format('%x')(new Date(d));
-          }
-      }
+          };
+       };
 
       $scope.options = {
             chart: {
                 type: 'scatterChart',
-                height: 450,
+                height: 600,
                 color: d3.scale.category10().range(),
                 scatter: {
                     onlyCircles: true
@@ -26,12 +26,11 @@ angular.module('gnittyApp')
                 },
                 transitionDuration: 1000,
                 x: function(d, i) {
-                  return new Date(d.x)},
+                  return new Date(d.x);},
                 // fisheye: 1,
                 xAxis: {
                     axisLabel: 'Dates',
                     tickFormat: $scope.xAxisTickFormatFunction(),
-
                 },
                 yAxis: {
                     axisLabel: 'Times',
@@ -44,41 +43,66 @@ angular.module('gnittyApp')
             }
           };
 
-
-//replace 10,000 with totalEmails
-        $scope.data = generateData(1, stats.data.dateLengthSentBoolArray.length);
-
-//needs 2 inputs here
-// $scope.totalEmails = $scope.statistics[0].dateArray.length;
-// $scope.emailDate = $scope.statistics[0].dateArray;
-
-        /* Random Data Generator (took from nvd3.org) */
-        function generateData(groups, points) {
-            var data = [],
-                shapes = ['circle', 'cross', 'triangle-up', 'triangle-down', 'diamond', 'square'],
-                random = d3.random.normal();
-
-            for (var i = 0; i < points; i++) {
-                data.push({
-                    //insert date here
-                    key: 'Email from ' + stats.data.dateLengthSentBoolArray[i].date,
-                    values: []
-                });
+        $scope.splitSent = function() {
+          var a = [];
+          var b = [];
+          for (var i=0; i<80; i++) {
+            for (var j=0; j<emails.bars.bars[i].length; j++) {
+              // console.log(emails.bars.bars[i][j]);
+              if(emails.bars.bars[i][j].sentBool === true) {
+                a.push(emails.bars.bars[i][j].date);
+                // console.log('a= ', a);
+              }
+              if (emails.bars.bars[i][j].sentBool === false) {
+                b.push(emails.bars.bars[i][j].date);
+                // console.log('b= ', b);
+              }
             }
+          }
+          return {a: a, b: b};
+        };
+//replace 10,000 with totalEmails
+        $scope.data = generateData(2, stats.data.dateLengthSentBoolArray.length);
+
+        function generateData(groups, points) {
+          $scope.splitSent();
+          var sentMail = $scope.splitSent();
+          $scope.sent = sentMail.a;
+          // console.log('$scope.sent array: ', $scope.sent);
+          $scope.received = sentMail.b;
+          var data = [],
+              shapes = ['circle', 'cross', 'triangle-up', 'triangle-down', 'diamond', 'square'],
+              random = d3.random.normal();
+          data[0]=[];
+          data[1]=[];
+          data[0].push({
+              key: 'Sent',
+              values: []
+          });
+          data[1].push({
+              key: 'Received',
+              values: []
+            });
+
             for (var j = 0; j < points; j++) {
-              stats.data.dateLengthSentBoolArray[j].date = new Date(stats.data.dateLengthSentBoolArray[j].date);
-              // console.log('date = ', Number(stats.data.dateLengthSentBoolArray[j].date));
-              // console.log('hour = ', Number(stats.data.dateLengthSentBoolArray[j].date)%(24*60*60)/(60*60));
-              //   // %(24*60*60*1000));
-              // console.log('minute = '+String(stats.data.dateLengthSentBoolArray[j].date).slice(20, 22));
-                data[j].values.push({
-                    x: stats.data.dateLengthSentBoolArray[j].date//email date here
-                    , y: Number(String(stats.data.dateLengthSentBoolArray[j].date).slice(16, 18)+"."+String(stats.data.dateLengthSentBoolArray[j].date).slice(19, 21))
-                    , size: stats.data.dateLengthSentBoolArray[j].tlength
-                    , shape: shapes[j % 6]
-                });
+              $scope.sent[j] = new Date($scope.sent[j]);
+              $scope.received[j] = new Date($scope.received[j]);
+              data[0].values.push({
+                  x: $scope.sent[j],//email date here
+                  y: Number(String($scope.sent[j]).slice(16, 18)+"."+String($scope.sent[j]).slice(19, 21)),
+                  size: stats.data.dateLengthSentBoolArray[j].tlength,
+                  shape: shapes[j % 6]
+              });
+
+              data[1].values.push({
+                x: $scope.received[j],
+                y: Number(String($scope.received[j]).slice(16, 18)+"."+String($scope.received[j]).slice(19, 21)),
+                size: stats.data.dateLengthSentBoolArray[r].tlength,
+                shape: shapes[r % 6]
+              });
             };
-            return data;
+          console.log('dataLater:', data);
+          return data;
         }
 }]);
 
