@@ -86,7 +86,7 @@
     <section class='dashboardSection center boxText well' ng-hide='showEmail' >
         <!--EMAIL SCATTER CHART -->
         <div ng-hide='showEmailScatter' ng-controller="emailScatterChartCtrl" class='animated zoomIn'>
-          <h4>Your sent messages.  All of them.</h4>
+          <h4>Your last 1,000 messages by date (x) and time (y)</h4>
           <nvd3 options="options" data="data" xAxisTickFormat="xAxisTickFormatFunction()"></nvd3>
         </div>
     </section>
