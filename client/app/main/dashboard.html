@@ -93,7 +93,7 @@
     <section class='dashboardSection center boxText well' ng-hide='showEmail'>
         <div ng-controller="SentVsGotCtrl">
           <h4>Your last 1,000 emails: sent vs. received</h4>
-          <h5>Starting at {{emails.bars.earliest}}, ending with {{emails.bars.latest}}</h5>
+          <h5>From {{emails.bars.earliest}} to {{emails.bars.latest}}</h5>
           <nvd3 options="options" data="data"></nvd3>
         </div>
     </section>

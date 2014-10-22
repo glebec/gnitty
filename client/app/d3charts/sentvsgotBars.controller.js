@@ -4,9 +4,9 @@ angular.module('gnittyApp')
   .controller('SentVsGotCtrl', ['$scope', 'stats', 'emails', function($scope, stats, emails){
   $scope.emails = {};
   $scope.emails.bars = [];
-  $scope.emails.bars.earliest = new Date(emails.bars.earliest);
+  $scope.emails.bars.earliest = new Date(emails.bars.earliest).toLocaleDateString();
   console.log($scope.emails.bars.earliest);
-  $scope.emails.bars.latest = new Date(emails.bars.latest);
+  $scope.emails.bars.latest = new Date(emails.bars.latest).toLocaleDateString();
   console.log($scope.emails.bars.latest);
 
   $scope.options = {
@@ -22,14 +22,15 @@ angular.module('gnittyApp')
                 clipEdge: true,
                 staggerLabels: true,
                 transitionDuration: 1000,
-                tooltips: false,
+                tooltips: true,
+                tooltipContent: function(key) {
+                    return '<h3>' + key + '</h3>';
+                },
                 stacked: true,
                 xAxis: {
-                    axisLabel: 'Time',
+                    axisLabel: 'Last 1,000 emails over time',
                     // showMaxMin: true,
-                    // tickFormat: function(d){
-                    //     return d3.format(',f')(d);
-                    // }
+                    tickFormat: ""
                 },
                 yAxis: {
                     axisLabel: 'Number of emails',
@@ -41,8 +42,6 @@ angular.module('gnittyApp')
             }
         };
 
-
-
         $scope.splitSent = function() {
           var a = [];
           var b = [];
@@ -52,7 +51,7 @@ angular.module('gnittyApp')
               a[d]=[];
               b[d]=[];
           }
-          debugger;
+
           for (var i=0; i<emails.bars.bars.length; i++) {
             for (var j=0; j<emails.bars.bars[i].length; j++) {
               // console.log(emails.bars.bars[i][j]);
