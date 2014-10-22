@@ -44,7 +44,7 @@ angular.module('gnittyApp')
           function absorbAlchemy (analysis) {
             $scope.fetchBtnText = 'Analyzed!';
             stats.parseAlchemyData( analysis );
-            // route to D3 charts page
+            $location.path('/dashboard');
           },
           function gnittyErr (err) {
             console.log ( 'Fetch or alchemy call failed: ', err );
