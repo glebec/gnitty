@@ -183,7 +183,7 @@ angular.module('gnittyApp')
       parsed.date    = new Date( headers.Date );
       // Directly-accessible values:
       parsed.id      = gmailObj.id;
-      parsed.labels  = gmailObj.labelIds;
+      parsed.labels  = gmailObj.labelIds || [];
       parsed.size    = gmailObj.sizeEstimate;
       // Find the actual message body in base-64 plaintext, depending on MIME:
       function b64text () {

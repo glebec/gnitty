@@ -34,27 +34,20 @@ angular.module('gnittyApp')
       for ( var id in this.data ) {
         // dates and lengths for scatterplot
         // DEV: remove try-catch when the parse bug is found
-        try {
-          for ( var i=0; i < this.data[id].labels.length; i++ ) {
-            this.sentBool = true;
-            if ( this.data[id].labels[i] !== 'SENT' ) {
-              this.sentBool = false;
-            }
+        for ( var i=0; i < this.data[id].labels.length; i++ ) {
+          this.sentBool = true;
+          if ( this.data[id].labels[i] !== 'SENT' ) {
+            this.sentBool = false;
           }
-          dateLengthSentBoolArr.push({
-            date: this.data[id].date,
-            tlength: this.data[id].plain.length,
-            sent: this.sentBool
-          });
-          // text for Alchemy analysis
-          charCount += this.data[id].plain.length;
-          if ( charCount < textLimit ) textArr.push( this.data[id].plain );
         }
-        catch ( exception ) {
-          window.alert( 'Debug: check console.log' );
-          console.log( exception );
-          console.log( 'Attempted to check labels of: ', this.data );
-        }
+        dateLengthSentBoolArr.push({
+          date: this.data[id].date,
+          tlength: this.data[id].plain.length,
+          sent: this.sentBool
+        });
+        // text for Alchemy analysis
+        charCount += this.data[id].plain.length;
+        if ( charCount < textLimit ) textArr.push( this.data[id].plain );
       }
       return { dateLengthSentBoolArr: dateLengthSentBoolArr, textArr: textArr };
     };
