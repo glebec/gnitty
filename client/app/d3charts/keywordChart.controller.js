@@ -49,8 +49,8 @@ angular.module('gnittyApp')
                     });
                         data[i].values.push({
                             x: i+.2,
-                            y: random(),
-                            size: stats.data.keywords[i].relevance*5,
+                            y: stats.data.keywords[i].relevance,
+                            size: .1,
                             shape: shapes[i % 6]
                         });
                 // console.log(stats.data.keywords[i].relevance);

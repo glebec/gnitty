@@ -31,7 +31,7 @@ angular.module('gnittyApp')
                 xAxis: {
                     axisLabel: 'Last 1,000 emails over time',
                     // showMaxMin: true,
-                    tickFormat: ""
+                    tickFormat: function() {return "";}
                 },
                 yAxis: {
                     axisLabel: 'Number of emails',
