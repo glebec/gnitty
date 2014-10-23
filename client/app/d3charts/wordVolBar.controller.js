@@ -1,7 +1,7 @@
 ;'use strict';
 
 angular.module('gnittyApp')
-  .controller('wordVolBarCtrl', ['$scope', 'stats', function($scope, stats){
+  .controller('wordVolBarCtrl', ['$scope', 'stats', 'emails', function($scope, stats, emails){
 
     //TODO: Put data in stats
 
@@ -18,10 +18,6 @@ angular.module('gnittyApp')
                 right: 20,
                 bottom: 60,
                 left: 55
-            },
-            title: {
-                enable: true,
-                text: 'Emails Received'
             },
             x: function(d){return d.label;},
             y: function(d){return d.value;},
@@ -46,7 +42,7 @@ angular.module('gnittyApp')
                 values: [
                     {
                         "label" : "You",
-                        "value" : 41638
+                        "value" : emails.sentWordVol(emails.dateLengthSentBoolArr)
                     } ,
                     // {
                     //     "label" : "Average American",

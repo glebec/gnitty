@@ -5,9 +5,10 @@ angular.module('gnittyApp')
   $scope.emails = {};
   $scope.emails.bars = [];
   $scope.emails.bars.earliest = new Date(emails.bars.earliest).toLocaleDateString();
-  console.log($scope.emails.bars.earliest);
   $scope.emails.bars.latest = new Date(emails.bars.latest).toLocaleDateString();
-  console.log($scope.emails.bars.latest);
+  // var timeVal = emails.bars.barCapacity.getHours() +":"+ emails.bars.barCapacity.getMinutes() +":"+ emails.bars.barCapacity.getSeconds();
+  // $scope.emails.bars.timeSpan = timeVal;
+  // console.log($scope.emails.bars.timeSpan);
 
   $scope.options = {
             chart: {
@@ -23,14 +24,14 @@ angular.module('gnittyApp')
                 staggerLabels: true,
                 transitionDuration: 1000,
                 tooltips: true,
-                tooltipContent: function(key) {
-                    return '<h3>' + key + '</h3>';
+                tooltipContent: function() {
+                    return '<h3>' + $scope.aLength + " sent, " + $scope.bLength + " received" + '</h3>';
                 },
                 stacked: true,
                 xAxis: {
                     axisLabel: 'Last 1,000 emails over time',
                     // showMaxMin: true,
-                    tickFormat: ""
+                    tickFormat: function() {return "";}
                 },
                 yAxis: {
                     axisLabel: 'Number of emails',

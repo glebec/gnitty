@@ -7,7 +7,7 @@ angular.module('gnittyApp')
   $scope.options = {
             chart: {
                 type: 'pieChart',
-                height: 500,
+                height: 600,
                 x: function(d){return d.key;},
                 y: function(d){return d.y;},
                 showLabels: true,
@@ -27,12 +27,11 @@ angular.module('gnittyApp')
         $scope.data = [
             {
                 key: "Positive",
-                y: 1 - stats.data.sentiment.score
+                y: (1 + Number((stats.data.sentiment.score)))/2
             },
             {
                 key: "Negative",
-                y: stats.data.sentiment.score
+                y: (2 - (1 + Number(stats.data.sentiment.score)))/2
             }
         ];
-
 }]);

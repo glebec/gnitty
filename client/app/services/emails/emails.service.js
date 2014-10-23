@@ -29,7 +29,7 @@ angular.module('gnittyApp')
       var dateLengthSentBoolArr = [];
       var textArr = [];
       var charCount = 0;
-      var textLimit = 50000; // test with Alchemy
+      var textLimit = 50000; // with Alchemy
 
       for ( var id in this.data ) {
         // dates and lengths for scatterplot
@@ -47,9 +47,11 @@ angular.module('gnittyApp')
         });
         // text for Alchemy analysis
         charCount += this.data[id].plain.length;
-        if ( charCount < textLimit ) textArr.push( this.data[id].plain );
+        if ( charCount < textLimit ) {
+          textArr.push( this.data[id].plain );
+        }
       }
-      return { dateLengthSentBoolArr: dateLengthSentBoolArr, textArr: textArr };
+      return { dateLengthSentBoolArr: dateLengthSentBoolArr, textArr: textArr};
     };
 
     this.splitDates = function (dateLengthSentBoolArr) {
@@ -64,36 +66,57 @@ angular.module('gnittyApp')
       this.latest = Number(dateLengthSentBoolArr[dateLengthSentBoolArr.length-1].date);
       this.earliest = Number(dateLengthSentBoolArr[0].date);
       var temporary = this.earliest;
-      var timeSpan = this.latest - this.earliest;
+      _emails.timeSpan = this.latest - this.earliest;
       //Listed as number of milliseconds since midnight January 1, 1970 UTC
 
-      //divide the timeSpan of user's ~1000 emails into 80 pieces (to become 80 bars)
+      //divide the timeSpan of user's ~1000 emails into 80 pieces -- to become 80 bars
       var barNum = 80;
-      var barCapacity = timeSpan/barNum;
+      var barCapacity = _emails.timeSpan/barNum;
       var bar = [];
       var delimiter = this.earliest+barCapacity;
+
       for (var h=0; h<barNum; h++) {
         bar[h] = [];
+      //split emails into 80 buckets
         for(var i=0; i<dateLengthSentBoolArr.length; i++) {
           if (delimiter >= Number(dateLengthSentBoolArr[i].date) &&
             Number(dateLengthSentBoolArr[i].date) > this.earliest) {
-            bar[h].push({date: dateLengthSentBoolArr[i].date, sentBool: dateLengthSentBoolArr[i].sent});
+            bar[h].push({date: dateLengthSentBoolArr[i].date, sentBool: dateLengthSentBoolArr[i].sent, emailLength: dateLengthSentBoolArr[i].tlength});
+            }
           }
-        }
         dateLengthSentBoolArr = dateLengthSentBoolArr.slice(bar[h], dateLengthSentBoolArr.length);
-        // console.log(delimiter+'='+latest+'?');
         this.earliest+=barCapacity;
-        // console.log('earliest'+earliest+'='+latest+'?');
         delimiter+=barCapacity;
       }
 
-      var datesInArray = 0;
-      for(var k=0; k<80; k++) {
-        datesInArray=bar.length;
+      return {bars: bar, earliest: temporary, latest: this.latest, barCapacity: barCapacity};
+    };
+
+    this.inboxVolume = function(dateLengthSentBoolArr) {
+      var indicator = 0;
+      //calculate number of received emails in partial inbox
+      for (var w=0; w<dateLengthSentBoolArr.length; w++) {
+        if (dateLengthSentBoolArr[w].sent === false) {
+          indicator ++;
+        }
       }
-      // console.log('datesInArray = ', datesInArray);
-      // console.log('bars in 80 pieces = ', bar);
-      return {bars: bar, earliest: temporary, latest: this.latest};
+      // 31536000000 = number of milliseconds in 1 year
+      var partOfYear = _emails.timeSpan/31536000000;
+      var emailsPerYear = indicator * (1/partOfYear);
+      return emailsPerYear;
+    };
+
+    this.sentWordVol = function(dateLengthSentBoolArr) {
+      var wordsInTimeInt = 0;
+      for (var v=0; v<dateLengthSentBoolArr.length; v++) {
+        if (dateLengthSentBoolArr[v].sent === true) {
+          wordsInTimeInt += dateLengthSentBoolArr[v].tlength;
+        }
+      }
+
+      var partOfYear = _emails.timeSpan/31536000000;
+      var wordsSentPerYear = wordsInTimeInt * (1/partOfYear);
+      return wordsSentPerYear;
     };
 
     // STRICTLY FOR DEV TESTING — REMOVE BEFORE DEPLOYMENT
@@ -104,6 +127,7 @@ angular.module('gnittyApp')
       localStorage.setItem( 'bars', JSON.stringify(this.bars));
       localStorage.setItem( 'texts', JSON.stringify(this.textArr) );
     };
+
     this.getLocal = function () {
       var emails = JSON.parse( localStorage.getItem('emails') );
       var dateLengths = JSON.parse( localStorage.getItem('dateLengths') );
@@ -120,13 +144,3 @@ angular.module('gnittyApp')
       }
     };
   });
-
-        // var dateData = [];
-        // var dateFixed = [];
-        // dateFixed[j] = new Date(dateLengthSentBoolArr[j].date);
-        // console.log(dateFixed);
-        // dateData.push(dateFixed);
-        // console.log(dateData);
-        // console.log(dateData[0]);
-
-        // console.log(dateData[dateData[0].length-1]);
