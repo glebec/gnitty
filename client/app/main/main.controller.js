@@ -20,6 +20,7 @@ angular.module('gnittyApp')
     $scope.fetchBtnText = 'Gnitify!';
     // fetch emails from Gmail API and store them in the email service
     $scope.fetch = function () {
+      $scope.clicked=true;
       $scope.fetchBtnText = 'Authorizing…';
       gAPI.start().then( runFetchers );
 

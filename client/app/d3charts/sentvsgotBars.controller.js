@@ -25,7 +25,7 @@ angular.module('gnittyApp')
                 transitionDuration: 1000,
                 tooltips: true,
                 tooltipContent: function() {
-                    return '<h3>' + $scope.aLength + " sent, " + $scope.bLength + " received" + '</h3>';
+                    return '<h3>' + "sent vs received" + '</h3>';
                 },
                 stacked: true,
                 xAxis: {

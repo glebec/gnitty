@@ -48,7 +48,7 @@ angular.module('gnittyApp')
                         values: []
                     });
                         data[i].values.push({
-                            x: i+.2,
+                            x: i,
                             y: stats.data.keywords[i].relevance,
                             size: .1,
                             shape: shapes[i % 6]

@@ -15,7 +15,7 @@
         Compare your inbox statistics to national averages.<br />
         Map your email habits chronologically.</p>
       <h2>Ready?</h2>
-      <button ng-click="fetch()" class="btn btn-primary btn-lg withripple" id="goButton">{{fetchBtnText}}</button>
+      <button ng-click="fetch()" ng-class="{'btn btn-primary btn-lg withripple disabled': clicked, 'btn btn-primary btn-lg withripple': !clicked}" id="goButton" button-disable>{{fetchBtnText}}</button>
     </div>
 
     <img class='imgMail animated bounceInRight' src='http://s28.postimg.org/55p2hmol9/gmailicons.png' id='gmailIcon'/>
