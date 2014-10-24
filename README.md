@@ -11,8 +11,6 @@ AngularJS Services allow Gnitty to function solely on the front end, with the on
 
 - Simple and secure login process using Google Auth's 2.0 OAuth Protocol
 
-![alt tag](https://raw.githubusercontent.com/glebec/gnitty/master/client/assets/images/OAuth2.jpg)
-
 - Analyze and plot 1,000 emails is less than 10 seconds
 
 ![alt tag](https://raw.githubusercontent.com/glebec/gnitty/master/client/assets/images/Scatter%20sent%20vs%20received.jpg)
