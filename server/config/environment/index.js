@@ -49,7 +49,7 @@ var all = {
   google: {
     clientID: localEnv.googleID,
     clientSecret: localEnv.googleSecret,
-    callbackURL:  'http://localhost:9000/auth/google/callback'
+    callbackURL:  'http://gnitty.heroku.com'
   }
 };
 
