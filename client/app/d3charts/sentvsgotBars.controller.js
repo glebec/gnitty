@@ -28,6 +28,7 @@ angular.module('gnittyApp')
                     return '<h3>' + "sent vs received" + '</h3>';
                 },
                 stacked: true,
+                showControls: false,
                 xAxis: {
                     axisLabel: 'Last 1,000 emails over time',
                     // showMaxMin: true,
