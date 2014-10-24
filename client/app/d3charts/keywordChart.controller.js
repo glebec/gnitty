@@ -20,16 +20,21 @@ angular.module('gnittyApp')
                         return '<h3>' + key + '</h3>';
                     },
                     transitionDuration: 1000,
-                    forceSize: 0
-                    // xAxis: {
-                    //     axisLabel: '',
-                    //     tickFormat: ""
-                    // },
-                    // yAxis: {
-                    //     axisLabel: '',
-                    //     tickFormat: "",
-                    //     axisLabelDistance: 30
-                    // }
+                    forceSize: 0,
+                    xAxis: {
+                        axisLabel: 'Keywords',
+                        tickFormat: function (d){
+                          return d3.format(',f')(d);
+                        },
+                        axisLabelDistance: 30
+                    },
+                    yAxis: {
+                        axisLabel: 'Relevance',
+                        tickFormat: function (d){
+                          return d3.format('.02f')(d);
+                        },
+                        axisLabelDistance: 30
+                    }
                 }
             };
 
@@ -56,6 +61,6 @@ angular.module('gnittyApp')
                 // console.log(stats.data.keywords[i].relevance);
                 }
                 return data;
-            };
+            }
 
   }]);

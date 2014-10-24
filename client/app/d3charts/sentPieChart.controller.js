@@ -7,7 +7,7 @@ angular.module('gnittyApp')
   $scope.options = {
             chart: {
                 type: 'pieChart',
-                height: 600,
+                height: 450,
                 x: function(d){return d.key;},
                 y: function(d){return d.y;},
                 showLabels: true,
