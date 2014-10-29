@@ -2,7 +2,6 @@
 
 var path = require('path');
 var _ = require('lodash');
-var localEnv = require('../local.env.js');
 
 function requiredProcessEnv(name) {
   if(!process.env[name]) {
@@ -43,13 +42,13 @@ var all = {
   },
 
   alchemy: {
-    apiKey: localEnv.alchemyKey
+    apiKey: process.env.ALCHEMY_KEY
   },
 
   google: {
-    clientID: localEnv.googleID,
-    clientSecret: localEnv.googleSecret,
-    callbackURL:  'http://gnitty.heroku.com'
+    clientID: process.env.GOOGLE_ID,
+    clientSecret: process.env.GOOGLE_SECRET,
+    callbackURL: process.env.DOMAIN + '/auth/google/callback'
   }
 };
 
