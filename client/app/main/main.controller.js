@@ -34,7 +34,7 @@ angular.module('gnittyApp')
           },
           null,
           function fetchUpdate ( update ) {
-            $scope.fetchBtnText = 'Fetching: ' + update;
+            $scope.fetchBtnText = 'Fetching: ' + Math.round(update * 100) + '%';
           }
         ).then(
           function analyze () {

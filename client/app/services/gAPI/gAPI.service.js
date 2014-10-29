@@ -128,7 +128,7 @@ angular.module('gnittyApp')
           }
         }
         // Send progress updates to the master promise.
-        emailDeferral.notify( doneCount );
+        emailDeferral.notify( doneCount/MSG_LIMIT );
         console.log( doneCount + ' total parsed & stored.\n^^^^^^^^' );
         // If this is the last batch, resolve the master promise.
         if ( receivedCount >= MSG_LIMIT ) emailDeferral.resolve( emailData );
