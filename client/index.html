@@ -16,7 +16,7 @@
       <link rel="stylesheet" href="bower_components/nvd3/src/nv.d3.css" />
       <link rel="stylesheet" href="bower_components/bootstrap-material-design/dist/css/material.min.css" />
       <link rel="stylesheet" href="bower_components/bootstrap-material-design/dist/css/ripples.min.css" />
-      <link rel="stylesheet" href="bower_components/animate.css/animate.css" />
+      <link rel="stylesheet" href="bower_components/animate-css/animate.css" />
       <!-- endbower -->
 
     <!-- endbuild -->
@@ -25,11 +25,9 @@
       <!-- endinjector -->
     <!-- endbuild -->
 
-        <link rel="stylesheet" href="app/main/css/demo.css">
-        <link rel="stylesheet" href="app/main/css/component2.css">
 
     <!-- external API calls -->
-    <script type="text/javascript" src="https://apis.google.com/js/client.js"></script>
+    <script type="text/javascript" src="//apis.google.com/js/client.js"></script>
 
   </head>
   <body ng-app="gnittyApp">
@@ -58,8 +56,8 @@
     <![endif]-->
 
     <!-- build:js(client) app/vendor.js -->
-      <!-- bower:js
-      <script src="bower_components/jquery/dist/jquery.js"></script>-->
+      <!-- bower:js-->
+      <script src="bower_components/jquery/dist/jquery.js"></script>
       <script src="bower_components/angular/angular.js"></script>
       <script src="bower_components/angular-resource/angular-resource.js"></script>
       <script src="bower_components/angular-cookies/angular-cookies.js"></script>
@@ -70,18 +68,20 @@
       <script src="bower_components/d3/d3.js"></script>
       <script src="bower_components/angular-charts/dist/angular-charts.js"></script>
       <script src="bower_components/nvd3/nv.d3.js"></script>
-      <script src="bower_components/angular-nvd3/dist/angular-nvd3.js"></script>
+      <script src="bower_components/bootstrap-material-design/dist/js/material.min.js"></script>
+      <script src="bower_components/bootstrap-material-design/dist/js/ripples.min.js"></script>
+      <script src="bower_components/angular-nvd3/dist/angular-nvd3.min.js"></script>
+      <script src="bower_components/angular-animate/angular-animate.js"></script>
+      <script src="bower_components/css-modal/modal.js"></script>
       <!-- endbower -->
     <!-- endbuild -->
 
 
+        <script type="text/javascript" src="//static.twilio.com/libs/twiliojs/1.2/twilio.min.js"></script>
 
         <!-- build:js({.tmp,client}) app/app.js -->
         <script src="app/app.js"></script>
-        <script type="text/javascript"
-src="//static.twilio.com/libs/twiliojs/1.2/twilio.min.js"></script>
 
-    
           <!-- injector:js -->
           <script src="app/account/account.js"></script>
           <script src="app/account/login/login.controller.js"></script>
@@ -97,9 +97,6 @@ src="//static.twilio.com/libs/twiliojs/1.2/twilio.min.js"></script>
           <script src="app/d3charts/sentiLineChart.controller.js"></script>
           <script src="app/d3charts/sentvsgotBars.controller.js"></script>
           <script src="app/d3charts/wordVolBar.controller.js"></script>
-          <script src="app/main/js/demo2.js"></script>
-          <script src="app/main/js/modernizr-2.6.2.min.js"></script>
-          <script src="app/main/js/polyfills.js"></script>
           <script src="app/main/main.controller.js"></script>
           <script src="app/main/main.js"></script>
           <script src="app/services/b64/b64.service.js"></script>
@@ -113,9 +110,5 @@ src="//static.twilio.com/libs/twiliojs/1.2/twilio.min.js"></script>
           <script src="components/navbar/navbar.controller.js"></script>
           <!-- endinjector -->
         <!-- endbuild -->
-
-      <script src="app/main/js/demo2.js"></script>
-      <script src="app/main/js/polyfills.js"></script>
-
 </body>
 </html>
