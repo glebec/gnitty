@@ -19,11 +19,12 @@ angular.module('gnittyApp')
                 },
                 showDistX: true,
                 showDistY: true,
-                tooltip: true,
+                tooltips: true,
+                interactive: true,
                 showLegend: true,
-                tooltipContent: function(key) {
-                    return '<h3>' + key + '</h3>';
-                },
+                // tooltipContent: function(key) {
+                //     return '<h3>' + key + '</h3>';
+                // },
                 transitionDuration: 1000,
                 x: function(d, i) {
                   return new Date(d.x);
@@ -33,7 +34,7 @@ angular.module('gnittyApp')
                     tickFormat: $scope.xAxisTickFormatFunction(),
                 },
                 yAxis: {
-                    axisLabel: 'Hours (24 Hour Time)',
+                    axisLabel: 'Hours (24-hour time)',
                     tickFormat: function (d){
                         return d3.format('.02f')(d);
                     },

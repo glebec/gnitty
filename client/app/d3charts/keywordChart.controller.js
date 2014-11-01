@@ -2,8 +2,6 @@
 
 angular.module('gnittyApp')
   .controller('KeywordChartCtrl', ['$scope', 'stats', function($scope, stats){
-      // console.log('stats.data :', stats.data);
-      // console.log('number of keywords: ', stats.data.keywords.length);
       $scope.options = {
                 chart: {
                     type: 'scatterChart',
@@ -16,13 +14,13 @@ angular.module('gnittyApp')
                     showDistY: false,
                     interactive: true,
                     tooltips: true,
-                    tooltipContent: function(key) {
-                        return '<h3>' + key + '</h3>';
-                    },
+                    // tooltipContent: function(key) {
+                    //   return '<h3>' + data.key + '</h3>';
+                    // },
                     transitionDuration: 1000,
                     forceSize: 0,
                     xAxis: {
-                        axisLabel: 'Keywords',
+                        axisLabel: '',
                         tickFormat: function (d){
                           return d3.format(',f')(d);
                         },
@@ -58,7 +56,6 @@ angular.module('gnittyApp')
                             size: .1,
                             shape: shapes[i % 6]
                         });
-                // console.log(stats.data.keywords[i].relevance);
                 }
                 return data;
             }

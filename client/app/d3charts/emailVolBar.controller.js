@@ -3,8 +3,9 @@
 angular.module('gnittyApp')
   .controller('emailVolBarCtrl', ['$scope', 'stats', 'emails', function($scope, stats, emails){
 
-    // avg person received = 5,579 emails
-    // add data on line 45
+    // avg American received = 147 emails/day *365 (Fortune Magazine: http://fortune.com/2012/10/08/stop-checking-your-email-now/)
+    // avg person received = 266 emails / day based on projections from Radicati Group Report http://www.radicati.com/?p=3237
+    // Pres Obama gets 20,000 pieces of mail / day
     $scope.options = {
         chart: {
             type: 'discreteBarChart',
@@ -17,7 +18,7 @@ angular.module('gnittyApp')
             },
             title: {
                 enable: true,
-                text: 'Emails Received'
+                text: 'Email Received Annually'
             },
             transitionDuration: 2000,
             x: function(d){return d.label;},
@@ -33,24 +34,28 @@ angular.module('gnittyApp')
 
         $scope.data = [
             {
-                key: "Cumulative Return",
+                key: "Email per Annum",
                 values: [
                     {
                         "label" : "You",
                         "value" : $scope.emailsPerYear
                     } ,
                     {
-                        "label" : "Average American",
-                        "value" : 5579
+                        "label" : "Average Email User (personal)",
+                        "value" : 43742
                     } ,
                     {
-                        "label" : "John Oliver",
-                        "value" : 13724
+                        "label" : "Average Email User (business)",
+                        "value" : 53655
                     } ,
                     {
-                        "label" : "Oprah",
-                        "value" : 23000
+                        "label" : "Average Email User (personal + business)",
+                        "value" : 97397
                     }
+                    // {
+                    //     "label" : "President Obama",
+                    //     "value" : 7300000
+                    // }
                 ]
             }
         ];

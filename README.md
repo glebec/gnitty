@@ -2,6 +2,8 @@
 
 Gnitty is a data visualization tool for your Gmail history, built on the MEAN stack in JavaScript (MongoDB, ExpressJS, AngularJS, NodeJS) and the d3 charting library. The site allows a user to analyze his or her 1,000 most recent emails (sent and received) for tone, volume per hour/day/year, and most common keywords.
 
+Try Gnitty [here](https://gnitty.herokuapps.com)
+
 ![alt tag](https://raw.githubusercontent.com/glebec/gnitty/master/client/assets/images/Front%20page.jpg)
 
 AngularJS Services allow Gnitty to function solely on the front end, with the only back end-code being the API calls.
@@ -18,5 +20,3 @@ AngularJS Services allow Gnitty to function solely on the front end, with the on
 - Sentiment and keyword analysis through the industry-standard Alchemy API
 
 ![alt tag](https://raw.githubusercontent.com/glebec/gnitty/master/client/assets/images/keyword%20chart.jpg)
-
-[Short video demo](http://youtu.be/-ZnzsL8egBI)

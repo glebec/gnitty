@@ -24,13 +24,13 @@ angular.module('gnittyApp')
                 staggerLabels: true,
                 transitionDuration: 1000,
                 tooltips: true,
-                tooltipContent: function() {
-                    return '<h3>' + "sent vs received" + '</h3>';
+                tooltipContent: function (key, x, y, e, graph) {
+                  return '<h3>' + key + '</h3>' + '<p>' +  y + '</p>';
                 },
                 stacked: true,
                 showControls: false,
                 xAxis: {
-                    axisLabel: 'Last 1,000 emails over time',
+                    axisLabel: 'Time from ' + new Date(emails.bars.earliest) + ' to ' + new Date(emails.bars.latest),
                     // showMaxMin: true,
                     tickFormat: function() {return "";}
                 },
