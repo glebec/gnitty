@@ -1,8 +1,8 @@
 .chart {
   width: 800px;
-  height: 800px;
+  height: 700px;
   margin: 20px 0px 0px 20px;
-  background-color: black;
+  background-color: #120C04 !important; /*dark brown*/
   color: white;
 };
 
@@ -37,9 +37,9 @@
 
 .nvtooltip {
   position: absolute;
-  background-color: rgba(255,255,255,1.0);
+  background-color: #120C04;
   padding: 1px;
-  border: 1px solid rgba(0,0,0,.2);
+  border: 1px solid #120C04;
   z-index: 10000;
 
   font-family: Arial;
@@ -80,7 +80,7 @@
   padding: 4px 14px;
   line-height: 18px;
   font-weight: normal;
-  background-color: rgba(247,247,247,0.75);
+  background-color: #120C04;
   text-align: center;
 
   border-bottom: 1px solid #ebebeb;
@@ -167,14 +167,16 @@ svg {
 
 svg text {
   font: normal 12px Arial;
+  color: white;
 }
 
 svg .title {
  font: bold 14px Arial;
+ color: white;
 }
 
 .nvd3 .nv-background {
-  fill: white;
+  fill: black;
   fill-opacity: 0;
   /*
   pointer-events: none;
@@ -184,6 +186,7 @@ svg .title {
 .nvd3.nv-noData {
   font-size: 18px;
   font-weight: bold;
+  color: white;
 }
 
 
@@ -204,6 +207,7 @@ svg .title {
 
 .nvd3 .nv-legend .nv-series {
   cursor: pointer;
+  color: #e5e4e2;
 }
 
 .nvd3 .nv-legend .disabled circle {
@@ -217,11 +221,13 @@ svg .title {
 */
 .nvd3 .nv-axis {
   pointer-events:none;
+  color: white;
+  fill: white;
 }
 
 .nvd3 .nv-axis path {
   fill: none;
-  stroke: #000;
+  stroke: #fff;
   stroke-opacity: .75;
   shape-rendering: crispEdges;
 }
@@ -236,7 +242,8 @@ svg .title {
 
 .nvd3 .nv-axis line {
   fill: none;
-  stroke: #e5e5e5;
+  stroke: #e5e4e2;
+  stroke-opacity: .5;
   shape-rendering: crispEdges;
 }
 
@@ -246,7 +253,7 @@ svg .title {
 }
 
 .nvd3 .nv-axis .nv-axisMaxMin text {
-  font-weight: bold;
+  color: #e5e4e2;
 }
 
 .nvd3 .x  .nv-axis .nv-axisMaxMin text,
@@ -285,20 +292,16 @@ svg .title {
   -webkit-transition: fill-opacity 250ms linear;
 }
 
-.nvd3 .nv-bars rect.hover {
-  fill-opacity: 1;
-}
-
 .nvd3 .nv-bars .hover rect {
   fill: lightblue;
 }
 
 .nvd3 .nv-bars text {
-  fill: rgba(0,0,0,0);
+  fill: #e5e4e2;
 }
 
 .nvd3 .nv-bars .hover text {
-  fill: rgba(0,0,0,1);
+  fill: #e5e4e2;
 }
 
 
@@ -309,8 +312,10 @@ svg .title {
 .nvd3 .nv-multibar .nv-groups rect,
 .nvd3 .nv-multibarHorizontal .nv-groups rect,
 .nvd3 .nv-discretebar .nv-groups rect {
-  stroke-opacity: 0;
-
+  fill: black;
+  fill-opacity: 1;
+  stroke-opacity: 1;
+  stroke-width: 1px;
   transition: fill-opacity 250ms linear;
   -moz-transition: fill-opacity 250ms linear;
   -webkit-transition: fill-opacity 250ms linear;
@@ -324,9 +329,11 @@ svg .title {
 
 .nvd3 .nv-discretebar .nv-groups text,
 .nvd3 .nv-multibarHorizontal .nv-groups text {
-  font-weight: bold;
-  fill: rgba(0,0,0,1);
-  stroke: rgba(0,0,0,0);
+  fill: #e5e4e2;
+}
+
+.nv-discretebar {
+/* GB to fill in */
 }
 
 /***********

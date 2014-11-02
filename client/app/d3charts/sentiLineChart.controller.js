@@ -6,7 +6,7 @@ angular.module('gnittyApp')
 $scope.options = {
             chart: {
                 type: 'lineChart',
-                height: 450,
+                height: 600,
                 margin : {
                     top: 20,
                     right: 20,
