@@ -3,7 +3,7 @@
   height: 700px;
   margin: 20px 0px 0px 20px;
   background-color: #1F1C19 !important; /*dark brown*/
-  color: white;
+  color: #e5e4e2;
 };
 
 
@@ -315,8 +315,7 @@ svg .title {
 .nvd3 .nv-multibar .nv-groups rect,
 .nvd3 .nv-multibarHorizontal .nv-groups rect,
 .nvd3 .nv-discretebar .nv-groups rect {
-  fill: #1F1C19;
-  fill-opacity: 1;
+  fill-opacity: 0;
   stroke-opacity: 1;
   stroke-width: 1px;
   transition: fill-opacity 500ms linear;
@@ -357,7 +356,6 @@ svg .title {
 .nvd3.nv-pie path {
   stroke-width: 2px;
   stroke-opacity: .75;
-  fill: #1F1C19;
   fill-opacity: 0;
 }
 
@@ -367,7 +365,7 @@ svg .title {
 }
 
 .nvd3.nv-pie .hover path {
-  fill-opacity: .7;
+  fill-opacity: 1;
 }
 .nvd3.nv-pie .nv-label {
   pointer-events: none;

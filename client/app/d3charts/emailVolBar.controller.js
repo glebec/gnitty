@@ -16,10 +16,7 @@ angular.module('gnittyApp')
                 bottom: 60,
                 left: 55
             },
-            title: {
-                enable: true,
-                text: 'Email Received Annually'
-            },
+            tooltips: false,
             transitionDuration: 2000,
             x: function(d){return d.label;},
             y: function(d){return d.value;},

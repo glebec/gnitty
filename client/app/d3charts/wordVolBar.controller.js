@@ -21,11 +21,11 @@ angular.module('gnittyApp')
             },
             x: function(d){return d.label;},
             y: function(d){return d.value;},
-            // showValues: true,
+            showValues: true,
             valueFormat: function(d){
                 return d3.format(',.0f')(d);
             },
-            transitionDuration: 1000
+            transitionDuration: 2000
             // xAxis: {
             //     axisLabel: ''
             // },
