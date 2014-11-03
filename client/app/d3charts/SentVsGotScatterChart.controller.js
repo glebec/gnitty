@@ -13,7 +13,6 @@ angular.module('gnittyApp')
             chart: {
                 type: 'scatterChart',
                 height: 600,
-                color: d3.scale.category10().range(),
                 scatter: {
                     onlyCircles: true
                 },
