@@ -25,7 +25,7 @@ angular.module('gnittyApp')
                 transitionDuration: 1000,
                 tooltips: true,
                 tooltipContent: function (key, x, y, e, graph) {
-                  return '<h3>' + key + '</h3>' + '<p>' +  y + '</p>';
+                  return '<p>' + key + ': ' + y + '</p>';
                 },
                 stacked: true,
                 showControls: false,

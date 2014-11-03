@@ -6,7 +6,7 @@ body {
     margin: 0 0 100px; /* bottom = footer height */
     font-family: 'Roboto', sans-serif;
     color: #e5e4e2 !important;
-    background-color: #666666;
+    background-color: white;
     -webkit-transition: all 1000ms cubic-bezier(0.250, 0.250, 0.750, 0.750);
     -moz-transition: all 1000ms cubic-bezier(0.250, 0.250, 0.750, 0.750);
      -o-transition: all 1000ms cubic-bezier(0.250, 0.250, 0.750, 0.750);
@@ -46,9 +46,13 @@ footer {
 */
 
 .navbar {
-    background-color: #4285f4;
+    background-color: #051326 !important;
     height: 75px;
     padding-top: 20px;
+    border: none;
+    -moz-box-shadow: 0px 0px 16px 0 rgba(0, 0, 0, 0.5);
+    -webkit-box-shadow: 0px 0px 16px 0 rgba(0, 0, 0, 0.5);
+    box-shadow: 0px 0px 16px 0 rgba(0, 0, 0, 0.5);
 }
 
 .navbar-default .navbar-brand {
@@ -62,7 +66,7 @@ footer {
 }
 
 .navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus {
-    background-color: rgba(255,255,255, 0);
+
 }
 
 /*

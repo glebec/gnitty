@@ -2,7 +2,7 @@
   width: 800px;
   height: 700px;
   margin: 20px 0px 0px 20px;
-  background-color: #120C04 !important; /*dark brown*/
+  background-color: #1F1C19 !important; /*dark brown*/
   color: white;
 };
 
@@ -61,13 +61,13 @@
     putting a "with-transitions" class on the container div.
 */
 .nvtooltip.with-transitions, .with-transitions .nvtooltip {
-  transition: opacity 250ms linear;
-  -moz-transition: opacity 250ms linear;
-  -webkit-transition: opacity 250ms linear;
+  transition: opacity 500ms linear;
+  -moz-transition: opacity 500ms linear;
+  -webkit-transition: opacity 500ms linear;
 
-  transition-delay: 250ms;
-  -moz-transition-delay: 250ms;
-  -webkit-transition-delay: 250ms;
+  transition-delay: 500ms;
+  -moz-transition-delay: 500ms;
+  -webkit-transition-delay: 500ms;
 }
 
 .nvtooltip.x-nvtooltip,
@@ -82,7 +82,7 @@
   font-weight: normal;
   background-color: #120C04;
   text-align: center;
-
+  color: #e5e4e2;
   border-bottom: 1px solid #ebebeb;
 
   -webkit-border-radius: 5px 5px 0 0;
@@ -94,6 +94,7 @@
   margin: 0;
   padding: 5px 14px;
   text-align: center;
+  color: #e5e4e2;
 }
 
 .nvtooltip span {
@@ -167,16 +168,16 @@ svg {
 
 svg text {
   font: normal 12px Arial;
-  color: white;
+  color: #e5e4e2;
 }
 
 svg .title {
  font: bold 14px Arial;
- color: white;
+ color: #e5e4e2;
 }
 
 .nvd3 .nv-background {
-  fill: black;
+  fill: #1F1C19;
   fill-opacity: 0;
   /*
   pointer-events: none;
@@ -186,7 +187,7 @@ svg .title {
 .nvd3.nv-noData {
   font-size: 18px;
   font-weight: bold;
-  color: white;
+  color: #e5e4e2;
 }
 
 
@@ -208,6 +209,8 @@ svg .title {
 .nvd3 .nv-legend .nv-series {
   cursor: pointer;
   color: #e5e4e2;
+  stroke: #e5e4e2;
+  stroke-width: 1;
 }
 
 .nvd3 .nv-legend .disabled circle {
@@ -221,8 +224,8 @@ svg .title {
 */
 .nvd3 .nv-axis {
   pointer-events:none;
-  color: white;
-  fill: white;
+  color: #e5e4e2;
+  fill: #e5e4e2;
 }
 
 .nvd3 .nv-axis path {
@@ -287,9 +290,9 @@ svg .title {
   zfill: steelblue;
   fill-opacity: .75;
 
-  transition: fill-opacity 250ms linear;
-  -moz-transition: fill-opacity 250ms linear;
-  -webkit-transition: fill-opacity 250ms linear;
+  transition: fill-opacity 500ms linear;
+  -moz-transition: fill-opacity 500ms linear;
+  -webkit-transition: fill-opacity 500ms linear;
 }
 
 .nvd3 .nv-bars .hover rect {
@@ -312,13 +315,13 @@ svg .title {
 .nvd3 .nv-multibar .nv-groups rect,
 .nvd3 .nv-multibarHorizontal .nv-groups rect,
 .nvd3 .nv-discretebar .nv-groups rect {
-  fill: black;
+  fill: #1F1C19;
   fill-opacity: 1;
   stroke-opacity: 1;
-  stroke-width: 1px;
-  transition: fill-opacity 250ms linear;
-  -moz-transition: fill-opacity 250ms linear;
-  -webkit-transition: fill-opacity 250ms linear;
+  stroke-width: 2px;
+  transition: fill-opacity 500ms linear;
+  -moz-transition: fill-opacity 500ms linear;
+  -webkit-transition: fill-opacity 500ms linear;
 }
 
 .nvd3 .nv-multibar .nv-groups rect:hover,
@@ -342,20 +345,19 @@ svg .title {
 
 .nvd3.nv-pie path {
   stroke-opacity: 0;
-  transition: fill-opacity 250ms linear, stroke-width 250ms linear, stroke-opacity 250ms linear;
-  -moz-transition: fill-opacity 250ms linear, stroke-width 250ms linear, stroke-opacity 250ms linear;
-  -webkit-transition: fill-opacity 250ms linear, stroke-width 250ms linear, stroke-opacity 250ms linear;
-
+  transition: fill-opacity 500ms linear, stroke-width 500ms linear, stroke-opacity 500ms linear;
+  -moz-transition: fill-opacity 500ms linear, stroke-width 500ms linear, stroke-opacity 500ms linear;
+  -webkit-transition: fill-opacity 500ms linear, stroke-width 500ms linear, stroke-opacity 500ms linear;
 }
 
 .nvd3.nv-pie .nv-slice text {
-  stroke: #000;
-  stroke-width: 0;
+  stroke: #e5e4e2;
+  stroke-width: 1;
 }
 
 .nvd3.nv-pie path {
   stroke: #fff;
-  stroke-width: 1px;
+  stroke-width: 0px;
   stroke-opacity: 1;
 }
 
@@ -381,13 +383,13 @@ svg .title {
   stroke-linecap: round;
   shape-rendering: geometricPrecision;
 
-  transition: stroke-width 250ms linear;
-  -moz-transition: stroke-width 250ms linear;
-  -webkit-transition: stroke-width 250ms linear;
+  transition: stroke-width 500ms linear;
+  -moz-transition: stroke-width 500ms linear;
+  -webkit-transition: stroke-width 500ms linear;
 
-  transition-delay: 250ms
-  -moz-transition-delay: 250ms;
-  -webkit-transition-delay: 250ms;
+  transition-delay: 500ms
+  -moz-transition-delay: 500ms;
+  -webkit-transition-delay: 500ms;
   */
 }
 
@@ -403,13 +405,13 @@ svg .title {
   shape-rendering: geometricPrecision;
 
   stroke-width: 2.5px;
-  transition: stroke-width 250ms linear;
-  -moz-transition: stroke-width 250ms linear;
-  -webkit-transition: stroke-width 250ms linear;
+  transition: stroke-width 500ms linear;
+  -moz-transition: stroke-width 500ms linear;
+  -webkit-transition: stroke-width 500ms linear;
 
-  transition-delay: 250ms
-  -moz-transition-delay: 250ms;
-  -webkit-transition-delay: 250ms;
+  transition-delay: 500ms
+  -moz-transition-delay: 500ms;
+  -webkit-transition-delay: 500ms;
   */
 }
 
@@ -436,9 +438,9 @@ svg .title {
 
 
 .with-transitions .nvd3 .nv-groups .nv-point {
-  transition: stroke-width 250ms linear, stroke-opacity 250ms linear;
-  -moz-transition: stroke-width 250ms linear, stroke-opacity 250ms linear;
-  -webkit-transition: stroke-width 250ms linear, stroke-opacity 250ms linear;
+  transition: stroke-width 500ms linear, stroke-opacity 500ms linear;
+  -moz-transition: stroke-width 500ms linear, stroke-opacity 500ms linear;
+  -webkit-transition: stroke-width 500ms linear, stroke-opacity 500ms linear;
 
 }
 
@@ -512,9 +514,9 @@ svg .title {
   */
   stroke-opacity: 0;
 
-  transition: fill-opacity 250ms linear, stroke-opacity 250ms linear;
-  -moz-transition: fill-opacity 250ms linear, stroke-opacity 250ms linear;
-  -webkit-transition: fill-opacity 250ms linear, stroke-opacity 250ms linear;
+  transition: fill-opacity 500ms linear, stroke-opacity 500ms linear;
+  -moz-transition: fill-opacity 500ms linear, stroke-opacity 500ms linear;
+  -webkit-transition: fill-opacity 500ms linear, stroke-opacity 500ms linear;
 
   /*
   transition-delay: 500ms;
@@ -692,7 +694,7 @@ svg .title {
 .nvd3 .nv-brushBackground rect {
   stroke: #000;
   stroke-width: .4;
-  fill: #fff;
+  fill: #e5e4e2;
   fill-opacity: .7;
 }
 
@@ -746,7 +748,7 @@ svg .title {
 
 .nvd3 .background path {
   fill: none;
-  stroke: #ccc;
+  stroke: #e5e4e2;
   stroke-opacity: .4;
   shape-rendering: crispEdges;
 }
@@ -765,7 +767,7 @@ svg .title {
 
 .nvd3 .axis line, .axis path {
   fill: none;
-  stroke: #000;
+  stroke: #e5e4e2;
   shape-rendering: crispEdges;
 }
 
@@ -780,5 +782,5 @@ Interactive Layer
   pointer-events:none;
 }
 .nvd3 line.nv-guideline {
-  stroke: #ccc;
+  stroke: #e5e4e2;
 }
