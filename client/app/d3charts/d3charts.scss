@@ -230,7 +230,7 @@ svg .title {
 
 .nvd3 .nv-axis path {
   fill: none;
-  stroke: #fff;
+  stroke: #e5e4e2;
   stroke-opacity: .75;
   shape-rendering: crispEdges;
 }
@@ -318,7 +318,7 @@ svg .title {
   fill: #1F1C19;
   fill-opacity: 1;
   stroke-opacity: 1;
-  stroke-width: 2px;
+  stroke-width: 1px;
   transition: fill-opacity 500ms linear;
   -moz-transition: fill-opacity 500ms linear;
   -webkit-transition: fill-opacity 500ms linear;
@@ -351,14 +351,19 @@ svg .title {
 }
 
 .nvd3.nv-pie .nv-slice text {
-  stroke: #e5e4e2;
+  // stroke: #e5e4e2;
   stroke-width: 1;
 }
 
 .nvd3.nv-pie path {
-  stroke: #fff;
-  stroke-width: 0px;
+  stroke-width: 1px;
   stroke-opacity: 1;
+  fill: #1F1C19;
+}
+
+.nv-pieChart {
+  stroke: #e5e4e2;
+  stroke-width: 1px;
 }
 
 .nvd3.nv-pie .hover path {
@@ -761,7 +766,6 @@ svg .title {
 
 .nvd3 .brush .extent {
   fill-opacity: .3;
-  stroke: #fff;
   shape-rendering: crispEdges;
 }
 

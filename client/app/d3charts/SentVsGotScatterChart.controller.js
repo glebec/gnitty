@@ -73,31 +73,32 @@ angular.module('gnittyApp')
               random = d3.random.normal();
 
           data.push({
-              key: 'Received',
-              values: []
-          });
-          data.push({
               key: 'Sent',
-              values: []
+              values: [],
+              color: '#ff7f0e'
             });
+          data.push({
+              key: 'Received',
+              values: [],
+              color: '#1f77b4'
+          });
 
-          for (var r = 0; r < $scope.received.length; r++) {
-              $scope.received[r].date = new Date($scope.received[r].date);
-              data[0].values.push({
-                x: $scope.received[r].date,
-                y: $scope.received[r].date.getHours()+((10/6)*$scope.received[r].date.getMinutes()*Math.pow(10,-2)),
-                size: $scope.received[r].emailLength,
-                shape: shapes[r % 6]
-              });
-            }
           for (var j = 0; j < $scope.sent.length; j++) {
               $scope.sent[j].date = new Date($scope.sent[j].date);
-
-              data[1].values.push({
+              data[0].values.push({
                   x: $scope.sent[j].date,//email date here
                   y: $scope.sent[j].date.getHours()+((10/6)*$scope.sent[j].date.getMinutes()*Math.pow(10,-2)),
                   size: $scope.sent[j].emailLength,
                   shape: shapes[j % 6]
+              });
+            }
+          for (var r = 0; r < $scope.received.length; r++) {
+              $scope.received[r].date = new Date($scope.received[r].date);
+              data[1].values.push({
+                x: $scope.received[r].date,
+                y: $scope.received[r].date.getHours()+((10/6)*$scope.received[r].date.getMinutes()*Math.pow(10,-2)),
+                size: $scope.received[r].emailLength,
+                shape: shapes[r % 6]
               });
             }
           return data;

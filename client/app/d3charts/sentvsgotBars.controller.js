@@ -92,11 +92,11 @@ angular.module('gnittyApp')
         // console.log("values[0]: ", values0)
 
         return [{
-          key: 'sent emails',
+          key: 'Sent',
           values: values
           },
           {
-            key: 'received emails',
+            key: 'Received',
             values: values0
           }
         ];
