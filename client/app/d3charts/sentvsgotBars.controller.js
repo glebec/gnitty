@@ -93,10 +93,12 @@ angular.module('gnittyApp')
 
         return [{
           key: 'Sent',
+          color: '#bcbd22',
           values: values
           },
           {
             key: 'Received',
+            color: '#1f77b4',
             values: values0
           }
         ];

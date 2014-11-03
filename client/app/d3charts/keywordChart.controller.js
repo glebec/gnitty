@@ -14,11 +14,12 @@ angular.module('gnittyApp')
                     showDistY: false,
                     interactive: true,
                     tooltips: true,
-                    // tooltipContent: function(key) {
-                    //   return '<h3>' + data.key + '</h3>';
-                    // },
+                    tooltipContent: function(key) {
+                      return '<h3>' + key + '</h3>';
+                    },
                     transitionDuration: 1000,
                     forceSize: 0,
+                    forceY: ([0]),
                     xAxis: {
                         axisLabel: '',
                         tickFormat: function (d){
@@ -52,12 +53,13 @@ angular.module('gnittyApp')
                     });
                         data[i].values.push({
                             x: i,
-                            y: stats.data.keywords[i].relevance,
+                            y: Number(stats.data.keywords[i].relevance),
                             size: .1,
                             shape: shapes[i % 6]
                         });
                 }
+                console.log(data);
                 return data;
-            }
+            };
 
   }]);
