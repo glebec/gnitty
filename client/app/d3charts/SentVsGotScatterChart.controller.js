@@ -81,9 +81,25 @@ angular.module('gnittyApp')
               values: []
             });
 
+<<<<<<< master
           for (var r = 0; r < $scope.received.length; r++) {
               $scope.received[r].date = new Date($scope.received[r].date);
               data[0].values.push({
+=======
+          for (var j = 0; j < $scope.sent.length; j++) {
+              console.log(typeof $scope.sent[j].date);
+              $scope.sent[j].date = new Date(Number($scope.sent[j].date));
+              console.log(typeof $scope.sent[j].date);
+              data[0].values.push({
+                  x: $scope.sent[j].date,//email date here
+                  y: $scope.sent[j].date.getHours()+((10/6)*$scope.sent[j].date.getMinutes()*Math.pow(10,-2)),
+                  size: $scope.sent[j].emailLength
+              });
+            }
+          for (var r = 0; r < $scope.received.length; r++) {
+              // $scope.received[r].date = new Date($scope.received[r].date);
+              data[1].values.push({
+>>>>>>> local
                 x: $scope.received[r].date,
                 y: $scope.received[r].date.getHours()+((10/6)*$scope.received[r].date.getMinutes()*Math.pow(10,-2)),
                 size: $scope.received[r].emailLength,

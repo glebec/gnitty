@@ -47,7 +47,6 @@ angular.module('gnittyApp')
                 for (var i = 0; i < points; i++) {
                     data.push({
                         key: stats.data.keywords[i].text,
-                        label: stats.data.keywords[i].text,
                         values: []
                     });
                         data[i].values.push({
@@ -57,6 +56,10 @@ angular.module('gnittyApp')
                             shape: shapes[i % 6]
                         });
                 }
+<<<<<<< master
+=======
+                console.log(stats.data.keywords);
+>>>>>>> local
                 return data;
             }
 

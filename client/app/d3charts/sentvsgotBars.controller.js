@@ -6,9 +6,24 @@ angular.module('gnittyApp')
   $scope.emails.bars = [];
   $scope.emails.bars.earliest = new Date(emails.bars.earliest).toLocaleDateString();
   $scope.emails.bars.latest = new Date(emails.bars.latest).toLocaleDateString();
-  // var timeVal = emails.bars.barCapacity.getHours() +":"+ emails.bars.barCapacity.getMinutes() +":"+ emails.bars.barCapacity.getSeconds();
-  // $scope.emails.bars.timeSpan = timeVal;
-  // console.log($scope.emails.bars.timeSpan);
+
+// determine the capacity of each bar for x-axis label
+  var minutes = 1000 * 60;
+  var hours = minutes * 60;
+  var days = hours * 24;
+  $scope.days = Math.floor(emails.bars.barCapacity/days);
+  $scope.hours = Math.floor((emails.bars.barCapacity/days - $scope.days)*24);
+  $scope.barCapacityTime = function () {
+    if ($scope.days < 1) {
+      return $scope.hours + ' hours';
+    }
+    if ($scope.days > 1) {
+      return $scope.days + ' days and ' + $scope.hours + ' hours';
+    }
+    if ($scope.days === 1) {
+      return $scope.days + ' day and ' + $scope.hours + ' hours';
+    }
+  };
 
   $scope.options = {
             chart: {
@@ -30,7 +45,7 @@ angular.module('gnittyApp')
                 stacked: true,
                 showControls: false,
                 xAxis: {
-                    axisLabel: 'Time from ' + new Date(emails.bars.earliest) + ' to ' + new Date(emails.bars.latest),
+                    axisLabel: 'Time from ' + $scope.emails.bars.earliest + ' to ' + $scope.emails.bars.latest + '. ' + '\n' + 'Each bar represents ' + $scope.barCapacityTime(),
                     // showMaxMin: true,
                     tickFormat: function() {return "";}
                 },
