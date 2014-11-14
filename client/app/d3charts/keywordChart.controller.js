@@ -56,10 +56,7 @@ angular.module('gnittyApp')
                             shape: shapes[i % 6]
                         });
                 }
-<<<<<<< master
-=======
                 console.log(stats.data.keywords);
->>>>>>> local
                 return data;
             }
 
