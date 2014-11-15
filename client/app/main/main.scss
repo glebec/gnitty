@@ -6,7 +6,7 @@ body {
     margin: 0 0 100px; /* bottom = footer height */
     font-family: 'Roboto', sans-serif;
     color: #e5e4e2 !important;
-    background-color: white;
+    background-color: gray;
     -webkit-transition: all 1000ms cubic-bezier(0.250, 0.250, 0.750, 0.750);
     -moz-transition: all 1000ms cubic-bezier(0.250, 0.250, 0.750, 0.750);
      -o-transition: all 1000ms cubic-bezier(0.250, 0.250, 0.750, 0.750);
@@ -105,23 +105,35 @@ footer {
   font-size: 2em;
   padding: 10px 25px;
   color: white;
-  background-color: #4285f4 !important;
+  background-color: #051326 !important;
+  border-color: #051326;
 }
 
 #landingText {
     padding: 50px;
-    width: 50%;
+    width: 100%;
     border-radius: 15px;
     display: inline-block;
 }
 
 .imgMail {
-    margin-left: 100px;
-    margin-bottom: 100px;
+    margin: 0 450px; //revisit
     -webkit-animation-delay: 0.5s; /* Chrome, Safari, Opera */
     animation-delay: 0.5s;
     -webkit-transition: all 1000ms cubic-bezier(0.250, 0.250, 0.750, 0.750);
     transition: all 1000ms cubic-bezier(0.250, 0.250, 0.750, 0.750);
+}
+
+.panel {
+  border-color: #1F1C19;
+}
+
+.panel-heading {
+  background-color: #1F1C19;
+}
+
+.homeText {
+  color: #1F1C19;
 }
 
 .bar {
