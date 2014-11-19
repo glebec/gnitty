@@ -1,70 +1,38 @@
-<div class="jumbotron">
+<!-- <div class="jumbotron">
   <div class="container center titleBlock">
     <h1>Gnitty</h1>
     <p>Visualize your Gmail</p>
   </div>
-</div>
+</div> -->
+<section id="mainLogo" class="boxText titleBlock">
+  <div>
+  Gnitty
+  <h4>Visualize your inbox</h4>
+  </div>
+</section>
 
-<div class="container">
 
-  <div class="row">
+  <div ng-controller="mainCarouselCtrl" class="carousel group">
+    <div style="height: 305px" >
+      <carousel interval="myInterval">
+        <slide ng-repeat="slide in slides" active="slide.active">
+          <img ng-src="{{slide.image}}" style="margin:auto; opacity: 50%;">
+          <div class="carousel-caption">
+            <h4>Slide {{$index+1}}</h4>
+            <h3>{{slide.text}}</h3>
+          </div>
+        </slide>
+      </carousel>
+    </div>
+  </div>
 
-    <div id='landingText' class="center">
-      <p class="lead"><i>
-        How do I come across in email?<br />
-        How much email do I get compared to others?<br />
-        What time of day do I send the most emails?</i></p>
+  <div class="container">
+    <div class="row landing-text">
       <h2>Chart your inbox</h2>
       <button ng-click="fetch()" ng-class="{'btn btn-primary btn-lg withripple disabled': clicked, 'btn btn-primary btn-lg withripple': !clicked}" id="goButton" button-disable>{{fetchBtnText}}</button>
     </div>
-
-  </div>
-
-  <div class="bs-example">
-      <div id="myCarousel" class="carousel slide" data-interval="3000" data-ride="carousel">
-          <!-- Carousel indicators -->
-          <ol class="carousel-indicators">
-              <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-              <li data-target="#myCarousel" data-slide-to="1"></li>
-              <li data-target="#myCarousel" data-slide-to="2"></li>
-          </ol>
-          <!-- Carousel items -->
-          <div class="carousel-inner">
-              <div class="active item">
-                  <h2>Slide 1</h2>
-                  <div class="carousel-caption">
-                      <h3>First slide label</h3>
-                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                  </div>
-              </div>
-              <div class="item">
-                  <h2>Slide 2</h2>
-                  <div class="carousel-caption">
-                      <h3>Second slide label</h3>
-                      <p>Aliquam sit amet gravida nibh, facilisis gravida odio.</p>
-                  </div>
-              </div>
-              <div class="item">
-                  <h2>Slide 3</h2>
-                  <div class="carousel-caption">
-                      <h3>Third slide label</h3>
-                      <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
-                  </div>
-              </div>
-          </div>
-          <!-- Carousel nav -->
-          <a class="carousel-control left" href="#myCarousel" data-slide="prev">
-              <span class="glyphicon glyphicon-chevron-left"></span>
-          </a>
-          <a class="carousel-control right" href="#myCarousel" data-slide="next">
-              <span class="glyphicon glyphicon-chevron-right"></span>
-          </a>
-      </div>
-  </div>
-
-  <div class="row">
-<!--     <div class="col-lg-2 col-lg-offset-4"> -->
-    <img class='imgMail animated bounceInRight' src='/assets/images/gmailicons.png' id='gmailIcon'/>
+    <div class="row">
+      <img class='imgMail animated bounceInRight' src='/assets/images/gmailicons.png' id='gmailIcon'/>
 
 <!--     <div class="col-xs-12 col-sm-6">
       <div class="panel">
@@ -79,8 +47,8 @@
         </div>
       </div>-->
 <!--     </div> -->
+    </div>
   </div>
-
 <!--     <div class="col-xs-12 col-sm-6">
       <div class="panel">
         <div class="panel-heading">

@@ -39,6 +39,14 @@ footer {
      text-align: center;
 }
 
+#mainLogo {
+    color: #e5e4e2;
+    background-color: #051326;
+    height: 300px;
+    text-align: center;
+    font-size: 60px;
+}
+
 /*
   ========================================
   Navigation Bar
@@ -47,7 +55,7 @@ footer {
 
 .navbar {
     background-color: #051326 !important;
-    height: 75px;
+    height: 85px;
     padding-top: 20px;
     border: none;
     -moz-box-shadow: 0px 0px 16px 0 rgba(0, 0, 0, 0.5);
@@ -56,12 +64,19 @@ footer {
 }
 
 .navbar-default .navbar-brand {
-     color: rgba(255,255,255,.84);
-
+     color: #e5e4e2;
+     background-color: #051326;
 }
 
-.navbar-default .navbar-nav > li > a {
-    color: rgba(255,255,255,.84);
+// .navbar-default .navbar-nav > li > a {
+//     color: #e5e4e2;
+//     background-color: #051326;
+//     font-size: 1.25em;
+// }
+
+  .navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus {
+    color: #e5e4e2;
+    background-color: #051326;
     font-size: 1.25em;
 }
 
@@ -75,14 +90,8 @@ footer {
   ========================================
 */
 
-.jumbotron {
-  height: 300px;
-  background: #696969 url("/assets/images/dotHeader.png") left top;
-  color: white;
-}
-
 .titleBlock {
-  margin-top: 75px;
+  margin: 75px auto 0 auto;
   background: rgba(0,0,0,0.4);
 }
 
@@ -101,12 +110,19 @@ footer {
     margin-bottom: 20px;
 }
 
+div .carousel {
+  clear: both;
+  opacity: 50%;
+}
+
 #goButton {
   font-size: 2em;
   padding: 10px 25px;
   color: white;
   background-color: #051326 !important;
   border-color: #051326;
+  margin: 200px 20px 0 900px;
+  z-index: 1000;
 }
 
 #landingText {
@@ -117,11 +133,12 @@ footer {
 }
 
 .imgMail {
-    margin: 0 450px; //revisit
+    margin: 100px 50px 0 900px; //revisit
     -webkit-animation-delay: 0.5s; /* Chrome, Safari, Opera */
     animation-delay: 0.5s;
     -webkit-transition: all 1000ms cubic-bezier(0.250, 0.250, 0.750, 0.750);
     transition: all 1000ms cubic-bezier(0.250, 0.250, 0.750, 0.750);
+    z-index: 100;
 }
 
 .panel {
