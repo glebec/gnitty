@@ -1,9 +1,4 @@
-<!-- <div class="jumbotron">
-  <div class="container center titleBlock">
-    <h1>Gnitty</h1>
-    <p>Visualize your Gmail</p>
-  </div>
-</div> -->
+
 <section id="mainLogo" class="boxText titleBlock">
   <div>
   Gnitty
@@ -18,9 +13,10 @@
       <carousel interval="myInterval">
         <slide ng-repeat="slide in slides" active="slide.active">
           <img ng-src="{{slide.image}}" style="margin:auto; opacity: 50%;">
+
           <div class="carousel-caption">
-            <h4>Slide {{$index+1}}</h4>
-            <h3>{{slide.text}}</h3>
+<!--             <h4>Slide {{$index+1}}</h4> -->
+<!--             <h3>{{slide.text}}</h3> -->
           </div>
         </slide>
       </carousel>
@@ -40,8 +36,6 @@
         </div>
       </div>-->
 <!--     </div> -->
-    </div>
-  </div>
 <!--     <div class="col-xs-12 col-sm-6">
       <div class="panel">
         <div class="panel-heading">
@@ -56,8 +50,4 @@
       </div>
     </div> -->
 
-  </div>
-
-</div>
-
-<div ng-include="'components/footer/footer.html'"></div>
+<div ng-include="'components/footer/footer.html'" class="group footer"></div>

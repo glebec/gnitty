@@ -19,13 +19,13 @@ h4, h5 {
 
 footer {
     position: absolute;
-    left: 0;
-    bottom: 0;
+    top: 1100px;
     width: 100%;
     text-align: center;
     color: rgba(0,0,0,0.5);
     padding-top: 15px;
     letter-spacing: 0.1em;
+    z-index: 200;
 }
 
 .displayed {
@@ -236,8 +236,3 @@ td {
 
   padding: 10px 30px;
 }
-
-
-
-
-
