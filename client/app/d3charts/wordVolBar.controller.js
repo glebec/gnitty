@@ -3,9 +3,8 @@
 angular.module('gnittyApp')
   .controller('wordVolBarCtrl', ['$scope', 'stats', 'emails', function($scope, stats, emails){
 
-    //TODO: Put data in stats
-
-    // avg person typed = 41,638
+//NOTES:
+    // avg American typed = 41,638 in a year
     // 41,638/250 words per page = 166 pages
     //  Which makes the average Cue user's email output slightly greater than The Old Man and the Sea (127 pages long), slightly less than The Great Gatsby (182 pages), and just about equal to The Turn of the Screw (165 pages) -- from The Atlantic http://www.theatlantic.com/technology/archive/2013/01/you-probably-write-a-novels-worth-of-email-every-year/266942/
 
@@ -26,13 +25,6 @@ angular.module('gnittyApp')
                 return d3.format(',.0f')(d);
             },
             transitionDuration: 2000
-            // xAxis: {
-            //     axisLabel: ''
-            // },
-            // yAxis: {
-            //     axisLabel: '',
-            //     axisLabelDistance: 30
-            // }
         }
     };
 
@@ -44,10 +36,6 @@ angular.module('gnittyApp')
                         "label" : "You",
                         "value" : emails.sentWordVol(emails.dateLengthSentBoolArr)
                     } ,
-                    // {
-                    //     "label" : "Average American",
-                    //     "value" : 41638
-                    // } ,
                     {
                         "label" : "The Old Man and the Sea",
                         "value" : 31750
@@ -60,7 +48,6 @@ angular.module('gnittyApp')
                         "label" : "To Kill a Mockingbird",
                         "value" : 100388
                     },
-
                     {
                       "label" : "Jane Eyre",
                       "value" : 183858

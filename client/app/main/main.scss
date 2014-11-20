@@ -41,7 +41,7 @@ footer {
 
 #mainLogo {
     color: #e5e4e2;
-    background-color: #051326;
+    background-color: #1F1C19;
     height: 300px;
     text-align: center;
     font-size: 60px;
@@ -54,7 +54,7 @@ footer {
 */
 
 .navbar {
-    background-color: #051326 !important;
+    background-color: #1F1C19 !important;
     height: 85px;
     padding-top: 20px;
     border: none;
@@ -110,19 +110,19 @@ footer {
     margin-bottom: 20px;
 }
 
-div .carousel {
-  clear: both;
-  opacity: 50%;
-}
-
 #goButton {
-  font-size: 2em;
+  font-size: 32px;
   padding: 10px 25px;
   color: white;
   background-color: #051326 !important;
   border-color: #051326;
-  margin: 200px 20px 0 900px;
+  margin: 0 auto;
   z-index: 1000;
+}
+
+div .carousel {
+  clear: both;
+  opacity: 50%;
 }
 
 #landingText {
@@ -130,15 +130,6 @@ div .carousel {
     width: 100%;
     border-radius: 15px;
     display: inline-block;
-}
-
-.imgMail {
-    margin: 100px 50px 0 900px; //revisit
-    -webkit-animation-delay: 0.5s; /* Chrome, Safari, Opera */
-    animation-delay: 0.5s;
-    -webkit-transition: all 1000ms cubic-bezier(0.250, 0.250, 0.750, 0.750);
-    transition: all 1000ms cubic-bezier(0.250, 0.250, 0.750, 0.750);
-    z-index: 100;
 }
 
 .panel {

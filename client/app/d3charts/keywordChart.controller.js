@@ -6,7 +6,7 @@ angular.module('gnittyApp')
                 chart: {
                     type: 'scatterChart',
                     height: 600,
-                    color: d3.scale.category10().range(),
+                    color: d3.scale.category20().range(),
                     scatter: {
                         onlyCircles: true
                     },
@@ -15,7 +15,7 @@ angular.module('gnittyApp')
                     interactive: true,
                     tooltips: true,
                     tooltipContent: function(key) {
-                      return '<h3>' + key + '</h3>';
+                      return '<h3>' + $scope.key + '</h3>';
                     },
                     transitionDuration: 1000,
                     forceSize: 0,
@@ -41,11 +41,11 @@ angular.module('gnittyApp')
 
             /* Random Data Generator (took from nvd3.org) */
             function generateData (groups, points) {
-                var data = [],
-                    shapes = ['circle', 'cross', 'triangle-up', 'triangle-down', 'diamond', 'square'],
-                    random = d3.random.normal();
-
+                var data = [];
                 for (var i = 0; i < points; i++) {
+                  console.log(stats.data.keywords[i].text);
+                  console.log(String(stats.data));
+                  // console.log("stats.data prototype type=", (stats.data.prototype).toString());
                     data.push({
                         key: stats.data.keywords[i].text,
                         label: stats.data.keywords[i].text,
@@ -54,11 +54,11 @@ angular.module('gnittyApp')
                         data[i].values.push({
                             x: i,
                             y: Number(stats.data.keywords[i].relevance),
-                            size: .1,
-                            shape: shapes[i % 6]
+                            size: .1
                         });
+                        $scope.key = data[i].key;
                 }
-                console.log(data);
+                console.log("keywords: ", data);
                 return data;
             };
 
