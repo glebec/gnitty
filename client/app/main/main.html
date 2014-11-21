@@ -3,6 +3,18 @@
   <div>
   Gnitty
   <h4>Visualize your inbox</h4>
+  <input type="text" ng-model="loaderval" ng-init="loaderval=0" class="dial"
+    data-width="300"
+    data-fgColor="#C0ffff"
+    data-skin="tron"
+    data-thickness=".2"
+    data-angleOffset="0">
+
+  <script>
+    $(function() {
+        $(".dial").knob();
+    });
+  </script>
     <button ng-click="fetch()" ng-class="{'btn btn-primary disabled': clicked, 'btn btn-primary': !clicked}" id="goButton" button-disable>{{fetchBtnText}}</button>
   </div>
 </section>

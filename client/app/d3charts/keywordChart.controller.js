@@ -15,7 +15,7 @@ angular.module('gnittyApp')
                     interactive: true,
                     tooltips: true,
                     tooltipContent: function(key) {
-                      return '<h3>' + $scope.key + '</h3>';
+                      return '<h3>' + key + '</h3>';
                     },
                     transitionDuration: 1000,
                     forceSize: 0,
@@ -56,7 +56,7 @@ angular.module('gnittyApp')
                             y: Number(stats.data.keywords[i].relevance),
                             size: .1
                         });
-                        $scope.key = data[i].key;
+                        // $scope.key = data[i].key;
                 }
                 console.log("keywords: ", data);
                 return data;

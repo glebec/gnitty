@@ -16,6 +16,8 @@ angular.module('gnittyApp')
       stats.getLocal();
     };
 
+    $scope.loaderval = 0;
+
     // Fetch button status
     $scope.fetchBtnText = 'Gnitify!';
     // fetch emails from Gmail API and store them in the email service
@@ -35,6 +37,7 @@ angular.module('gnittyApp')
           null,
           function fetchUpdate ( update ) {
             $scope.fetchBtnText = 'Fetching: ' + Math.round(update * 100) + '%';
+            $scope.loaderval = Math.round(update * 100);
           }
         ).then(
           function analyze () {
