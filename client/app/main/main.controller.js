@@ -16,54 +16,10 @@ angular.module('gnittyApp')
       stats.getLocal();
     };
 
-    $scope.loaderval = 0;
-
-    // Fetch button status
-    $scope.fetchBtnText = 'Gnitify!';
-    // fetch emails from Gmail API and store them in the email service
-    $scope.fetch = function () {
-      $scope.clicked=true;
-      $scope.fetchBtnText = 'Authorizing…';
-      gAPI.start().then( runFetchers );
-
-      function runFetchers () {
-        $scope.fetchBtnText = 'Fetching…';
-
-        gAPI.collectEmails().then(
-          function fetchSuccess ( emailData ) {
-            $scope.fetchBtnText = 'Fetched!';
-            emails.setData( emailData );
-          },
-          null,
-          function fetchUpdate ( update ) {
-            $scope.fetchBtnText = 'Fetching: ' + Math.round(update * 100) + '%';
-            $scope.loaderval = Math.round(update * 100);
-          }
-        ).then(
-          function analyze () {
-            $scope.fetchBtnText = 'Analyzing…';
-            return postAlchemy.sendToAlchemy( emails.textArr.join('') );
-          }
-        ).then(
-          function absorbAlchemy (analysis) {
-            $scope.fetchBtnText = 'Analyzed!';
-            stats.parseAlchemyData( analysis );
-            $location.path('/dashboard');
-          },
-          function gnittyErr (err) {
-            console.log ( 'Fetch or alchemy call failed: ', err );
-            $scope.fetchBtnText = 'OOPS…';
-          }
-        );
-
-      }
-
-    };
-
     // show stored data
     $scope.showEmails = function () {
       console.log('data stored in email service: ', emails.data);
-      console.log('dates length: ', emails.dateLengthSentBoolArr.length);
+      console.log('dates length: ', emails.dateLengthSentBoolSubjArr.length);
       console.log('text length: ', emails.textArr.length);
     };
 

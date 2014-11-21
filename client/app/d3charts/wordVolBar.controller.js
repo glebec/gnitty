@@ -34,7 +34,7 @@ angular.module('gnittyApp')
                 values: [
                     {
                         "label" : "You",
-                        "value" : emails.sentWordVol(emails.dateLengthSentBoolArr)
+                        "value" : emails.sentWordVol(emails.dateLengthSentBoolSubjArr)
                     } ,
                     {
                         "label" : "The Old Man and the Sea",

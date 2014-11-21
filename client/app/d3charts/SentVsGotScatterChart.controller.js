@@ -9,6 +9,15 @@ angular.module('gnittyApp')
           };
        };
 
+      $scope.subject = [];
+      $scope.makeSubjArr = function () {
+        for (var i=0; i<emails.dateLengthSentBoolSubjArr.length; i++) {
+          $scope.subject.push(emails.dateLengthSentBoolSubjArr.subject[i]);
+        }
+        console.log($scope.subject);
+        return $scope.subject;
+      };
+
       $scope.options = {
             chart: {
                 type: 'scatterChart',
@@ -22,7 +31,7 @@ angular.module('gnittyApp')
                 interactive: true,
                 showLegend: true,
                 tooltipContent: function(key) {
-                    return '<h3>' + key + '</h3>';
+                    return '<h3>' + key + '</h3>' + '<p>' + $scope.makeSubjArr() + '</p>';
                 },
                 transitionDuration: 1000,
                 // x: function(d, i) {
@@ -48,7 +57,6 @@ angular.module('gnittyApp')
           var words = 0;
           for (var i=0; i<80; i++) {
             for (var j=0; j<emails.bars.bars[i].length; j++) {
-              // console.log(emails.bars.bars[i][j]);
               if(emails.bars.bars[i][j].sentBool === true) {
                 a.push(emails.bars.bars[i][j]);
               }
@@ -60,7 +68,7 @@ angular.module('gnittyApp')
           return {a: a, b: b};
         };
 //replace 10,000 with totalEmails
-        $scope.data = generateData(2, stats.data.dateLengthSentBoolArray.length);
+        $scope.data = generateData(2, stats.data.dateLengthSentBoolSubjArray.length);
 
         function generateData(groups, points) {
           $scope.splitSent();
@@ -81,14 +89,9 @@ angular.module('gnittyApp')
           });
 
           for (var j = 0; j < $scope.sent.length; j++) {
-              // console.log($scope.sent[j].date);
-              // console.log(typeof $scope.sent[j].date);
-              // $scope.sent[j].date = new Date($scope.sent[j].date);
-              // console.log($scope.sent[j].date.toString());
-              // console.log("date prototype=", $scope.sent[j].date.prototype.toString());
               data[0].values.push({
+                //round down hours, minutes, seconds, milisecs
                   x: Number($scope.sent[j].date),
-                  // .getMonth()+1)+($scope.sent[j].date.getDate()*Math.pow(10,-2)),//email date here
                   y: $scope.sent[j].date.getHours()+((10/6)*$scope.sent[j].date.getMinutes()*Math.pow(10,-2)),
                   size: $scope.sent[j].emailLength
               });

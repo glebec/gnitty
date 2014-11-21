@@ -15,7 +15,7 @@ angular.module('gnittyApp')
                     interactive: true,
                     tooltips: true,
                     tooltipContent: function(key) {
-                      return '<h3>' + key + '</h3>';
+                      return '<p>' + key + '</p>';
                     },
                     transitionDuration: 1000,
                     forceSize: 0,
@@ -43,9 +43,6 @@ angular.module('gnittyApp')
             function generateData (groups, points) {
                 var data = [];
                 for (var i = 0; i < points; i++) {
-                  console.log(stats.data.keywords[i].text);
-                  console.log(String(stats.data));
-                  // console.log("stats.data prototype type=", (stats.data.prototype).toString());
                     data.push({
                         key: stats.data.keywords[i].text,
                         label: stats.data.keywords[i].text,

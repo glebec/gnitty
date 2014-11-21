@@ -27,7 +27,7 @@ angular.module('gnittyApp')
         }
     };
 
-    $scope.emailsPerYear = emails.inboxVolume(emails.dateLengthSentBoolArr);
+    $scope.emailsPerYear = emails.inboxVolume(emails.dateLengthSentBoolSubjArr);
 
         $scope.data = [
             {

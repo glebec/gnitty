@@ -18,7 +18,7 @@ angular.module('gnittyApp')
         concepts: analysis.concepts,
         keywords: analysis.keywords,
         sentiment: analysis.sentiment,
-        dateLengthSentBoolArray: emails.dateLengthSentBoolArr
+        dateLengthSentBoolSubjArray: emails.dateLengthSentBoolSubjArr
         // wordCount: emails.wordCount,
         // bars: $scope.bars
       };
