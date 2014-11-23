@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('gnittyApp')
-  .service('emails', function () {
+  .service('emails', function ($log) {
     var _emails = this;
 
     // Primary data stores
@@ -13,13 +13,13 @@ angular.module('gnittyApp')
     // Main setter function
     this.setData = function setData (data) {
       _emails.data = data;
-      console.log(_emails.data);
+      $log.debug('Emails data: ', _emails.data);
       // derive values based on data and cache for easy access:
       var retrieved = _emails.separateDatasets();
       _emails.dateLengthSentBoolArr = retrieved.dateLengthSentBoolArr;
       _emails.textArr = retrieved.textArr;
       _emails.bars = _emails.splitDates(this.dateLengthSentBoolArr);
-      console.log('Also derived ' + _emails.textArr.length + ' bodies and '+
+      $log.debug('Also derived ' + _emails.textArr.length + ' bodies and '+
         _emails.dateLengthSentBoolArr.length + ' dates.');
     };
 
@@ -121,7 +121,7 @@ angular.module('gnittyApp')
 
     // STRICTLY FOR DEV TESTING — REMOVE BEFORE DEPLOYMENT
     this.setLocal = function () {
-      console.log ('Saving to local storage: ', this.data, this.dateLengthSentBoolArr, this.textArr, this.bars );
+      $log.info ('Saving to local storage: ', this.data, this.dateLengthSentBoolArr, this.textArr, this.bars );
       localStorage.setItem( 'emails', JSON.stringify(this.data) );
       localStorage.setItem( 'dateLengths', JSON.stringify(this.dateLengthSentBoolArr) );
       localStorage.setItem( 'bars', JSON.stringify(this.bars));
@@ -134,13 +134,13 @@ angular.module('gnittyApp')
       var texts = JSON.parse( localStorage.getItem('texts') );
       var bars = JSON.parse(localStorage.getItem('bars'));
       if ( !emails || !dateLengths || !texts ||!bars) {
-        console.log('No / incomplete local storage found. Please fetch.');
+        $log.warn('No / incomplete local storage found. Please fetch.');
       } else {
         this.data = emails;
         this.dateLengthSentBoolArr = dateLengths;
         this.textArr = texts;
         this.bars = bars;
-        console.log( 'Retrieved local storage and set data: ', this.data, this.dateLengthSentBoolArr, this.textArr, this.bars );
+        $log.info( 'Retrieved local storage and set data: ', this.data, this.dateLengthSentBoolArr, this.textArr, this.bars );
       }
     };
   });

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('gnittyApp')
-  .controller('KeywordChartCtrl', ['$scope', 'stats', function($scope, stats){
+  .controller('KeywordChartCtrl', function($scope, $log, stats) {
       $scope.options = {
                 chart: {
                     type: 'scatterChart',
@@ -56,8 +56,8 @@ angular.module('gnittyApp')
                             shape: shapes[i % 6]
                         });
                 }
-                console.log(stats.data.keywords);
+                $log.debug('Stat keywords: ', stats.data.keywords);
                 return data;
             }
 
-  }]);
+  });

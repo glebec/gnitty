@@ -8,7 +8,7 @@ That promise also sends notifications counting emails fetched so far.
 ----------------------------------------------------------------------*/
 
 angular.module('gnittyApp')
-  .service('gAPI', ['$http', '$rootScope', '$q', 'b64', function ($http, $rootScope, $q, b64) {
+  .service('gAPI', function ($http, $rootScope, $q, $log, b64) {
 
     // TODO: reference CLIENT_ID key from local.env
     // gapi object is loaded in index.html script header.
@@ -95,14 +95,14 @@ angular.module('gnittyApp')
       // Get a list of message IDs, optionally starting from a given page.
       // Returns a promise.
       function getNextList ( fromPage ) {
-        console.log( 'Requesting list of emails >>>>>>' );
+        $log.debug( 'Requesting list of emails >>>>>>' );
         return _gAPI.requestMessageIds( fromPage );
       }
 
       // Handler for successful response to message ID list request.
       // Returns a promise.
       function startBatch (listResponse) {
-        console.log( '>>>>>> Received new list of emails; fetching.');
+        $log.debug( '>>>>>> Received new list of emails; fetching.');
         getCount += BATCH_SIZE;
         // Call to fire off more message ID list requests if needed.
         if ( getCount < MSG_LIMIT && listResponse.result.nextPageToken ) {
@@ -115,7 +115,7 @@ angular.module('gnittyApp')
       // Handler for successful response to batched messages request.
       // Notifies and resolves the master promise.
       function parseAndSave (batchResponse) {
-        console.log( '________\nFetched emails; now parsing.' );
+        $log.debug( '________\nFetched emails; now parsing.' );
         var responses = batchResponse.result;
         receivedCount += BATCH_SIZE;
         // get gmails, parse and store in 'emails' AJS service
@@ -129,18 +129,18 @@ angular.module('gnittyApp')
         }
         // Send progress updates to the master promise.
         emailDeferral.notify( doneCount/MSG_LIMIT );
-        console.log( doneCount + ' total parsed & stored.\n^^^^^^^^' );
+        $log.debug( doneCount + ' total parsed & stored.\n^^^^^^^^' );
         // If this is the last batch, resolve the master promise.
         if ( receivedCount >= MSG_LIMIT ) emailDeferral.resolve( emailData );
       }
 
       // Error response handlers.
       function listFail (why) {
-        console.log( 'Message IDs req. failed: ', why );
+        $log.error( 'Message IDs req. failed: ', why );
         emailDeferral.reject( why );
       }
       function batchFail (why) {
-        console.log( 'Batch error: ', why );
+        $log.error( 'Batch error: ', why );
         emailDeferral.reject( why );
       }
     };
@@ -198,7 +198,7 @@ angular.module('gnittyApp')
           case 'multipart/related':
             return raw.parts[0].parts ? raw.parts[0].parts[0].body.data : '';
           default: {
-            console.log( raw.mimeType + ' body currently ignored' );
+            $log.warn( raw.mimeType + ' body currently ignored' );
             return '';
           }
         }
@@ -244,4 +244,4 @@ angular.module('gnittyApp')
       return gapi.client.gmail.users.messages.list( params );
     };
 
-  }]);
+  });

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('gnittyApp')
-.controller('MainCtrl', function ($scope, $http, gAPI, emails, postAlchemy, stats, $location) {
+.controller('MainCtrl', function ($scope, $http, $location, $log, gAPI, emails, postAlchemy, stats) {
 
     // initialize google api in case already signed in, etc. TODO: fix this
     // gAPI.handleClientLoad();
@@ -49,7 +49,7 @@ angular.module('gnittyApp')
           }
         ).catch(
           function gnittyErr (err) {
-            console.log ( 'Fetch or alchemy call failed: ', err );
+            $log.error( 'Fetch or alchemy call failed: ', err );
             $scope.fetchBtnText = 'OOPS…';
           }
         );
@@ -60,9 +60,9 @@ angular.module('gnittyApp')
 
     // show stored data
     $scope.showEmails = function () {
-      console.log('data stored in email service: ', emails.data);
-      console.log('dates length: ', emails.dateLengthSentBoolArr.length);
-      console.log('text length: ', emails.textArr.length);
+      $log.info('data stored in email service: ', emails.data);
+      $log.info('dates length: ', emails.dateLengthSentBoolArr.length);
+      $log.info('text length: ', emails.textArr.length);
     };
 
     $scope.link = 'http://www.ginnabaker.com';

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('gnittyApp')
-  .service('stats', function (emails) {
+  .service('stats', function ($log, emails) {
     var _stats = this;
     this.data = {};
 
@@ -23,21 +23,21 @@ angular.module('gnittyApp')
         // bars: $scope.bars
       };
       _stats.data = statObj;
-      console.log( 'Saved to stats: ', _stats.data );
+      $log.debug( 'Saved to stats: ', _stats.data );
     };
 
     // STRICTLY FOR DEV TESTING — REMOVE BEFORE DEPLOYMENT
     this.setLocal = function () {
-      console.log ( 'Saving to local storage: ', this.data );
+      $log.info ( 'Saving to local storage: ', this.data );
       localStorage.setItem( 'stats', JSON.stringify( this.data ) );
     };
     this.getLocal = function () {
       var storage = JSON.parse( localStorage.getItem( 'stats' ) );
       if ( !storage ) {
-        console.log('No / incomplete local storage found. Please fetch.');
+        $log.warn('No / incomplete local storage found. Please fetch.');
       } else {
         this.data = storage;
-        console.log( 'Retrieved local storage and set data: ', this.data );
+        $log.info( 'Retrieved local storage and set data: ', this.data );
       }
     };
 
