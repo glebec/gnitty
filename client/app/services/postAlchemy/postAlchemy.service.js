@@ -11,7 +11,7 @@ angular.module('gnittyApp')
       ];
       // map each API call to a promise for its response.data
       alchemyCalls = alchemyCalls.map( function makeCall (url) {
-        return $http.post( url, {text: text, outputMode: 'json'} )
+        return $http.post( url, {text: text} )
           .then( function received (response) {
             return response.data;
           });
