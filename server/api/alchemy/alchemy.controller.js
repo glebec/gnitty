@@ -1,8 +1,8 @@
 'use strict';
 
 var AlchemyAPI = require('alchemy-api');
-var key = require('./../../config/environment/index.js')
-var alchemyApiKey = key.alchemy.apiKey;
+var config = require('./../../config/environment/index.js')
+var alchemyApiKey = config.alchemy.apiKey;
 var alchemy = new AlchemyAPI(alchemyApiKey);
 
 exports.sentiment = function (req,res) {
