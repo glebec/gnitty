@@ -1,63 +1,27 @@
 'use strict';
 
 angular.module('gnittyApp')
-  .service('postAlchemy', function ($http, $q) {
+  .service('postAlchemy', function ($http, $q, $log) {
 
-    var sentiment,
-      keywords,
-      concepts;
-
-    var _thisService = this;
-
-    this.sendToAlchemy = function (emails) {
-
-      // Master promise for grouping the three API calls, and object to send.
-      var alchemyDefer = $q.defer();
-      var resultsObj = {};
-
-      // Keep track and resolve promise when all calls done:
-      var done = {};
-      function checkOffList (which) {
-        done[which] = true;
-        if ( done.sentiment && done.keywords && done.concepts ) {
-          alchemyDefer.resolve( resultsObj );
-        }
-      }
-
-      // Fire off the asynchronous API calls simultaneously
-      // TODO: make this more DRY
-      $http.post('/api/alchemy', {
-        text: emails,
-        outputMode: 'json'
-      }).success( function (sent) {
-        resultsObj.sentiment = sent;
-        checkOffList('sentiment');
-      }).error( function (err) {
-        alchemyDefer.reject(err);
+    this.sendToAlchemy = function (text) {
+      var alchemyCalls = [
+        '/api/alchemy',
+        '/api/alchemy/keywords',
+        '/api/alchemy/concepts'
+      ];
+      // map each API route to a promise for its response
+      alchemyCalls = alchemyCalls.map( function makeCall (url) {
+        return $http.post( url, {text: text, outputMode: 'json'} );
       });
-
-      $http.post('/api/alchemy/keywords', {
-        text: emails,
-        outputMode: 'json'
-      }).success( function (keyw) {
-        resultsObj.keywords = keyw.k;
-        checkOffList('keywords');
-      }).error( function (err) {
-        alchemyDefer.reject(err);
+      // return a promise for one object representing all the data
+      return $q.all( alchemyCalls ).then( function received (results) {
+        $log.debug('Alchemy results: ', results);
+        return {
+          sentiment : results[0].data,
+          keywords : results[1].data,
+          concepts : results[2].data
+        };
       });
-
-      $http.post('/api/alchemy/concepts', {
-        text: emails,
-        outputMode: 'json'
-      }).success( function (conc) {
-        resultsObj.concepts = conc.c;
-        checkOffList('concepts');
-      }).error( function (err) {
-        alchemyDefer.reject(err);
-      });
-
-      // Return the promise for consumption in controller.
-      return alchemyDefer.promise;
     };
 
   });

@@ -1,38 +1,30 @@
 'use strict';
 
-var _ = require('lodash');
 var AlchemyAPI = require('alchemy-api');
 var key = require('./../../config/environment/index.js')
 var alchemyApiKey = key.alchemy.apiKey;
 var alchemy = new AlchemyAPI(alchemyApiKey);
 
-exports.sentiment = function(req,res) {
-  alchemy.sentiment(req.body.text, {}, function(err, response) {
+exports.sentiment = function (req,res) {
+  alchemy.sentiment( req.body.text, {}, function (err, response) {
     if (err) throw err;
-    var sentiment = response.docSentiment;
-    res.json(sentiment);
+    res.json( response.docSentiment);
   });
 };
 
-exports.keywords = function(req, res) {
-  alchemy.keywords(req.body.text, {}, function(err, response) {
+exports.keywords = function (req, res) {
+  alchemy.keywords( req.body.text, {}, function (err, response) {
     if (err) throw err;
-    var keywords = {
-      k: response.keywords
-      };
-    res.json(keywords);
+    res.json( response.keywords );
   });
 };
 
-exports.concepts = function(req, res) {
-  alchemy.concepts(req.body.text, {}, function(err, response) {
-  if (err) throw err;
-  var concepts = {
-    c: response.concepts
-  };
-  res.json(concepts);
-});
-}
+exports.concepts = function (req, res) {
+  alchemy.concepts( req.body.text, {}, function (err, response) {
+    if (err) throw err;
+    res.json( response.concepts );
+  });
+};
 
 function handleError(res, err) {
   return res.send(500, err);
