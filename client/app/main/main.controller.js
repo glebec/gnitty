@@ -46,7 +46,8 @@ angular.module('gnittyApp')
             $scope.fetchBtnText = 'Analyzed!';
             stats.parseAlchemyData( analysis );
             $location.path('/dashboard');
-          },
+          }
+        ).catch(
           function gnittyErr (err) {
             console.log ( 'Fetch or alchemy call failed: ', err );
             $scope.fetchBtnText = 'OOPS…';
