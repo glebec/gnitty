@@ -14,38 +14,38 @@ angular.module('gnittyApp')
       $scope.clicked = true;
       $scope.fetchBtnText = 'Authorizing…';
 
-      gAPI.start().then( runFetchers );
-
-      function runFetchers () {
-        $scope.fetchBtnText = 'Fetching…';
-        gAPI.collectEmails().then(
-          function fetchSuccess (emailData) {
-            $scope.fetchBtnText = 'Fetched!';
-            emails.setData( emailData );
-          },
-          null,
-          function fetchUpdate (update) {
-            $scope.fetchBtnText = 'Fetching: ' + Math.round(update * 100) + '%';
-          }
-        ).then(
-          function analyze () {
-            $scope.fetchBtnText = 'Analyzing…';
-            return postAlchemy.sendToAlchemy( emails.textArr.join('') );
-          }
-        ).then(
-          function absorbAlchemy (analysis) {
-            $scope.fetchBtnText = 'Analyzed!';
-            stats.parseAlchemyData( analysis );
-            $location.path('/dashboard');
-          }
-        ).catch(
-          function gnittyErr (err) {
-            $log.error( 'Fetch or alchemy call failed: ', err );
-            $scope.fetchBtnText = 'OOPS… Try again?';
-            $scope.clicked = false;
-          }
-        );
-      }
+      gAPI.start().then(
+        function fetchEmails () {
+          $scope.fetchBtnText = 'Fetching…';
+          return gAPI.collectEmails();
+        }
+      ).then(
+        function fetchSuccess (emailData) {
+          $scope.fetchBtnText = 'Fetched!';
+          emails.setData( emailData );
+        },
+        null,
+        function fetchUpdate (update) {
+          $scope.fetchBtnText = 'Fetching: ' + Math.round(update * 100) + '%';
+        }
+      ).then(
+        function analyze () {
+          $scope.fetchBtnText = 'Analyzing…';
+          return postAlchemy.sendToAlchemy( emails.textArr.join('') );
+        }
+      ).then(
+        function absorbAlchemy (analysis) {
+          $scope.fetchBtnText = 'Analyzed!';
+          stats.parseAlchemyData( analysis );
+          $location.path('/dashboard');
+        }
+      ).catch(
+        function gnittyErr (err) {
+          $log.error( 'Fetch or alchemy call failed: ', err );
+          $scope.fetchBtnText = 'OOPS… Try again?';
+          $scope.clicked = false;
+        }
+      );
 
     };
 
