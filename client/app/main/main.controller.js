@@ -19,12 +19,12 @@ angular.module('gnittyApp')
       function runFetchers () {
         $scope.fetchBtnText = 'Fetching…';
         gAPI.collectEmails().then(
-          function fetchSuccess ( emailData ) {
+          function fetchSuccess (emailData) {
             $scope.fetchBtnText = 'Fetched!';
             emails.setData( emailData );
           },
           null,
-          function fetchUpdate ( update ) {
+          function fetchUpdate (update) {
             $scope.fetchBtnText = 'Fetching: ' + Math.round(update * 100) + '%';
           }
         ).then(
@@ -41,7 +41,8 @@ angular.module('gnittyApp')
         ).catch(
           function gnittyErr (err) {
             $log.error( 'Fetch or alchemy call failed: ', err );
-            $scope.fetchBtnText = 'OOPS…';
+            $scope.fetchBtnText = 'OOPS… Try again?';
+            $scope.clicked = false;
           }
         );
       }
