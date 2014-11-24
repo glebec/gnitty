@@ -7,16 +7,8 @@ angular.module('gnittyApp')
         templateUrl: 'app/main/main.html',
         controller: 'MainCtrl'
       })
-      .when('/loading', {
-        templateUrl: 'app/main/loading.html',
-        controller: 'MainCtrl'
-      })
       .when('/dashboard', {
         templateUrl: 'app/main/dashboard.html',
-        controller: 'MainCtrl'
-      })
-      .when('/menu', {
-        templateUrl: 'app/main/circularmenu.html',
         controller: 'MainCtrl'
       })
       .otherwise({ redirectTo: '/' });
