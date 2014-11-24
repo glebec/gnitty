@@ -24,10 +24,6 @@
       <!-- endinjector -->
     <!-- endbuild -->
 
-
-    <!-- external API calls -->
-    <script type="text/javascript" src="//apis.google.com/js/client.js"></script>
-
   </head>
   <body ng-app="gnittyApp">
 
@@ -53,6 +49,9 @@
     <script src="bower_components/es5-shim/es5-shim.js"></script>
     <script src="bower_components/json3/lib/json3.min.js"></script>
     <![endif]-->
+
+    <!-- downloaded client library (too unreliable otherwise) -->
+    <script type="text/javascript" src="//apis.google.com/js/client.js"></script>
 
     <!-- build:js(client) app/vendor.js -->
       <!-- bower:js-->
