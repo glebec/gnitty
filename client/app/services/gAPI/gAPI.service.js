@@ -8,7 +8,7 @@ That promise also sends notifications counting emails fetched so far.
 ----------------------------------------------------------------------*/
 
 angular.module('gnittyApp')
-  .service('gAPI', function ($http, $rootScope, $q, $log, b64) {
+  .service('gAPI', function ($http, $rootScope, $q, $log, $timeout, b64) {
 
     // TODO: reference CLIENT_ID key from local.env
     // gapi object is loaded in index.html script header.
@@ -26,29 +26,42 @@ angular.module('gnittyApp')
     // TODO: enable immediate mode without breaking.
     // Result: returns promise, attach a gAPI method requiring gmail auth.
     this.start = function () {
-      return _gAPI.checkAuth()
+      return _gAPI.getAuth()
         .then( _gAPI.loadGmail );
     };
-
 
     /*-------------------------------------------------
     Authorization, initiation, and user-centric methods
     -------------------------------------------------*/
 
-    // Prevents popup blockers, etc. TODO: make this work in Safari etc.
-    this.handleClientLoad = function() {
-      gapi.auth.init(function() {});
-      // window.setTimeout(checkAuth, 1);
-    };
+    // Start with immediate mode check in case of existing access token.
+    // Terrible hack: $timeout to deal with external script load issue.
+    var authCheck = $timeout( function init () {
+      return _gAPI.getAuth(true).then(
+        function authorized (authResult) {
+          var expireDate = new Date( +authResult.expires_at * 1000 );
+          $log.debug( 'Authorized.', authResult );
+          $log.debug( 'Auth expires at:', expireDate );
+          return expireDate;
+        },
+        function unauthorized (authResult) {
+          var expireDate = new Date( +authResult.expires_at * 1000 );
+          $log.warn( 'Unauthorized.', authResult );
+          $log.info( 'Auth expired:', expireDate );
+          return expireDate;
+        }
+      );
+    }, 500);
 
     // Generic authorization method.
-    // Returns a promise that resolves to the auth token on success.
-    this.checkAuth = function checkAuth () {
+    // Returns a promise that resolves to the auth info object on success.
+    this.getAuth = function getAuth (immediate) {
+      immediate = !!immediate || false;
       var authDeferral = $q.defer();
       gapi.auth.authorize({
         'client_id': CLIENT_ID,
         'scope': SCOPES,
-        'immediate': false,
+        'immediate': immediate,
       }, function handleAuth (authResult) {
         if ( authResult && !authResult.error ) {
           authDeferral.resolve( authResult );
@@ -59,7 +72,7 @@ angular.module('gnittyApp')
       return authDeferral.promise;
     };
 
-    // Assumes authorized access via checkAuth above. Returns a promise.
+    // Assumes authorized access via getAuth above. Returns a promise.
     this.loadGmail = function loadGmail () {
       return gapi.client.load( 'gmail', 'v1' );
     };
@@ -86,7 +99,7 @@ angular.module('gnittyApp')
       return emailDeferral.promise;
 
       // Main collection trigger chains promises; will be called per-batch.
-      function startCollecting ( fromPage ) {
+      function startCollecting (fromPage ) {
         getNextList ( fromPage )
           .then( startBatch, listFail )
           .then( parseAndSave, batchFail );
@@ -94,7 +107,7 @@ angular.module('gnittyApp')
 
       // Get a list of message IDs, optionally starting from a given page.
       // Returns a promise.
-      function getNextList ( fromPage ) {
+      function getNextList (fromPage) {
         $log.debug( 'Requesting list of emails >>>>>>' );
         return _gAPI.requestMessageIds( fromPage );
       }
