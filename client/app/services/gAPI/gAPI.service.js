@@ -9,7 +9,7 @@ That promise also sends notifications counting emails fetched so far.
 ----------------------------------------------------------------------*/
 
 angular.module('gnittyApp')
-  .service('gAPI', function ($http, $rootScope, $q, $log, $timeout, b64) {
+  .service('gAPI', function ($http, $q, $log, $timeout, b64) {
 
     // TODO: reference CLIENT_ID key from local.env
     // `gapi` object is loaded in index.html script header.
