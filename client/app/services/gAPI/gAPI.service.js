@@ -22,12 +22,12 @@ angular.module('gnittyApp')
         BATCH_SIZE = 100;
 
     // A controller-ready trigger for running any number of other gAPI calls.
-    // If immediate mode worked, this would skip the login window flash…
-    // TODO: enable immediate mode without breaking.
-    // Result: returns promise, attach a gAPI method requiring gmail auth.
+    // Returns a promise for Gmail library client access.
     this.start = function () {
-      return _gAPI.getAuth()
-        .then( _gAPI.loadGmail );
+      return authInitCheck.then( function checkTime (expireDate) {
+        if (+new Date() < +expireDate) return _gAPI.loadGmail();
+        else return _gAPI.getAuth().then( _gAPI.loadGmail );
+      });
     };
 
     /*-------------------------------------------------
@@ -36,25 +36,12 @@ angular.module('gnittyApp')
 
     // Start with immediate mode check in case of existing access token.
     // Terrible hack: $timeout to deal with external script load issue.
-    var authCheck = $timeout( function init () {
-      return _gAPI.getAuth(true).then(
-        function authorized (authResult) {
-          var expireDate = new Date( +authResult.expires_at * 1000 );
-          $log.debug( 'Authorized.', authResult );
-          $log.debug( 'Auth expires at:', expireDate );
-          return expireDate;
-        },
-        function unauthorized (authResult) {
-          var expireDate = new Date( +authResult.expires_at * 1000 );
-          $log.warn( 'Unauthorized.', authResult );
-          $log.info( 'Auth expired:', expireDate );
-          return expireDate;
-        }
-      );
+    var authInitCheck = $timeout( function init () {
+      return _gAPI.getAuth(true);
     }, 500);
 
     // Generic authorization method.
-    // Returns a promise that resolves to the auth info object on success.
+    // Returns a promise that resolves to an expiration date.
     this.getAuth = function getAuth (immediate) {
       immediate = !!immediate || false;
       var authDeferral = $q.defer();
@@ -64,9 +51,11 @@ angular.module('gnittyApp')
         'immediate': immediate,
       }, function handleAuth (authResult) {
         if ( authResult && !authResult.error ) {
-          authDeferral.resolve( authResult );
+          $log.debug( 'Authorized.', authResult );
+          authDeferral.resolve( new Date(+authResult.expires_at * 1000) );
         } else {
-          authDeferral.reject( authResult );
+          $log.warn( 'Unauthorized.', authResult );
+          authDeferral.resolve( new Date() );
         }
       });
       return authDeferral.promise;
