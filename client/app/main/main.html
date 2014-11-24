@@ -15,7 +15,7 @@
         How much email do I get compared to others?<br />
         What time of day do I send the most emails?</p>
       <h2>Visualize your gmail habits.</h2>
-      <button ng-click="fetch()" ng-class="{'btn btn-primary btn-lg withripple disabled': clicked, 'btn btn-primary btn-lg withripple': !clicked}" id="goButton" button-disable>{{fetchBtnText}}</button>
+      <button ng-click="fetch()" class="btn btn-primary btn-lg withripple" ng-class="{'disabled': clicked}" id="goButton" button-disable>{{fetchBtnText}}</button>
     </div>
 
     <img class='imgMail animated bounceInRight' src='/assets/images/gmailicons.png' id='gmailIcon'/>
