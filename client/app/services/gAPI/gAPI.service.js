@@ -25,7 +25,9 @@ angular.module('gnittyApp')
     // Returns a promise for Gmail library client access.
     this.start = function () {
       return authInitCheck.then( function checkTime (expireDate) {
+        // even if we were authorized on init, let's check our expiration:
         if (+new Date() < +expireDate) return _gAPI.loadGmail();
+        // if we are no longer authorized, due a non-immediate-mode auth:
         else return _gAPI.getAuth().then( _gAPI.loadGmail );
       });
     };
@@ -34,8 +36,8 @@ angular.module('gnittyApp')
     Authorization, initiation, and user-centric methods
     -------------------------------------------------*/
 
-    // Start with immediate mode check in case of existing access token.
-    // Terrible hack: $timeout to deal with external script load issue.
+    // On instantiation, do an immediate-mode check in case of existing access.
+    // Terrible hack: $timeout to deal with slow external script load issue.
     var authInitCheck = $timeout( function init () {
       return _gAPI.getAuth(true);
     }, 500);
@@ -74,6 +76,7 @@ angular.module('gnittyApp')
     // Assumes Gmail API loaded via loadGmail above.
     // Fetches message IDs, then batch requests actual messages,
     // then parses them. Returns a promise that resolves to emaildata object.
+    // TODO: insert a timeout checker to reject the collection.
     this.collectEmails = function collectEmails (query) {
       // Return values: a master promise, and data to resolve it with.
       var emailDeferral = $q.defer();
