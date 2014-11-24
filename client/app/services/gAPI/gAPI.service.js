@@ -97,13 +97,13 @@ angular.module('gnittyApp')
 
       // Get promise for a list of message IDs, optionally from a given page.
       function getNextList (fromPage) {
-        $log.debug( '⬆  Requesting list of emails' );
+        $log.debug( '△  Requesting list of emails' );
         return _gAPI.requestMessageIds( fromPage );
       }
 
       // Handler for successful response to message ID list request.
       function startBatch (listResponse) {
-        $log.debug( '⬇⬆ Received new list of emails; fetching.');
+        $log.debug( '▽⬆ Received new list of emails; fetching.');
         requestedNum += BATCH_SIZE;
         // Start another message ID list request if needed.
         if ( requestedNum < MSG_LIMIT && listResponse.result.nextPageToken ) {
@@ -115,7 +115,7 @@ angular.module('gnittyApp')
 
       // Handler for successful response to batched messages request.
       function parseAndSave (batchResponse) {
-        $log.debug( '───────▼───────\nFetched emails; now parsing.' );
+        $log.debug( '─⬇─────────────\nFetched emails; now parsing.' );
         var responses = batchResponse.result;
         receivedNum += BATCH_SIZE;
         for ( var id in responses ) {
@@ -127,7 +127,7 @@ angular.module('gnittyApp')
         }
         // Send progress updates.
         emailDeferral.notify( parsedNum / MSG_LIMIT );
-        $log.debug( parsedNum + ' total parsed & stored.\n───────────────' );
+        $log.debug( parsedNum + ' total parsed & stored.\n￣￣￣￣￣￣￣￣￣￣' );
         // If this is the last batch, resolve the master promise.
         if ( receivedNum >= MSG_LIMIT ) emailDeferral.resolve( emailData );
       }
