@@ -12,11 +12,20 @@ angular.module('gnittyApp')
       $scope.subject = [];
       $scope.makeSubjArr = function () {
         for (var i=0; i<emails.dateLengthSentBoolSubjArr.length; i++) {
-          $scope.subject.push(emails.dateLengthSentBoolSubjArr.subject[i]);
+          $scope.subject.push(emails.dateLengthSentBoolSubjArr[i].subject);
         }
         console.log($scope.subject);
         return $scope.subject;
       };
+      // $scope.makeSubjArr();
+
+      // $scope.descriptionFunction = function(){
+      //   return function () {
+      //     for (var i=0; i<$scope.subject.length; i++) {
+      //     return $scope.subject[i];
+      //     };
+      //   };
+      // };
 
       $scope.options = {
             chart: {
@@ -30,8 +39,8 @@ angular.module('gnittyApp')
                 tooltips: true,
                 interactive: true,
                 showLegend: true,
-                tooltipContent: function(key) {
-                    return '<h3>' + key + '</h3>' + '<p>' + $scope.makeSubjArr() + '</p>';
+                tooltipContent: function(e) {
+                    return $scope.makeSubjArr()[e.pointIndex];
                 },
                 transitionDuration: 1000,
                 // x: function(d, i) {

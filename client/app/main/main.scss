@@ -95,10 +95,20 @@ footer {
   background: rgba(0,0,0,0.4);
 }
 
+.logoText {
+  position: absolute;
+  margin: 150px 0 0 200px
+}
+
 .divider {
     width: 100%;
     height: 5px;
     background-color: rgba(0,0,0,.75);
+}
+
+h1 {
+  font-size: 56px;
+  font-weight: normal;
 }
 
 .boxText {

@@ -1,9 +1,9 @@
 
 <section id="mainLogo" class="boxText titleBlock">
   <div ng-controller="D3loaderCtrl" class="chart well">
-  Gnitty
-    <h4>Visualize your inbox</h4>
-    <nvd3 options="options" data="data"></nvd3>
+    <h1 class="logoText">Gnitty</h1>
+    <h4 class="logoText">Visualize your inbox</h4>
+    <nvd3 options="options" data="data" events="events" api="api"></nvd3>
     <button ng-click="fetch()" ng-class="{'btn btn-primary disabled': clicked, 'btn btn-primary': !clicked}" id="goButton" button-disable>GNITIFY!</button>
   </div>
 </section>
