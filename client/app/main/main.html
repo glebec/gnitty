@@ -1,28 +1,30 @@
 
-<section id="mainLogo" class="boxText titleBlock">
-  <div ng-controller="D3loaderCtrl" class="chart well">
+<section id="mainLogo">
+  <div ng-controller="D3loaderCtrl" class="chart" id="logoBox">
     <h1 class="logoText">Gnitty</h1>
-    <h4 class="logoText">Visualize your inbox</h4>
+    <h4 class="logoText" id="subtitle">Visualize your inbox</h4>
     <nvd3 options="options" data="data" events="events" api="api"></nvd3>
     <button ng-click="fetch()" ng-class="{'btn btn-primary disabled': clicked, 'btn btn-primary': !clicked}" id="goButton" button-disable>GNITIFY!</button>
+<!--     <img id="homeImage" src="../../assets/images/stackedBarsForLogo.jpg"> -->
   </div>
+
 </section>
 
 
-  <div ng-controller="mainCarouselCtrl" class="carousel group">
+<!--   <div ng-controller="mainCarouselCtrl" class="carousel group">
     <div style="height: 305px" >
       <carousel interval="myInterval">
         <slide ng-repeat="slide in slides" active="slide.active">
           <img ng-src="{{slide.image}}" style="margin:auto; opacity: 50%;">
 
           <div class="carousel-caption">
-<!--             <h4>Slide {{$index+1}}</h4> -->
-<!--             <h3>{{slide.text}}</h3> -->
+             <h4>Slide {{$index+1}}</h4> -->
+<!--             <h3>{{slide.text}}</h3>
           </div>
         </slide>
       </carousel>
     </div>
-  </div>
+  </div> -->
 
 <!--     <div class="col-xs-12 col-sm-6">
       <div class="panel">

@@ -10,7 +10,7 @@ angular.module('gnittyApp')
       console.log('loadVal has changed', $scope.loadVal);
       $scope.data = [
             {
-                key: "Fetching and Analyzing",
+                key: "Fetching and Analyzing: "+ $scope.loadVal + "%",
                 y: $scope.loadVal,
                 color: '#bcbd22'
             },
@@ -27,11 +27,11 @@ angular.module('gnittyApp')
             chart: {
                 type: 'pieChart',
                 height: 450,
-                donut: true,
+                donut: false,
                 x: function(d){return d.key;},
                 y: function(d){return d.y;},
                 showLabels: true,
-                donutLabelsOutside: true,
+                pieLabelsOutside: true,
                 showLegend: false,
                 pie: {
                     startAngle: function(d) {return d.startAngle - Math.PI/2},
