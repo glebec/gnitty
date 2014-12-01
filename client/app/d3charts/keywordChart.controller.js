@@ -57,7 +57,12 @@ angular.module('gnittyApp')
                         });
                 }
                 $log.debug('Stat keywords: ', stats.data.keywords);
+                // if (!data.key) {
+                //   alert("Your data has timed out.  Please go back and click 'GNITIFY' again.");
+                // }
                 return data;
             }
+
+
 
   });

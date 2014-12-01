@@ -10,29 +10,28 @@
   </section>
 
     <section class='dashboardSection center boxText well' ng-hide='showEmail' >
-        <div ng-controller="emailVolBarCtrl" class='animated zoomIn'>
+        <div ng-controller="emailVolBarCtrl" class='zoomIn'>
            <h4>Inbox volume (messages per year)</h4>
           <nvd3 options="options" data="data"></nvd3>
         </div>
   </section>
 
   <section class='dashboardSection center boxText well' ng-hide='showWordVol' >
-        <div ng-controller="wordVolBarCtrl" class='animated zoomIn'>
+        <div ng-controller="wordVolBarCtrl" class='zoomIn'>
           <h4>Your last year of emails, measured in words</h4>
           <nvd3 options="options" data="data"></nvd3>
         </div>
   </section>
 
     <section class='dashboardSection center boxText well' ng-hide='showEmailSent'  >
-        <div ng-controller="sentPieChartCtrl" class='animated zoomIn'>
+        <div ng-controller="sentPieChartCtrl" class='zoomIn'>
           <h4>Your email tone is mostly:</h4>
           <nvd3 options="options" data="data"></nvd3>
         </div>
     </section>
 
     <section class='dashboardSection center boxText well' ng-hide='showEmail' >
-
-        <div ng-hide='showTopKey' ng-controller='KeywordChartCtrl' class='animated zoomIn'>
+        <div ng-hide='showTopKey' ng-controller='KeywordChartCtrl' class='zoomIn'>
           <h4>Your top keywords</h4>
           <nvd3 options="options" data="data"></nvd3>
         </div>
@@ -40,15 +39,24 @@
 
     <section class='dashboardSection center boxText well' ng-hide='showEmail' >
         <!--EMAIL SCATTER CHART -->
-        <div ng-hide='showEmailScatter' ng-controller="emailScatterChartCtrl" class='animated zoomIn'>
+        <div ng-hide='showEmailScatter' ng-controller="emailScatterChartCtrl" class='zoomIn'>
           <h4>Your last {{emails.dateLengthSentBoolArr[0].length}} messages by date (x) and hour (y)</h4>
           <nvd3 options="options" data="data" xAxisTickFormat="xAxisTickFormatFunction()"></nvd3>
         </div>
     </section>
+
     <section class='dashboardSection center boxText well' ng-hide='showEmail'>
         <div ng-controller="SentVsGotCtrl">
           <h4>Your last {{emails.dateLengthSentBoolArr[0].length}} emails: sent vs. received</h4>
           <h5>From {{emails.bars.earliest}} to {{emails.bars.latest}}</h5>
+          <nvd3 options="options" data="data"></nvd3>
+        </div>
+    </section>
+
+    <section class='dashboardSection center boxText well' ng-hide='showEmail'>
+        <div ng-controller="SenderDonutCtrl">
+          <h4>Your most frequent senders</h4>
+          <h5></h5>
           <nvd3 options="options" data="data"></nvd3>
         </div>
     </section>
@@ -59,5 +67,3 @@
 </div>
 
 <div ng-include="'components/footer/footer.html'"></div>
-
-

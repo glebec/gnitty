@@ -25,20 +25,12 @@ angular.module('gnittyApp')
             valueFormat: function(d){
                 return d3.format(',.0f')(d);
             },
-            transitionDuration: 1000
-            // xAxis: {
-            //     axisLabel: ''
-            // },
-            // yAxis: {
-            //     axisLabel: '',
-            //     axisLabelDistance: 30
-            // }
+            transitionDuration: 2000
         }
     };
 
         $scope.data = [
             {
-                key: "Cumulative Return",
                 values: [
                     {
                         "label" : "You",
@@ -76,4 +68,7 @@ angular.module('gnittyApp')
                 ]
             }
         ];
+    if (isNaN($scope.data[0].values[0].value)) {
+      alert("Your data has timed out. Please go back and click 'GNITIFY' again.");
+    }
     }]);
