@@ -16,12 +16,12 @@ body {
 p, h1, h2, h3, h4, h5 {
   color: #e5e4e2;
   z-index: 1000;
+  font-weight: 100;
 }
 
 footer {
-    margin-top: 250px;
     position: absolute;
-    top: 1100px;
+    top: 800px;
     width: 100%;
     text-align: center;
     color: rgba(0,0,0,0.5);
@@ -35,7 +35,6 @@ footer {
     margin-left: auto;
     margin-right: auto;
 }
-
 
 .center {
      text-align: center;
@@ -90,31 +89,16 @@ footer {
   position: absolute;
   z-index: 20;
   margin: 0 0 0 -300px;
-  -webkit-shape-outside:circle();
-  shape-outside:circle();
-}
-
-#logoBox path {
-  -webkit-shape-outside:circle();
-  shape-outside:circle();
 }
 
 .logoText {
   position: absolute;
   margin: 150px 0 0 200px;
   font-weight: 100;
-
 }
 
 #subtitle {
   margin: 210px 0 0 200px !important;
-}
-
-img {
-  position: absolute;
-  z-index: 0;
-  max-height: 400px;
-  margin: 200px 0 0 -350px;
 }
 
 .divider {
@@ -148,8 +132,15 @@ h1 {
 }
 
 div .carousel {
-  margin-top: 200px;
-  clear: both;
+  height: 220px;
+  margin: -350px 0 0 0;
+  color: #e5e4e2;
+  font-family: Roboto, sans-serif;
+  font-weight: 100;
+}
+
+div .carousel-control {
+  display: none;
 }
 
 #landingText {
