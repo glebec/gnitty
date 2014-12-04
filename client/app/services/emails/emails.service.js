@@ -19,8 +19,10 @@ angular.module('gnittyApp')
       _emails.dateLengthSentBoolArr = retrieved.dateLengthSentBoolArr;
       _emails.textArr = retrieved.textArr;
       _emails.bars = _emails.splitDates(this.dateLengthSentBoolArr);
+      _emails.senderCount = _emails.sortSenders();
       $log.debug('Also derived ' + _emails.textArr.length + ' bodies and '+
         _emails.dateLengthSentBoolArr.length + ' dates.');
+
     };
 
     // Combined two for-in loops into one
@@ -67,7 +69,7 @@ angular.module('gnittyApp')
       this.earliest = Number(dateLengthSentBoolArr[0].date);
       var temporary = this.earliest;
       _emails.timeSpan = this.latest - this.earliest;
-      //Listed as number of milliseconds since midnight January 1, 1970 UTC
+      //in milliseconds
 
       //divide the timeSpan of user's ~1000 emails into 80 pieces -- to become 80 bars
       var barNum = 80;
@@ -117,6 +119,67 @@ angular.module('gnittyApp')
       var partOfYear = _emails.timeSpan/31536000000;
       var wordsSentPerYear = wordsInTimeInt * (1/partOfYear);
       return wordsSentPerYear;
+    };
+
+    this.sortSenders = function () {
+      var allSenders = [];
+      var allSendersSliced = [];
+      var sendersArr = [];
+
+      //get only received email, so that you don't show up on your own chart
+      for ( var id in this.data ) {
+        var sentBoolVar = 0;
+        for ( var i=0; i < this.data[id].labels.length; i++ ) {
+          if ( this.data[id].labels[i] !== 'SENT' ) {
+            sentBoolVar++;
+          }
+          if (sentBoolVar === this.data[id].labels.length) {
+            allSenders.push(this.data[id].from);
+          }
+        }
+      }
+
+      //get raw email address so that duplicates can be removed
+      for ( var j=0; j < allSenders.length; j++ ) {
+        allSendersSliced[j] = allSenders[j].slice(allSenders[j].indexOf('<') + 1, allSenders[j].indexOf('>'));
+      }
+
+      //use duplicates to get number of emails from each sender
+      for ( var k=0; k < allSendersSliced.length; k++ ) {
+        var tempVal = 0;
+        for ( var l=0; l < allSendersSliced.length; l++ ) {
+          if (allSendersSliced[k] === allSendersSliced[l]) {
+            tempVal++;
+          }
+        }
+        sendersArr[k] = {email: allSendersSliced[k], val: tempVal};
+      }
+
+      //sort senders' array smallest to largest. Mine was ~700 email address objects
+      sendersArr.sort(function(a,b) {
+        return b.val - a.val;
+      });
+
+      //remove duplicates.  Mine was about 160 length after this
+      Array.prototype.removeDuplicates = function() {
+        var input = this;
+        var hashObject = new Object();
+
+        for (var i = input.length - 1; i >= 0; i--) {
+            var currentItem = input[i].email;
+
+            if (hashObject[currentItem] == true) {
+                input.splice(i, 1);
+            }
+
+            hashObject[currentItem] = true;
+        }
+        return input;
+      }
+
+      sendersArr.removeDuplicates();
+      console.log('sendersArr spliced dupes:', sendersArr);
+      return sendersArr;
     };
 
     // STRICTLY FOR DEV TESTING — REMOVE BEFORE DEPLOYMENT
