@@ -34,13 +34,17 @@ angular.module('gnittyApp')
       var textLimit = 50000; // with Alchemy
 
       for ( var id in this.data ) {
-        // dates and lengths for scatterplot
+        // dates and lengths and sentBoolean for scatterplot
         // DEV: remove try-catch when the parse bug is found
+        this.sentBool = true;
         for ( var i=0; i < this.data[id].labels.length; i++ ) {
-          this.sentBool = true;
-          if ( this.data[id].labels[i] !== 'SENT' ) {
-            this.sentBool = false;
+          var sentBoolInt = 0;
+          if ( this.data[id].labels[i] === 'SENT' ) {
+            sentBoolInt++;
           }
+        }
+        if (sentBoolInt === 0) {
+          this.sentBool = false;
         }
         dateLengthSentBoolArr.push({
           date: this.data[id].date,
