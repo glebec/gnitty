@@ -154,6 +154,7 @@ angular.module('gnittyApp')
     this.parseMessage = function parseMessage (gmailObj) {
       var parsed = {};
       if ( !gmailObj.payload ) return null;
+      // console.log("gmail object before parse:", gmailObj.payload)
       function getHeaders (gmailObj) {
         // Headers delivered as array of objs w 'name' and 'val' keys;
         // converting to a single hash with name:val properties.
@@ -166,6 +167,8 @@ angular.module('gnittyApp')
       }
       var headers    = getHeaders( gmailObj );
       parsed.from    = headers.From;
+      parsed.to      = headers.To;
+      parsed.cc      = headers.Cc;
       parsed.subject = headers.Subject;
       parsed.date    = new Date( headers.Date );
       // Directly-accessible values:

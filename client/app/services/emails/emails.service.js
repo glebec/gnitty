@@ -123,20 +123,32 @@ angular.module('gnittyApp')
       return wordsSentPerYear;
     };
 
+    //Populates most common senders and recipients charts
     this.sortSenders = function () {
       var allSenders = [];
       var allSendersSliced = [];
       var sendersArr = [];
 
-      //get only received email, so that you don't show up on your own chart
+      var allRecips = [];
+      var allRecipsSliced = [];
+      var recipsArr = [];
+
+      //senders array gets inbox messages, recips array gets sent messages
+      //NOTE: RECIPS ARRAY INCLUDES CCs, so length does not equal number of emails
       for ( var id in this.data ) {
         var sentBoolVar = 0;
         for ( var i=0; i < this.data[id].labels.length; i++ ) {
-          if ( this.data[id].labels[i] !== 'SENT' ) {
+          if ( this.data[id].labels[i] === 'SENT' ) {
             sentBoolVar++;
           }
-          if (sentBoolVar === this.data[id].labels.length) {
+          if (sentBoolVar === 0) {
             allSenders.push(this.data[id].from);
+          }
+          if (sentBoolVar > 0) {
+            allRecips.push(this.data[id].to);
+            if (this.data[id].cc !== undefined) {
+              allRecips.push(this.data[id].cc);
+            }
           }
         }
       }
@@ -146,7 +158,11 @@ angular.module('gnittyApp')
         allSendersSliced[j] = allSenders[j].slice(allSenders[j].indexOf('<') + 1, allSenders[j].indexOf('>'));
       }
 
-      //use duplicates to get number of emails from each sender
+      for (var m=0; m < allRecips.length; m++ ) {
+        allRecipsSliced[m] = allRecips[m].slice(allRecips[m].indexOf('<') + 1, allRecips[m].indexOf('>'));
+      }
+
+      //use duplicates to get number of emails from/to each sender
       for ( var k=0; k < allSendersSliced.length; k++ ) {
         var tempVal = 0;
         for ( var l=0; l < allSendersSliced.length; l++ ) {
@@ -157,8 +173,22 @@ angular.module('gnittyApp')
         sendersArr[k] = {email: allSendersSliced[k], val: tempVal};
       }
 
-      //sort senders' array smallest to largest. Mine was ~700 email address objects
+      for ( var p=0; p < allRecipsSliced.length; p++ ) {
+        var tempVal = 0;
+        for ( var r=0; r < allRecipsSliced.length; r++ ) {
+          if (allRecipsSliced[p] === allRecipsSliced[r]) {
+            tempVal++;
+          }
+        }
+        recipsArr[p] = {email: allRecipsSliced[p], val: tempVal};
+      }
+
+      //sort array smallest to largest. My senders = ~700 email address objects. Recipes = ~300
       sendersArr.sort(function(a,b) {
+        return b.val - a.val;
+      });
+
+      recipsArr.sort(function(a,b) {
         return b.val - a.val;
       });
 
@@ -177,10 +207,13 @@ angular.module('gnittyApp')
             hashObject[currentItem] = true;
         }
         return input;
-      }
+      };
 
       sendersArr.removeDuplicates();
+      recipsArr.removeDuplicates();
       console.log('sendersArr spliced dupes:', sendersArr);
+      console.log('recipsArr spliced dupes:', recipsArr);
+      //FIX
       return sendersArr;
     };
 

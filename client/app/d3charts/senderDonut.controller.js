@@ -11,8 +11,8 @@ console.log(emails.senderCount);
                     donutRatio: 0.3,
                     x: function(d){return d.key;},
                     y: function(d){return d.y;},
-                    showLabels: true,
-                    showLegend: false,
+                    showLabels: false,
+                    showLegend: true,
                     pie: {
                         startAngle: function(d) { return d.startAngle -Math.PI/2 },
                         endAngle: function(d) { return d.endAngle -Math.PI/2 }
