@@ -22,12 +22,10 @@ angular.module('gnittyApp')
       _emails.senderCount = _emails.sortSenders();
       $log.debug('Also derived ' + _emails.textArr.length + ' bodies and '+
         _emails.dateLengthSentBoolArr.length + ' dates.');
-
     };
 
     // Combined two for-in loops into one
     this.separateDatasets = function separateDatasets () {
-      var datasets = {};
       var dateLengthSentBoolArr = [];
       var textArr = [];
       var charCount = 0;
