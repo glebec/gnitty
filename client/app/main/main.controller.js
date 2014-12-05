@@ -58,6 +58,7 @@ angular.module('gnittyApp')
       emails.getLocal();
       stats.getLocal();
     };
+
     $scope.showEmails = function () {
       $log.info('data stored in email service: ', emails.data);
       $log.info('dates length: ', emails.dateLengthSentBoolArr.length);

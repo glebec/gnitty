@@ -22,7 +22,7 @@ console.log(emails.senderCount);
             };
 
     $scope.data = [];
-    for (var i=0; i<15; i++) {
+    for (var i=0; i<16; i++) {
       $scope.data.push({
         key: emails.senderCount.senders[i].email,
         y: emails.senderCount.senders[i].val

@@ -14,9 +14,9 @@ angular.module('gnittyApp')
                     showDistY: false,
                     interactive: true,
                     tooltips: true,
-                    // tooltipContent: function(key) {
-                    //   return '<h3>' + data.key + '</h3>';
-                    // },
+                    tooltipContent: function(key) {
+                      return '<h3>' + key + '</h3>';
+                    },
                     transitionDuration: 1000,
                     forceSize: 0,
                     xAxis: {

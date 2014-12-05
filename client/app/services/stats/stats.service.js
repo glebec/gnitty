@@ -6,8 +6,8 @@ angular.module('gnittyApp')
     this.data = {};
 
     this.parseAlchemyData = function (analysis) {
-      if ( analysis.keywords.length > 50 ) {
-        analysis.keywords = analysis.keywords.slice( 0, 50 );
+      if ( analysis.keywords.length > 45 ) {
+        analysis.keywords = analysis.keywords.slice( 0, 45 );
       }
       for (var i = 0; i < analysis.keywords.length; i++) {
         if ( analysis.keywords[i].text.length > 15 ) {

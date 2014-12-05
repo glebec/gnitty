@@ -155,11 +155,11 @@ angular.module('gnittyApp')
 
       //get raw email address so that duplicates can be removed
       for ( var j=0; j < allSenders.length; j++ ) {
-        allSendersSliced[j] = allSenders[j].slice(allSenders[j].indexOf('<') + 1, allSenders[j].indexOf('>'));
+        allSendersSliced[j] = allSenders[j].slice(0, allSenders[j].indexOf('<'));
       }
 
       for (var m=0; m < allRecips.length; m++ ) {
-        allRecipsSliced[m] = allRecips[m].slice(allRecips[m].indexOf('<') + 1, allRecips[m].indexOf('>'));
+        allRecipsSliced[m] = allRecips[m].slice(0, allRecips[m].indexOf('<'));
       }
 
       //use duplicates to get number of emails from/to each sender

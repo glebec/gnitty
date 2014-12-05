@@ -156,6 +156,14 @@ footer {
   margin-bottom: 20px;
 }
 
+.dashboardHalfSection {
+  width: 45%;
+  margin-bottom: 20px;
+  margin-left: 35px !important;
+  margin-right: 30px;
+  display: inline-block;
+}
+
 .barGraph {
     display: inline-block;
 }
@@ -186,7 +194,6 @@ footer {
     margin-right: auto;
 }
 
-
 /*
   ========================================
   Dash Selector
@@ -206,8 +213,3 @@ td {
 
   padding: 10px 30px;
 }
-
-
-
-
-
