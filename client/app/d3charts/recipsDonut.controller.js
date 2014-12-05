@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('gnittyApp')
-  .controller('SenderDonutCtrl', function ($scope, emails) {
+  .controller('RecipsDonutCtrl', function ($scope, emails) {
 console.log(emails.senderCount);
     $scope.options = {
                 chart: {
@@ -24,8 +24,8 @@ console.log(emails.senderCount);
     $scope.data = [];
     for (var i=0; i<15; i++) {
       $scope.data.push({
-        key: emails.senderCount.senders[i].email,
-        y: emails.senderCount.senders[i].val
+        key: emails.senderCount.recips[i].email,
+        y: emails.senderCount.recips[i].val
       });
     }
 

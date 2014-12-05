@@ -141,14 +141,14 @@ angular.module('gnittyApp')
           if ( this.data[id].labels[i] === 'SENT' ) {
             sentBoolVar++;
           }
-          if (sentBoolVar === 0) {
-            allSenders.push(this.data[id].from);
-          }
-          if (sentBoolVar > 0) {
-            allRecips.push(this.data[id].to);
-            if (this.data[id].cc !== undefined) {
-              allRecips.push(this.data[id].cc);
-            }
+        }
+        if (sentBoolVar === 0) {
+          allSenders.push(this.data[id].from);
+        }
+        if (sentBoolVar > 0) {
+          allRecips.push(this.data[id].to);
+          if (this.data[id].cc !== undefined) {
+            allRecips.push(this.data[id].cc);
           }
         }
       }
@@ -214,7 +214,8 @@ angular.module('gnittyApp')
       console.log('sendersArr spliced dupes:', sendersArr);
       console.log('recipsArr spliced dupes:', recipsArr);
       //FIX
-      return sendersArr;
+      var sendersRecips = {senders: sendersArr, recips: recipsArr};
+      return sendersRecips;
     };
 
     // STRICTLY FOR DEV TESTING — REMOVE BEFORE DEPLOYMENT

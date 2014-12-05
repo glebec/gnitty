@@ -55,7 +55,15 @@
 
     <section class='dashboardSection center boxText well' ng-hide='showEmail'>
         <div ng-controller="SenderDonutCtrl">
-          <h4>Your most frequent senders</h4>
+          <h4>You get the most email from:</h4>
+          <h5></h5>
+          <nvd3 options="options" data="data"></nvd3>
+        </div>
+    </section>
+
+    <section class='dashboardSection center boxText well' ng-hide='showEmail'>
+        <div ng-controller="RecipsDonutCtrl">
+          <h4>You send the most email to:</h4>
           <h5></h5>
           <nvd3 options="options" data="data"></nvd3>
         </div>
