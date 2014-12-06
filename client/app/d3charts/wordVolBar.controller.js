@@ -10,27 +10,28 @@ angular.module('gnittyApp')
     //  Which makes the average Cue user's email output slightly greater than The Old Man and the Sea (127 pages long), slightly less than The Great Gatsby (182 pages), and just about equal to The Turn of the Screw (165 pages) -- from The Atlantic http://www.theatlantic.com/technology/archive/2013/01/you-probably-write-a-novels-worth-of-email-every-year/266942/
 
      $scope.options = {
-        chart: {
-            type: 'discreteBarChart',
-            height: 600,
-            margin : {
-                top: 20,
-                right: 20,
-                bottom: 60,
-                left: 55
-            },
-            x: function(d){return d.label;},
-            y: function(d){return d.value;},
-            // showValues: true,
-            valueFormat: function(d){
-                return d3.format(',.f')(d);
-            },
-            transitionDuration: 2000,
-            tooltips: true,
-            tooltipContent: function(key, x, y, e, graph) {
-              return '<p>' + y + ' words' + '</p>';
-            }
+      chart: {
+        type: 'discreteBarChart',
+        height: 600,
+        margin: {
+            top: 20,
+            right: 20,
+            bottom: 60,
+            left: 55
+        },
+        x: function(d){return d.label;},
+        y: function(d){return d.value;},
+        yAxis: {
+          tickFormat: function (d){
+            return d3.format(',f')(d);
+          }
+        },
+        transitionDuration: 2000,
+        tooltips: true,
+        tooltipContent: function(key, x, y, e, graph) {
+          return '<h3>' + y + ' words' + '</h3>';
         }
+      }
     };
 
         $scope.data = [

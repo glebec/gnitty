@@ -7,27 +7,22 @@ angular.module('gnittyApp')
     // avg person received = 266 emails / day based on projections from Radicati Group Report http://www.radicati.com/?p=3237
     // Pres Obama gets 20,000 pieces of mail / day
     $scope.options = {
-        chart: {
-            type: 'discreteBarChart',
-            height: 600,
-            margin : {
-                top: 20,
-                right: 20,
-                bottom: 60,
-                left: 55
-            },
-            title: {
-                enable: true,
-                text: 'Email Received Annually'
-            },
-            transitionDuration: 2000,
-            x: function(d){return d.label;},
-            y: function(d){return d.value;},
-            showValues: true,
-            valueFormat: function(d){
-                return d3.format(',f')(d);
-            }
+      chart: {
+        type: 'discreteBarChart',
+        height: 600,
+        transitionDuration: 1000,
+        x: function(d){return d.label;},
+        y: function(d){return d.value;},
+        yAxis: {
+          tickFormat: function (d){
+            return d3.format(',f')(d);
+          }
+        },
+        tooltips: true,
+        tooltipContent: function(key, x, y, e, graph) {
+          return '<h3>' + y + ' emails' + '</h3>';
         }
+      }
     };
 
     $scope.emailsPerYear = emails.inboxVolume(emails.dateLengthSentBoolArr);

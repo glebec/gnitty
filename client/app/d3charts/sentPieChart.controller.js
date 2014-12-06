@@ -13,6 +13,10 @@ angular.module('gnittyApp')
                 showLabels: true,
                 transitionDuration: 1000,
                 labelThreshold: 0.01,
+                tooltips: true,
+                tooltipContent: function(key, y) {
+                  return '<h3>' + y + '</h3>';
+                },
                 legend: {
                     margin: {
                         top: 5,

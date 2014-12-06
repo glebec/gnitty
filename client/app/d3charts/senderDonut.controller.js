@@ -11,6 +11,9 @@ angular.module('gnittyApp')
         donutRatio: 0.3,
         x: function(d){return d.key;},
         y: function(d){return d.y;},
+        valueFormat: function (d){
+            return d3.format(',f')(d);
+        },
         showLabels: false,
         showLegend: true,
         pie: {

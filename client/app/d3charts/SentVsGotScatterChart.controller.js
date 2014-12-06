@@ -21,7 +21,7 @@ angular.module('gnittyApp')
                 showDistY: true,
                 tooltips: true,
                 tooltipContent: function(key, x, y, e, graph) {
-                  return e.series.values[e.pointIndex].subject;
+                  return '<h3>' + e.series.values[e.pointIndex].subject + '</h3>';
                 },
                 interactive: true,
                 showLegend: true,
