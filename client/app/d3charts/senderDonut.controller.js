@@ -2,7 +2,7 @@
 
 angular.module('gnittyApp')
   .controller('SenderDonutCtrl', function ($scope, emails) {
-console.log(emails.senderCount);
+
     $scope.options = {
       chart: {
         type: 'pieChart',

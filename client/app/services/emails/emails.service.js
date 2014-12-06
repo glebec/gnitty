@@ -32,7 +32,7 @@ angular.module('gnittyApp')
       var textLimit = 50000; // with Alchemy
 
       for ( var id in this.data ) {
-        // dates and lengths and sentBoolean for scatterplot
+        // dates and lengths and sentBoolean and subject for scatterplot
         // DEV: remove try-catch when the parse bug is found
         this.sentBool = true;
         for ( var i=0; i < this.data[id].labels.length; i++ ) {
@@ -47,7 +47,8 @@ angular.module('gnittyApp')
         dateLengthSentBoolArr.push({
           date: this.data[id].date,
           tlength: this.data[id].plain.length,
-          sent: this.sentBool
+          sent: this.sentBool,
+          subject: this.data[id].subject
         });
         // text for Alchemy analysis
         charCount += this.data[id].plain.length;
@@ -58,6 +59,7 @@ angular.module('gnittyApp')
       return { dateLengthSentBoolArr: dateLengthSentBoolArr, textArr: textArr};
     };
 
+    //function to create bars in bar chart, also used in scatter plot
     this.splitDates = function (dateLengthSentBoolArr) {
       // Safety typecasting, e.g. in case of stringified data from local store
       for ( var j = 0; j < dateLengthSentBoolArr.length; j++ ) {
@@ -85,7 +87,7 @@ angular.module('gnittyApp')
         for(var i=0; i<dateLengthSentBoolArr.length; i++) {
           if (delimiter >= Number(dateLengthSentBoolArr[i].date) &&
             Number(dateLengthSentBoolArr[i].date) > this.earliest) {
-            bar[h].push({date: dateLengthSentBoolArr[i].date, sentBool: dateLengthSentBoolArr[i].sent, emailLength: dateLengthSentBoolArr[i].tlength});
+            bar[h].push({date: dateLengthSentBoolArr[i].date, subject: dateLengthSentBoolArr[i].subject, sentBool: dateLengthSentBoolArr[i].sent, emailLength: dateLengthSentBoolArr[i].tlength});
             }
           }
         dateLengthSentBoolArr = dateLengthSentBoolArr.slice(bar[h], dateLengthSentBoolArr.length);
@@ -208,12 +210,8 @@ angular.module('gnittyApp')
         }
         return input;
       };
-
       sendersArr.removeDuplicates();
       recipsArr.removeDuplicates();
-      console.log('sendersArr spliced dupes:', sendersArr);
-      console.log('recipsArr spliced dupes:', recipsArr);
-      //FIX
       var sendersRecips = {senders: sendersArr, recips: recipsArr};
       return sendersRecips;
     };

@@ -20,6 +20,9 @@ angular.module('gnittyApp')
                 showDistX: true,
                 showDistY: true,
                 tooltips: true,
+                tooltipContent: function(key, x, y, e, graph) {
+                  return e.series.values[e.pointIndex].subject;
+                },
                 interactive: true,
                 showLegend: true,
                 transitionDuration: 1000,
@@ -43,10 +46,8 @@ angular.module('gnittyApp')
         $scope.splitSent = function() {
           var a = [];
           var b = [];
-          var words = 0;
           for (var i=0; i<80; i++) {
             for (var j=0; j<emails.bars.bars[i].length; j++) {
-              // console.log(emails.bars.bars[i][j]);
               if(emails.bars.bars[i][j].sentBool === true) {
                 a.push(emails.bars.bars[i][j]);
               }
@@ -57,7 +58,7 @@ angular.module('gnittyApp')
           }
           return {a: a, b: b};
         };
-//replace 10,000 with totalEmails
+
         $scope.data = generateData(2, stats.data.dateLengthSentBoolArray.length);
 
         function generateData(groups, points) {
@@ -84,6 +85,7 @@ angular.module('gnittyApp')
                 x: $scope.received[r].date,
                 y: $scope.received[r].date.getHours()+((10/6)*$scope.received[r].date.getMinutes()*Math.pow(10,-2)),
                 size: $scope.received[r].emailLength,
+                subject: $scope.received[r].subject,
                 shape: shapes[r % 6]
               });
             }
@@ -94,11 +96,10 @@ angular.module('gnittyApp')
                   x: $scope.sent[j].date,//email date here
                   y: $scope.sent[j].date.getHours()+((10/6)*$scope.sent[j].date.getMinutes()*Math.pow(10,-2)),
                   size: $scope.sent[j].emailLength,
+                  subject: $scope.sent[j].subject,
                   shape: shapes[j % 6]
               });
             }
           return data;
         }
   }]);
-
-// data[{key: 'Email from _date_'; values: [{x:_date, y:_time, size:0.1, shape:whatever}]}]
