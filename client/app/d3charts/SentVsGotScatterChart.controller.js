@@ -22,9 +22,6 @@ angular.module('gnittyApp')
                 tooltips: true,
                 interactive: true,
                 showLegend: true,
-                // tooltipContent: function(key) {
-                //     return '<h3>' + key + '</h3>';
-                // },
                 transitionDuration: 1000,
                 x: function(d, i) {
                   return new Date(d.x);

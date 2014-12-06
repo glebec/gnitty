@@ -23,9 +23,13 @@ angular.module('gnittyApp')
             y: function(d){return d.value;},
             // showValues: true,
             valueFormat: function(d){
-                return d3.format(',.0f')(d);
+                return d3.format(',.f')(d);
             },
-            transitionDuration: 2000
+            transitionDuration: 2000,
+            tooltips: true,
+            tooltipContent: function(key, x, y, e, graph) {
+              return '<p>' + y + ' words' + '</p>';
+            }
         }
     };
 
