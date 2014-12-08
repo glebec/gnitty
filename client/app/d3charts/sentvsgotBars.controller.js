@@ -41,6 +41,7 @@ angular.module('gnittyApp')
                 tooltips: true,
                 tooltipContent: function (key, x, y, e, graph) {
                   return '<h3>' + key + '</h3>' + '<p>' +  y + '</p>';
+                  console.log(e.series);
                 },
                 stacked: true,
                 showControls: false,

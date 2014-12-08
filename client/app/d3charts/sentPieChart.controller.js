@@ -15,7 +15,7 @@ angular.module('gnittyApp')
                 labelThreshold: 0.01,
                 tooltips: true,
                 tooltipContent: function(key, y) {
-                  return '<h3>' + y + '</h3>';
+                  return '<h3>' + y*100 + '%' +'</h3>';
                 },
                 legend: {
                     margin: {

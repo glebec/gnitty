@@ -87,7 +87,7 @@ angular.module('gnittyApp')
         for(var i=0; i<dateLengthSentBoolArr.length; i++) {
           if (delimiter >= Number(dateLengthSentBoolArr[i].date) &&
             Number(dateLengthSentBoolArr[i].date) > this.earliest) {
-            bar[h].push({date: dateLengthSentBoolArr[i].date, subject: dateLengthSentBoolArr[i].subject, sentBool: dateLengthSentBoolArr[i].sent, emailLength: dateLengthSentBoolArr[i].tlength});
+            bar[h].push({date: dateLengthSentBoolArr[i].date, subject: dateLengthSentBoolArr[i].subject || "[No Subject]", sentBool: dateLengthSentBoolArr[i].sent, emailLength: dateLengthSentBoolArr[i].tlength});
             }
           }
         dateLengthSentBoolArr = dateLengthSentBoolArr.slice(bar[h], dateLengthSentBoolArr.length);
