@@ -2,17 +2,19 @@
 
 angular.module('gnittyApp')
   .controller('SentVsGotCtrl', ['$scope', 'stats', 'emails', function($scope, stats, emails){
+
   $scope.emails = {};
   $scope.emails.bars = [];
   $scope.emails.bars.earliest = new Date(emails.bars.earliest).toLocaleDateString();
   $scope.emails.bars.latest = new Date(emails.bars.latest).toLocaleDateString();
+  $scope.barCapacity = emails.bars.barCapacity;
 
 // determine the capacity of each bar for x-axis label
   var minutes = 1000 * 60;
   var hours = minutes * 60;
   var days = hours * 24;
-  $scope.days = Math.floor(emails.bars.barCapacity/days);
-  $scope.hours = Math.floor((emails.bars.barCapacity/days - $scope.days)*24);
+  $scope.days = Math.floor($scope.barCapacity/days);
+  $scope.hours = Math.floor(($scope.barCapacity/days - $scope.days)*24);
   $scope.barCapacityTime = function () {
     if ($scope.days < 1) {
       return $scope.hours + ' hours';
@@ -40,14 +42,15 @@ angular.module('gnittyApp')
                 transitionDuration: 1000,
                 tooltips: true,
                 tooltipContent: function (key, x, y, e, graph) {
-                  return '<h3>' + key + '</h3>' + '<p>' +  y + '</p>';
-                  console.log(e.series);
+                                    console.log('e series values:', e.series.values);
+                  return '<h3>' + y + ' ' + key + '</h3>' + '<p>' +  'from ' + e.series.values[e.pointIndex].barStartDate + ' to ' + e.series.values[e.pointIndex].barEndDate + '</p>';
+
                 },
                 stacked: true,
                 showControls: false,
                 xAxis: {
                     axisLabel: 'Time from ' + $scope.emails.bars.earliest + ' to ' + $scope.emails.bars.latest + '. ' + '\n' + 'Each bar represents ' + $scope.barCapacityTime(),
-                    // showMaxMin: true,
+                    showMaxMin: false,
                     tickFormat: function() {return "";}
                 },
                 yAxis: {
@@ -61,33 +64,23 @@ angular.module('gnittyApp')
         };
 
         $scope.splitSent = function() {
-          var a = [];
-          var b = [];
-          $scope.aLength = [];
-          $scope.bLength = [];
-          for (var d=0; d<emails.bars.bars.length; d++) {
-              a[d]=[];
-              b[d]=[];
-          }
-
+          $scope.a = [];
+          $scope.b = [];
           for (var i=0; i<emails.bars.bars.length; i++) {
+              $scope.a[i] = [];
+              $scope.b[i] = [];
             for (var j=0; j<emails.bars.bars[i].length; j++) {
-              // console.log(emails.bars.bars[i][j]);
               if(emails.bars.bars[i][j].sentBool === true) {
-                a[i].push(emails.bars.bars[i][j]);
+                $scope.a[i].push(emails.bars.bars[i][j]);
                 // console.log('a= ', a);
               }
               if (emails.bars.bars[i][j].sentBool === false) {
-                b[i].push(emails.bars.bars[i][j]);
+                $scope.b[i].push(emails.bars.bars[i][j]);
                 // console.log('b= ', b);
               }
             }
           }
 
-          for (var k=0; k<emails.bars.bars.length; k++) {
-            $scope.aLength.push(a[k].length);
-            $scope.bLength.push(b[k].length);
-          }
         };
 
         $scope.data = generateData();
@@ -97,22 +90,21 @@ angular.module('gnittyApp')
           var values = [];
           var values0 =[];
           for (var h=0; h<emails.bars.bars.length; h++) {
-            // debugger;
-            var aLength = $scope.aLength[h];
-            var bLength = $scope.bLength[h];
-            values.push({x: h, y: aLength});
-            values0.push({x: h, y: bLength});
+            var barStartDate = new Date(Number(emails.bars.earliest + $scope.barCapacity*h)).toLocaleDateString() +' at ' + new Date(Number(emails.bars.earliest + $scope.barCapacity*h)).toLocaleTimeString();
+            var barEndDate = new Date(Number(emails.bars.earliest + $scope.barCapacity*(h+1))).toLocaleDateString() + ' at ' + new Date(Number(emails.bars.earliest + $scope.barCapacity*(h+1))).toLocaleTimeString();
+            values.push({x: h, y: $scope.a[h].length, barStartDate: barStartDate, barEndDate: barEndDate});
+            values0.push({x: h, y: $scope.b[h].length, barStartDate: barStartDate, barEndDate: barEndDate});
           };
 
         // console.log("values: ", values);
-        // console.log("values[0]: ", values0)
+        // console.log("values[0]: ", values0);
 
         return [{
-          key: 'sent emails',
+          key: 'emails sent',
           values: values
           },
           {
-            key: 'received emails',
+            key: 'emails received',
             values: values0
           }
         ];
