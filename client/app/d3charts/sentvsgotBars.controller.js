@@ -3,11 +3,12 @@
 angular.module('gnittyApp')
   .controller('SentVsGotCtrl', ['$scope', 'stats', 'emails', function($scope, stats, emails){
 
+    $scope.emailNumber = emails.dateLengthSentBoolArr.length;
     $scope.bars = emails.bars.bars;
     $scope.emails = {};
     $scope.emails.bars = [];
-    $scope.emails.bars.earliest = new Date(emails.bars.earliest).toLocaleDateString();
-    $scope.emails.bars.latest = new Date(emails.bars.latest).toLocaleDateString();
+    $scope.earliest = new Date(emails.bars.earliest).toLocaleDateString();
+    $scope.latest = new Date(emails.bars.latest).toLocaleDateString();
     $scope.barCapacity = emails.bars.barCapacity;
 
   // convert the capacity of each bar into days/hours/minutes
@@ -30,33 +31,33 @@ angular.module('gnittyApp')
       }
     };
 
-  $scope.options = {
-            chart: {
-                type: 'multiBarChart',
-                height: 600,
-                clipEdge: true,
-                staggerLabels: true,
-                transitionDuration: 1000,
-                tooltips: true,
-                tooltipContent: function (key, x, y, e, graph) {
-                  return '<h3>' + y + ' ' + key + '</h3>' + '<p>' +  'from ' + e.series.values[e.pointIndex].barStartDate + ' to ' + e.series.values[e.pointIndex].barEndDate + '</p>';
-                },
-                stacked: true,
-                showControls: false,
-                xAxis: {
-                    axisLabel: 'Time from ' + $scope.emails.bars.earliest + ' to ' + $scope.emails.bars.latest + '. ' + '\n' + 'Each bar represents ' + $scope.barCapacityTime(),
-                    showMaxMin: false,
-                    tickFormat: function() {return "";}
-                },
-                yAxis: {
-                    axisLabel: 'Number of emails',
-                    axisLabelDistance: 40,
-                    tickFormat: function(d){
-                        return d3.format(',f')(d);
-                    }
-                }
-            }
-        };
+    $scope.options = {
+      chart: {
+        type: 'multiBarChart',
+        height: 600,
+        clipEdge: true,
+        staggerLabels: true,
+        transitionDuration: 1000,
+        tooltips: true,
+        tooltipContent: function (key, x, y, e, graph) {
+          return '<h3>' + y + ' ' + key + '</h3>' + '<p>' +  'from ' + e.series.values[e.pointIndex].barStartDate + ' to ' + e.series.values[e.pointIndex].barEndDate + '</p>';
+        },
+        stacked: true,
+        showControls: false,
+        xAxis: {
+          axisLabel: 'Each bar represents ' + $scope.barCapacityTime(),
+          showMaxMin: false,
+          tickFormat: function() {return "";}
+        },
+        yAxis: {
+          axisLabel: 'Number of emails',
+          axisLabelDistance: 40,
+          tickFormat: function(d){
+            return d3.format(',f')(d);
+          }
+        }
+      }
+    };
 
       //put sent emails into 'a' array and received emails into 'b' array
         $scope.splitSent = function() {

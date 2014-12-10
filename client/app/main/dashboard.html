@@ -36,15 +36,15 @@
 
   <section class='dashboardSection center boxText well' ng-hide='showEmail' >
     <div ng-hide='showEmailScatter' ng-controller="emailScatterChartCtrl" class='zoomIn'>
-      <h4>Your last {{emails.dateLengthSentBoolArr[0].length}} messages by date (x) and hour (y)</h4>
+      <h4>Your last {{emailNumber}} messages by date (x) and hour (y)</h4>
       <nvd3 options="options" data="data" xAxisTickFormat="xAxisTickFormatFunction()"></nvd3>
     </div>
   </section>
 
   <section class='dashboardSection center boxText well' ng-hide='showEmail'>
     <div ng-controller="SentVsGotCtrl">
-      <h4>Your last {{emails.dateLengthSentBoolArr[0].length}} emails: sent vs. received</h4>
-      <h5>From {{emails.bars.earliest}} to {{emails.bars.latest}}</h5>
+      <h4>Your last {{emailNumber}} emails, sent vs. received volume by time segment</h4>
+      <h5>From {{earliest}} to today</h5>
       <nvd3 options="options" data="data"></nvd3>
     </div>
   </section>

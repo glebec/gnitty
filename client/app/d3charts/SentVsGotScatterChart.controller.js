@@ -3,6 +3,8 @@
 angular.module('gnittyApp')
   .controller('emailScatterChartCtrl', ['$scope', 'stats', 'emails', function($scope, stats, emails){
 
+      debugger;
+      $scope.emailNumber = emails.dateLengthSentBoolArr.length;
       $scope.xAxisTickFormatFunction = function(){
           return function(d){
             return d3.time.format('%x')(new Date(d));
