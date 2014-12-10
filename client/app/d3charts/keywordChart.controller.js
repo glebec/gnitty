@@ -27,6 +27,7 @@ angular.module('gnittyApp')
           },
           axisLabelDistance: 30
         },
+        forceX: [0, 26],
         // xDomain: ["A", "B", "C"],
         // xRange: [0, 1, 2],
         yAxis: {
@@ -66,7 +67,6 @@ angular.module('gnittyApp')
                 ]
               });
             }
-          console.log(data);
           }
         }
         return data;

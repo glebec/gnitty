@@ -47,7 +47,6 @@ footer {
 
 .navbar-default .navbar-brand {
      color: rgba(255,255,255,.84);
-
 }
 
 .navbar-default .navbar-nav > li > a {
@@ -147,7 +146,6 @@ footer {
   margin: 0 1.5%;
   width: 30%;
   display: block;
-
 }
 
 .dashboardSection {
@@ -180,36 +178,4 @@ footer {
 
 #analyticsTop {
   font-size: 3em;
-}
-
-/*
-  ========================================
-  Login / Register
-  ========================================
-*/
-
-.regBox {
-    width: 700px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-/*
-  ========================================
-  Dash Selector
-  ========================================
-*/
-
-label {
-  font-size: 1.5em;
-  margin-right: 30px;
-}
-
-table {
-  border-collapse: collapse;
-}
-th,
-td {
-
-  padding: 10px 30px;
 }
