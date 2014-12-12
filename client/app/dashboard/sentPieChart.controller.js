@@ -2,7 +2,12 @@
 
 angular.module('gnittyApp')
   .controller('sentPieChartCtrl', ['$scope', 'stats', function($scope, stats){
-//TODO: REPLACE Y VALUES WITH SENTIMENT VALUES
+
+  if (stats.data.sentiment.type === "neutral" && !stats.data.sentiment.score) {
+    $scope.sentiment = 0;
+  } else {
+    $scope.sentiment = stats.data.sentiment.score;
+  }
 
   $scope.options = {
             chart: {
@@ -31,11 +36,11 @@ angular.module('gnittyApp')
         $scope.data = [
             {
                 key: "Positive",
-                y: (1 + Number((stats.data.sentiment.score)))/2
+                y: (1 + Number($scope.sentiment))/2
             },
             {
                 key: "Negative",
-                y: (2 - (1 + Number(stats.data.sentiment.score)))/2
+                y: (2 - (1 + Number($scope.sentiment)))/2
             }
         ];
 }]);

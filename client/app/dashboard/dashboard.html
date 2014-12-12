@@ -2,7 +2,7 @@
 
 <header>
   <div class='well'>
-    <p id='analyticsTop'><span style='margin-right:1.5em'></span>Welcome to your analytics dashboard!</p>
+    <p id='analyticsTop'><span style='margin-right:1.5em'></span>ANALYTICS DASHBOARD</p>
   </div>
 </header>
 
@@ -11,7 +11,11 @@
        <h4>Inbox volume (messages per year)</h4>
        <img class="info-icon" id="email-vol" src="/assets/images/info_icon_xl.png"/>
        <div class="info-box">
-        <p>Gnitty does not count spam or deleted emails.  Your spam bar is a projection based on the 2012 average (70% of email is spam). A high non-spam email count indicates large volume and/or spam not marked as such.  A low non-spam email count indicates either low volume and/or diligence in deleting emails.</p>
+        <ul>
+          <li>Gnitty does not count spam or deleted emails. Your spam total is an estimate based on the 2012 average (70% of email is spam). Click 'stacked' to see an estimated total email count for the past year.</li>
+          <li>A high non-spam email count indicates large volume and/or spam not marked as such.</li>
+          <li>A low non-spam email count indicates either low volume and/or diligence in deleting emails.</li>
+        </ul>
        </div>
       <nvd3 options="options" data="data"></nvd3>
     </div>
@@ -34,6 +38,10 @@
   <section class='dashboardHalfSection center boxText well' ng-hide='showEmailSent'  >
     <div ng-controller="sentPieChartCtrl" class='zoomIn'>
       <h4>Your email tone is mostly:</h4>
+      <img class="info-icon" src="/assets/images/info_icon_xl.png"/>
+      <div class="info-box" id="sent-pie">
+        <p>Sentiment analysis is a set of algorithms used to determine the writer's attitude as expressed in a fragment of text.</p>
+      </div>
       <nvd3 options="options" data="data"></nvd3>
     </div>
   </section>
@@ -41,6 +49,13 @@
   <section class='dashboardSection center boxText well' ng-hide='showEmail' >
     <div ng-hide='showEmailScatter' ng-controller="emailScatterChartCtrl" class='zoomIn'>
       <h4>Your last {{emailNumber}} messages by date (x) and hour (y)</h4>
+      <img class="info-icon" src="/assets/images/info_icon_xl.png"/>
+      <div class="info-box" id="email-scatter">
+        <ul>
+          <li>Size corresponds to an email's word count, with larger circles representing longer emails.</li>
+          <li>A grid-like chart appearance often results from news feed subscriptions or automated reminders that email you at the same time each day.</li>
+        </ul>
+      </div>
       <nvd3 options="options" data="data" xAxisTickFormat="xAxisTickFormatFunction()"></nvd3>
     </div>
   </section>

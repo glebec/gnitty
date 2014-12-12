@@ -10,7 +10,7 @@ angular.module('gnittyApp')
       chart: {
         type: 'multiBarChart',
         height: 600,
-        stacked: true,
+        stacked: false,
         transitionDuration: 1000,
         x: function(d){return d.label;},
         y: function(d){return d.value;},

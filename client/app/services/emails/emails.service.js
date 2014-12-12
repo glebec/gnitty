@@ -33,29 +33,30 @@ angular.module('gnittyApp')
 
       for ( var id in this.data ) {
         // dates and lengths and sentBoolean and subject for scatterplot
-        // DEV: remove try-catch when the parse bug is found
-        this.sentBool = true;
+        this.sentBool = false;
         for ( var i=0; i < this.data[id].labels.length; i++ ) {
           var sentBoolInt = 0;
           if ( this.data[id].labels[i] === 'SENT' ) {
             sentBoolInt++;
           }
         }
-        if (sentBoolInt === 0) {
-          this.sentBool = false;
+        if (sentBoolInt > 0) {
+          this.sentBool = true;
+          // text for Alchemy analysis
+          charCount += this.data[id].plain.length;
+          if ( charCount < textLimit ) {
+            textArr.push( this.data[id].plain );
+          }
         }
+
         dateLengthSentBoolArr.push({
           date: this.data[id].date,
           tlength: this.data[id].plain.length,
           sent: this.sentBool,
           subject: this.data[id].subject
         });
-        // text for Alchemy analysis
-        charCount += this.data[id].plain.length;
-        if ( charCount < textLimit ) {
-          textArr.push( this.data[id].plain );
-        }
       }
+
       return { dateLengthSentBoolArr: dateLengthSentBoolArr, textArr: textArr};
     };
 
