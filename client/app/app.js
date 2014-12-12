@@ -52,7 +52,6 @@ angular.module('gnittyApp', [
       Auth.isLoggedInAsync(function(loggedIn) {
         if (next.authenticate && !loggedIn) {
           $location.path('/login');
-
         }
       });
     });

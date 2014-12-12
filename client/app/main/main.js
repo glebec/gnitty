@@ -7,9 +7,5 @@ angular.module('gnittyApp')
         templateUrl: 'app/main/main.html',
         controller: 'MainCtrl'
       })
-      .when('/dashboard', {
-        templateUrl: 'app/main/dashboard.html',
-        controller: 'MainCtrl'
-      })
       .otherwise({ redirectTo: '/' });
   });

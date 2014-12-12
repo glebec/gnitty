@@ -1,0 +1,72 @@
+<div ng-include="'components/navbar/navbar.html'"></div>
+
+<header>
+  <div class='well'>
+    <p id='analyticsTop'><span style='margin-right:1.5em'></span>Welcome to your analytics dashboard!</p>
+  </div>
+</header>
+
+  <section class='dashboardSection center boxText well' ng-hide='showEmail' >
+    <div ng-controller="emailVolBarCtrl" class='zoomIn'>
+       <h4>Inbox volume (messages per year)</h4>
+       <img class="info-icon" id="email-vol" src="/assets/images/info_icon_xl.png"/>
+       <div class="info-box">
+        <p>Gnitty does not count spam or deleted emails.  Your spam bar is a projection based on the 2012 average (70% of email is spam). A high non-spam email count indicates large volume and/or spam not marked as such.  A low non-spam email count indicates either low volume and/or diligence in deleting emails.</p>
+       </div>
+      <nvd3 options="options" data="data"></nvd3>
+    </div>
+  </section>
+
+  <section class='dashboardSection center boxText well' ng-hide='showWordVol' >
+    <div ng-controller="wordVolBarCtrl" class='zoomIn'>
+      <h4>Your last year of emails, measured in words</h4>
+      <nvd3 options="options" data="data"></nvd3>
+    </div>
+  </section>
+
+  <section class='dashboardHalfSection center boxText well' ng-hide='showEmail' >
+    <div ng-hide='showTopKey' ng-controller='KeywordChartCtrl' class='zoomIn'>
+      <h4>Your top keywords</h4>
+      <nvd3 options="options" data="data"></nvd3>
+    </div>
+  </section>
+
+  <section class='dashboardHalfSection center boxText well' ng-hide='showEmailSent'  >
+    <div ng-controller="sentPieChartCtrl" class='zoomIn'>
+      <h4>Your email tone is mostly:</h4>
+      <nvd3 options="options" data="data"></nvd3>
+    </div>
+  </section>
+
+  <section class='dashboardSection center boxText well' ng-hide='showEmail' >
+    <div ng-hide='showEmailScatter' ng-controller="emailScatterChartCtrl" class='zoomIn'>
+      <h4>Your last {{emailNumber}} messages by date (x) and hour (y)</h4>
+      <nvd3 options="options" data="data" xAxisTickFormat="xAxisTickFormatFunction()"></nvd3>
+    </div>
+  </section>
+
+  <section class='dashboardSection center boxText well' ng-hide='showEmail'>
+    <div ng-controller="SentVsGotCtrl">
+      <h4>Your last {{emailNumber}} emails, sent vs. received volume by time segment</h4>
+      <h5>From {{earliest}} to today</h5>
+      <nvd3 options="options" data="data"></nvd3>
+    </div>
+  </section>
+
+  <section class='dashboardHalfSection center boxText well' ng-hide='showEmail'>
+    <div ng-controller="SenderDonutCtrl">
+      <h4>You get the most email from:</h4>
+      <h5></h5>
+      <nvd3 options="options" data="data"></nvd3>
+    </div>
+  </section>
+
+  <section class='dashboardHalfSection center boxText well' ng-hide='showEmail'>
+    <div ng-controller="RecipsDonutCtrl">
+      <h4>You send the most email to:</h4>
+      <h5></h5>
+      <nvd3 options="options" data="data"></nvd3>
+    </div>
+  </section>
+
+<div ng-include="'components/footer/footer.html'"></div>
