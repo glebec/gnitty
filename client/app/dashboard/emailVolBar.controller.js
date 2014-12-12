@@ -33,7 +33,7 @@ angular.module('gnittyApp')
                 key: "Non-Spam",
                 values: [
                     {
-                        "label" : "You",
+                        "label" : "Your Inbox",
                         "value" : $scope.emailsPerYear
                     } ,
                     {
@@ -58,7 +58,7 @@ angular.module('gnittyApp')
                 key: "Spam",
                 values: [
                  {
-                      "label" : "You",
+                      "label" : "Your Inbox",
                       "value" : ($scope.emailsPerYear*.7)
                   } ,
                   {

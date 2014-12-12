@@ -42,7 +42,7 @@ angular.module('gnittyApp')
         }
         if (sentBoolInt > 0) {
           this.sentBool = true;
-          // text for Alchemy analysis
+          // text for Alchemy analysis -- keywords and sentiment
           charCount += this.data[id].plain.length;
           if ( charCount < textLimit ) {
             textArr.push( this.data[id].plain );
