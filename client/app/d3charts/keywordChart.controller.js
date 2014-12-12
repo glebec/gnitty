@@ -2,7 +2,8 @@
 
 angular.module('gnittyApp')
   .controller('KeywordChartCtrl', ['$scope', 'stats', function($scope, stats){
-      $scope.options = {
+ // console.log(stats.data);
+       $scope.options = {
                 chart: {
                     type: 'scatterChart',
                     height: 600,
@@ -44,8 +45,8 @@ angular.module('gnittyApp')
                 var data = [];
                 for (var i = 0; i < points; i++) {
                     data.push({
-                        key: stats.data.keywords[i].text,
-                        label: stats.data.keywords[i].text,
+                        key: String(stats.data.keywords[i].text),
+                        label: String(stats.data.keywords[i].text),
                         values: []
                     });
                         data[i].values.push({
@@ -55,7 +56,6 @@ angular.module('gnittyApp')
                         });
                         // $scope.key = data[i].key;
                 }
-                console.log("keywords: ", data);
                 return data;
             };
 

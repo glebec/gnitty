@@ -4,50 +4,12 @@
     <h4 class="logoText" id="subtitle">Visualize your inbox</h4>
     <nvd3 options="options" data="data" events="events" api="api"></nvd3>
     <button ng-click="fetch()" ng-class="{'btn btn-primary disabled': clicked, 'btn btn-primary': !clicked}" id="goButton" button-disable>GNITIFY!</button>
-
-    <div ng-controller="mainCarouselCtrl" class="carousel">
-      <div>
-        <carousel interval="myInterval">
-          <slide ng-repeat="slide in slides" active="slide.active">
-            <h2>{{slide.header}}</h2>
-  <!--              <h4>Slide {{$index+1}}</h4> -->
-              <h3>{{slide.text}}</h3>
-          </slide>
-        </carousel>
-      </div>
-    </div>
-
+  </div>
+  <div class="fader">
+    <h3 class="fader" ng-show="indicator === 1">How much email do I get?</h3>
+    <h3 ng-show="indicator === 2">How do I come across?</h3>
+    <h3 ng-show="indicator === 3">Who do I send the most email to?</h3>
   </div>
 </section>
-
-
-
-
-<!--     <div class="col-xs-12 col-sm-6">
-      <div class="panel">
-        <div class="panel-heading">
-          <h3 class="panel-title">Email Intelligence</h3>
-        </div>
-        <div class="panel-body">
-          <br />
-          <img class="displayed pull-right" src="/assets/images/email_icon.png" style="width:100px; height:100px" />
-          <br />
-          <p class="homeText">Pick out patterns, understand your inbox. Gnitty gets down to the nitty-gritty of your last 1,000 Gmail messages.</p>
-        </div>
-      </div>-->
-<!--     </div> -->
-<!--     <div class="col-xs-12 col-sm-6">
-      <div class="panel">
-        <div class="panel-heading">
-          <h3 class="panel-title">Free, Easy, Secure</h3>
-        </div>
-        <div class="panel-body">
-          <br />
-          <img class="displayed pull-right" src="/assets/images/security_user_shield_icon.png" style="width:100px; height:100px" />
-          <br />
-          <p class="homeText">Authenticated through Google, meaning you remain in control. Gnitty processes your mail in the browser, saving nothing. We do not use or share your data except for a short anonymous text-snippet used to glean your keywords.</p>
-        </div>
-      </div>
-    </div> -->
 
 <div ng-include="'components/footer/footer.html'" class="group footer"></div>

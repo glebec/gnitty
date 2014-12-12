@@ -2,8 +2,8 @@
   width: 800px;
   height: 700px;
   margin: 20px auto 0px auto;
-  background-color: #1F1C19 !important; /*dark brown*/
-  color: #e5e4e2 !important;
+  background-color: $choc-brown !important; /*dark brown*/
+  color: $gray-font !important;
 };
 
 
@@ -22,10 +22,7 @@
   Box shadow and border radius styling
 */
 .nvtooltip.with-3d-shadow, .with-3d-shadow .nvtooltip {
-  -moz-box-shadow: 0 5px 10px rgba(0,0,0,.2);
-  -webkit-box-shadow: 0 5px 10px rgba(0,0,0,.2);
-  box-shadow: 0 5px 10px rgba(0,0,0,.2);
-
+  @include box-shadow(0.2);
   -webkit-border-radius: 6px;
   -moz-border-radius: 6px;
   border-radius: 6px;
@@ -82,7 +79,7 @@
   font-weight: normal;
   background-color: #120C04;
   text-align: center;
-  color: #e5e4e2;
+  color: $gray-font;
   border-bottom: 1px solid #ebebeb;
 
   -webkit-border-radius: 5px 5px 0 0;
@@ -94,7 +91,7 @@
   margin: 0;
   padding: 5px 14px;
   text-align: center;
-  color: #e5e4e2;
+  color: $gray-font;
 }
 
 .nvtooltip span {
@@ -168,16 +165,16 @@ svg {
 
 svg text {
   font: normal 12px Arial;
-  color: #e5e4e2;
+  color: $gray-font;
 }
 
 svg .title {
  font: bold 14px Arial;
- color: #e5e4e2;
+ color: $gray-font;
 }
 
 .nvd3 .nv-background {
-  fill: #1F1C19;
+  fill: $choc-brown;
   fill-opacity: 0;
   /*
   pointer-events: none;
@@ -187,7 +184,7 @@ svg .title {
 .nvd3.nv-noData {
   font-size: 18px;
   font-weight: bold;
-  color: #e5e4e2;
+  color: $gray-font;
 }
 
 
@@ -208,8 +205,8 @@ svg .title {
 
 .nvd3 .nv-legend .nv-series {
   cursor: pointer;
-  color: #e5e4e2;
-  stroke: #e5e4e2;
+  color: $gray-font;
+  stroke: $gray-font;
   stroke-width: 1;
 }
 
@@ -224,13 +221,13 @@ svg .title {
 */
 .nvd3 .nv-axis {
   pointer-events:none;
-  color: #e5e4e2;
-  fill: #e5e4e2;
+  color: $gray-font;
+  fill: $gray-font;
 }
 
 .nvd3 .nv-axis path {
   fill: none;
-  stroke: #e5e4e2;
+  stroke: $gray-font;
   stroke-opacity: .75;
   shape-rendering: crispEdges;
 }
@@ -245,7 +242,7 @@ svg .title {
 
 .nvd3 .nv-axis line {
   fill: none;
-  stroke: #e5e4e2;
+  stroke: $gray-font;
   stroke-opacity: .25;
   shape-rendering: crispEdges;
 }
@@ -256,7 +253,7 @@ svg .title {
 }
 
 .nvd3 .nv-axis .nv-axisMaxMin text {
-  color: #e5e4e2;
+  color: $gray-font;
 }
 
 .nvd3 .x  .nv-axis .nv-axisMaxMin text,
@@ -300,11 +297,11 @@ svg .title {
 }
 
 .nvd3 .nv-bars text {
-  fill: #e5e4e2;
+  fill: $gray-font;
 }
 
 .nvd3 .nv-bars .hover text {
-  fill: #e5e4e2;
+  fill: $gray-font;
 }
 
 
@@ -330,7 +327,7 @@ svg .title {
 
 .nvd3 .nv-discretebar .nv-groups text,
 .nvd3 .nv-multibarHorizontal .nv-groups text {
-  fill: #e5e4e2;
+  fill: $gray-font;
 }
 
 .nv-discretebar rect {
@@ -359,7 +356,7 @@ svg .title {
 }
 
 .nv-pieChart {
-  stroke: #e5e4e2;
+  stroke: $gray-font;
   stroke-width: 1px;
 }
 
@@ -696,7 +693,7 @@ svg .title {
 .nvd3 .nv-brushBackground rect {
   stroke: #000;
   stroke-width: .4;
-  fill: #e5e4e2;
+  fill: $gray-font;
   fill-opacity: .7;
 }
 
@@ -750,7 +747,7 @@ svg .title {
 
 .nvd3 .background path {
   fill: none;
-  stroke: #e5e4e2;
+  stroke: $gray-font;
   stroke-opacity: .4;
   shape-rendering: crispEdges;
 }
@@ -768,7 +765,7 @@ svg .title {
 
 .nvd3 .axis line, .axis path {
   fill: none;
-  stroke: #e5e4e2;
+  stroke: $gray-font;
   shape-rendering: crispEdges;
 }
 
@@ -783,5 +780,5 @@ Interactive Layer
   pointer-events:none;
 }
 .nvd3 line.nv-guideline {
-  stroke: #e5e4e2;
+  stroke: $gray-font;
 }

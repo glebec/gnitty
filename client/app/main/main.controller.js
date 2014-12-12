@@ -1,10 +1,15 @@
 'use strict';
 
 angular.module('gnittyApp')
-.controller('MainCtrl', function ($scope, $http, gAPI, emails, postAlchemy, stats, $location) {
+.controller('MainCtrl', function ($scope, $http, gAPI, emails, postAlchemy, stats, $location, $timeout) {
 
-    // initialize google api in case already signed in, etc. TODO: fix this
+    // initialize google api in case already signed in, etc.
     // gAPI.handleClientLoad();
+    $scope.indicator = 1;
+
+    $timeout(function() {
+      $scope.indicator++;
+    }, 6000);
 
     // DEV TESTING ONLY, REMOVE BEFORE DEPLOYMENT
     $scope.setLocal = function () {

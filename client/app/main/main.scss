@@ -2,10 +2,66 @@ html {
     position: relative;
     min-height: 100%;
 }
+
+$gray-font: #e5e4e2;
+$choc-brown: #1F1C19;
+@mixin box-shadow($shadow) {
+    -moz-box-shadow: 0px 0px 16px 0 rgba(0, 0, 0, $shadow);
+    -webkit-box-shadow: 0px 0px 16px 0 rgba(0, 0, 0, $shadow);
+    box-shadow: 0px 0px 16px 0 rgba(0, 0, 0, $shadow);
+}
+
+.fader {
+  position: absolute;
+  margin: 0 0 0 500px;
+  // z-index: -1;
+  animation: fadein 2s;
+  -moz-animation: fadein 2s; /* Firefox */
+  -webkit-animation: fadein 2s; /* Safari and Chrome */
+  -o-animation: fadein 2s; /* Opera */
+}
+
+
+@keyframes fadein {
+    from {
+        opacity:0;
+    }
+    to {
+        opacity:1;
+    }
+}
+
+@-moz-keyframes fadein { /* Firefox */
+    from {
+        opacity:0;
+    }
+    to {
+        opacity:1;
+    }
+}
+
+@-webkit-keyframes fadein { /* Safari and Chrome */
+    from {
+        opacity:0;
+    }
+    to {
+        opacity:1;
+    }
+}
+
+@-o-keyframes fadein { /* Opera */
+    from {
+        opacity:0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
 body {
     margin: 0 0 100px; /* bottom = footer height */
     font-family: 'Roboto', sans-serif;
-    color: #e5e4e2 !important;
+    color: $gray-font !important;
     background-color: gray;
     -webkit-transition: all 1000ms cubic-bezier(0.250, 0.250, 0.750, 0.750);
     -moz-transition: all 1000ms cubic-bezier(0.250, 0.250, 0.750, 0.750);
@@ -14,7 +70,7 @@ body {
 }
 
 p, h1, h2, h3, h4, h5 {
-  color: #e5e4e2;
+  color: $gray-font;
   z-index: 1000;
   font-weight: 100;
 }
@@ -41,7 +97,7 @@ footer {
 }
 
 #mainLogo {
-    color: #e5e4e2;
+    color: $gray-font;
     text-align: center;
     font-size: 60px;
     margin: 0 auto !important;
@@ -55,22 +111,20 @@ footer {
 */
 
 .navbar {
-    background-color: #1F1C19 !important;
+    background-color: $choc-brown !important;
     height: 85px;
     padding-top: 20px;
     border: none;
-    -moz-box-shadow: 0px 0px 16px 0 rgba(0, 0, 0, 0.5);
-    -webkit-box-shadow: 0px 0px 16px 0 rgba(0, 0, 0, 0.5);
-    box-shadow: 0px 0px 16px 0 rgba(0, 0, 0, 0.5);
+    @include box-shadow($shadow)
 }
 
 .navbar-default .navbar-brand {
-     color: #e5e4e2;
+     color: $gray-font;
      background-color: #051326;
 }
 
   .navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus {
-    color: #e5e4e2;
+    color: $gray-font;
     background-color: #051326;
     font-size: 1.25em;
 }
@@ -114,9 +168,7 @@ h1 {
 
 .boxText {
     border-radius: 3px;
-    -moz-box-shadow: 0px 0px 16px 0 rgba(0, 0, 0, 0.5);
-    -webkit-box-shadow: 0px 0px 16px 0 rgba(0, 0, 0, 0.5);
-    box-shadow: 0px 0px 16px 0 rgba(0, 0, 0, 0.5);
+    @include box-shadow(0.5);
     padding-bottom: 35px;
     margin-bottom: 20px;
 }
@@ -134,7 +186,7 @@ h1 {
 div .carousel {
   height: 220px;
   margin: -350px 0 0 0;
-  color: #e5e4e2;
+  color: $gray-font;
   font-family: Roboto, sans-serif;
   font-weight: 100;
 }
@@ -151,15 +203,15 @@ div .carousel-control {
 }
 
 .panel {
-  border-color: #1F1C19;
+  border-color: $choc-brown;
 }
 
 .panel-heading {
-  background-color: #1F1C19;
+  background-color: $choc-brown;
 }
 
 .homeText {
-  color: #1F1C19;
+  color: $choc-brown;
 }
 
 .bar {
