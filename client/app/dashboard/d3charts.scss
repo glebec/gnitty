@@ -38,6 +38,9 @@ h4 {
   padding: 10px;
   position: absolute;
   margin: 0 0 0 46%;
+  z-index: 1000;
+  font-weight: bold;
+  background-color: #fff;
 }
 
 .info-icon:hover + .info-box {
@@ -46,12 +49,12 @@ h4 {
 
 #sent-pie {
   margin: 0 0 0 20%;
-  background-color: FFF;
+  opacity: 0.8;
 }
 
 #email-scatter {
-  opacity: 1.0;
-  background-color: FFF;
+  opacity: 0.8;
+  margin: 0 0 0 36%;
 }
 
 /********************
@@ -393,6 +396,7 @@ svg .title {
 }
 .nvd3.nv-pie .nv-label {
   pointer-events: none;
+  font-weight: bold;
 }
 .nvd3.nv-pie .nv-label rect {
   fill-opacity: 0;

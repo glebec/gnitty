@@ -56,7 +56,7 @@ angular.module('gnittyApp')
               var firstLetter = stats.data.keywords[i][j].text[0].toUpperCase();
               var xNum = alphaStr.indexOf(firstLetter);
               data.push({
-                key: stats.data.keywords[i][j].text,
+                key: String(stats.data.keywords[i][j].text),
                 values: [
                   {
                   x: 1 + xNum,

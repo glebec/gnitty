@@ -15,6 +15,7 @@ angular.module('gnittyApp')
                 height: 600,
                 x: function(d){return d.key;},
                 y: function(d){return d.y;},
+                showLegend: false,
                 showLabels: true,
                 transitionDuration: 1000,
                 labelThreshold: 0.01,
