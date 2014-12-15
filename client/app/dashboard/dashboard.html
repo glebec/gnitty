@@ -75,14 +75,18 @@
     <div ng-controller="SentVsGotCtrl">
       <h3>Your last {{emailNumber}} emails, sent vs. received volume by time segment</h3>
       <h5>From {{earliest}} to today</h5>
-      <nvd3 options="options" data="data"></nvd3>
+      <div style="position: relative">
+        <nvd3 options="options" data="data"></nvd3>
+      </div>
     </div>
   </section>
 
   <section class='dashboardSection center boxText well' ng-hide='showWordVol' >
     <div ng-controller="wordVolBarCtrl" class='zoomIn'>
       <h3>Your email output last year (words): </h3>
+      <div style="position: relative">
       <nvd3 options="options" data="data"></nvd3>
+      </div>
     </div>
   </section>
 
