@@ -16,12 +16,12 @@ angular.module('gnittyApp')
                 x: function(d){return d.key;},
                 y: function(d){return d.y;},
                 showLegend: false,
-                showLabels: true,
+                showLabels: false,
                 transitionDuration: 1000,
                 labelThreshold: 0.01,
                 tooltips: true,
                 tooltipContent: function(key, y) {
-                  return '<h3>' + y*100 + '%' +'</h3>';
+                  return '<h3>' + key + ': ' + Number(y*100) + '%' +'</h3>';
                 },
                 legend: {
                     margin: {
