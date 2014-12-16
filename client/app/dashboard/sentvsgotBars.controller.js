@@ -40,7 +40,7 @@ angular.module('gnittyApp')
         transitionDuration: 1000,
         tooltips: true,
         tooltipContent: function (key, x, y, e, graph) {
-          return '<h3>' + y + ' ' + key + '</h3>' + '<p>' +  'from ' + e.series.values[e.pointIndex].barStartDate + ' to ' + e.series.values[e.pointIndex].barEndDate + '</p>';
+          return '<h3>' + y + ' ' + key + '</h3>' + '<p>' +  'spanning ' + e.series.values[e.pointIndex].barStartDate + ' to ' + e.series.values[e.pointIndex].barEndDate + '</p>';
         },
         stacked: true,
         showControls: false,
@@ -86,9 +86,10 @@ angular.module('gnittyApp')
           $scope.splitSent();
           var values = [];
           var values0 =[];
+          var dict = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
           for (var h=0; h<$scope.bars.length; h++) {
-            var barStartDate = new Date(Number(emails.bars.earliest + $scope.barCapacity*h)).toLocaleDateString() +' at ' + new Date(Number(emails.bars.earliest + $scope.barCapacity*h)).toLocaleTimeString();
-            var barEndDate = new Date(Number(emails.bars.earliest + $scope.barCapacity*(h+1))).toLocaleDateString() + ' at ' + new Date(Number(emails.bars.earliest + $scope.barCapacity*(h+1))).toLocaleTimeString();
+            var barStartDate = dict[new Date(Number(emails.bars.earliest + $scope.barCapacity*h)).getDay()] + ", " + new Date(Number(emails.bars.earliest + $scope.barCapacity*h)).toLocaleDateString();
+            var barEndDate = dict[new Date(Number(emails.bars.earliest + $scope.barCapacity*(h+1))).getDay()] + ", " + new Date(Number(emails.bars.earliest + $scope.barCapacity*(h+1))).toLocaleDateString();
             values.push({x: h, y: $scope.a[h].length, barStartDate: barStartDate, barEndDate: barEndDate});
             values0.push({x: h, y: $scope.b[h].length, barStartDate: barStartDate, barEndDate: barEndDate});
           };

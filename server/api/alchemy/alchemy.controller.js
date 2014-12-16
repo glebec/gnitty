@@ -4,6 +4,7 @@ var AlchemyAPI = require('alchemy-api');
 var config = require('./../../config/environment/index.js')
 var alchemyApiKey = config.alchemy.apiKey;
 var alchemy = new AlchemyAPI(alchemyApiKey);
+var keywordExtractMode = "strict";
 
 exports.sentiment = function (req,res) {
   alchemy.sentiment( req.body.text, {}, function (err, response) {

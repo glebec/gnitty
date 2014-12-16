@@ -24,7 +24,7 @@ h3, h4 {
 .info-icon {
   display: inline-block;
   max-width: 20px;
-  margin: 0 0 5px 0;
+  margin: 0 0 6px 0;
 }
 
 .info-box {
@@ -39,7 +39,8 @@ h3, h4 {
   position: absolute;
   margin: 0 0 0 46%;
   z-index: 1000;
-  font-weight: bold;
+  text-align: left;
+  font-weight: bold !important;
   background-color: #fff;
 }
 
@@ -47,9 +48,14 @@ h3, h4 {
   display:block;
 }
 
+#keyword-scatter {
+  margin: 0 0 0 20%;
+  opacity: 1;
+}
+
 #sent-pie {
   margin: 0 0 0 20%;
-  opacity: 0.8;
+  opacity: 1;
 }
 
 #email-scatter {

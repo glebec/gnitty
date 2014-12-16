@@ -9,7 +9,6 @@
   <section class='dashboardHalfSection center boxText well' ng-hide='showEmail'>
     <div ng-controller="SenderDonutCtrl">
       <h3>You get the most email from:</h3>
-      <h5></h5>
       <div style="position: relative">
       <nvd3 options="options" data="data"></nvd3>
       </div>
@@ -37,7 +36,7 @@
         </ul>
        </div>
       <div style="position: relative">
-      <nvd3 options="options" data="data"></nvd3>
+        <nvd3 options="options" data="data"></nvd3>
       </div>
     </div>
   </section>
@@ -45,6 +44,12 @@
   <section class='dashboardHalfSection center boxText well' ng-hide='showEmail' >
     <div ng-hide='showTopKey' ng-controller='KeywordChartCtrl' class='zoomIn'>
       <h3>Your top keywords</h3>
+       <img class="info-icon" src="/assets/images/info_icon_xl.png" />
+       <div class="info-box" id="keyword-scatter">
+          <p>
+          Gnitty uses Alchemy API to select keywords using a combination of natural language processing and statistical analysis. Based on each keyword's frequency of use and position in a sentence, Alchemy generates a score for its relevancy.
+          </p>
+        </div>
       <div style="position: relative">
       <nvd3 options="options" data="data"></nvd3>
       </div>
@@ -56,7 +61,7 @@
       <h3>Your email tone is mostly:</h3>
       <img class="info-icon" src="/assets/images/info_icon_xl.png"/>
       <div class="info-box" id="sent-pie">
-        <p>Sentiment analysis is a set of algorithms used to determine the writer's attitude as expressed in a fragment of text.</p>
+        <p>Email tone is determined through sentiment analysis, a set of algorithms that analyze the attitude in a fragment of text.</p>
       </div>
       <div style="position: relative">
       <nvd3 options="options" data="data"></nvd3>

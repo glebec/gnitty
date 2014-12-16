@@ -2,6 +2,7 @@ html {
     position: relative;
     min-height: 100%;
 }
+
 body {
     margin: 0 0 100px; /* bottom = footer height */
     font-family: 'Roboto', sans-serif;
@@ -11,6 +12,7 @@ body {
      -o-transition: all 1000ms cubic-bezier(0.250, 0.250, 0.750, 0.750);
         transition: all 1000ms cubic-bezier(0.250, 0.250, 0.750, 0.750); /* linear */
 }
+
 footer {
     position: absolute;
     left: 0;

@@ -7,7 +7,8 @@ var Schema = mongoose.Schema;
 var AlchemySchema = new Schema({
   apikey: String,
   text: String,
-  outputMode: String
+  outputMode: String,
+  keywordExtractMode: String
 });
 
 module.exports = mongoose.model('Alchemy', AlchemySchema);
