@@ -16,10 +16,10 @@ angular.module('gnittyApp')
         },
         showLabels: false,
         showLegend: true,
-        // pie: {
-        //     startAngle: function(d) { return d.startAngle -Math.PI/2 },
-        //     endAngle: function(d) { return d.endAngle -Math.PI/2 }
-        // },
+        pie: {
+            startAngle: function(d) { return d.startAngle -Math.PI/2 },
+            endAngle: function(d) { return d.endAngle -Math.PI/2 }
+        },
         transitionDuration: 1000
       }
     };

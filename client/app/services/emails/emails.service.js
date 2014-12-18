@@ -25,7 +25,7 @@ angular.module('gnittyApp')
     };
 
     // Combined two for-in loops into one
-    this.separateDatasets = function separateDatasets () {
+    this.separateDatasets = function () {
       var dateLengthSentBoolArr = [];
       var textArr = [];
       var charCount = 0;
@@ -126,7 +126,7 @@ angular.module('gnittyApp')
       return wordsSentPerYear;
     };
 
-    //Populates most common senders and recipients charts
+    //Populates most common senders and recipients donut charts
     this.sortSenders = function () {
       var allSenders = [];
       var allRecips = [];
@@ -155,12 +155,14 @@ angular.module('gnittyApp')
       var countMsgsAndSort = function(arrayInput) {
         var hashCount = {};
         var finalArr = [];
-        for ( var k=0; k < arrayInput.length; k++ ) {
-          if (!hashCount[arrayInput[k]]) {
-            hashCount[arrayInput[k]] = 0;
+
+        arrayInput.forEach(function(item) {
+          if (!hashCount[item]) {
+            hashCount[item] = 0;
           }
-          hashCount[arrayInput[k]]++;
-        }
+          hashCount[item]++;
+        });
+
         for (var eAddress in hashCount) {
           if (eAddress !== "") {
             finalArr.push({email: eAddress, val: hashCount[eAddress]});

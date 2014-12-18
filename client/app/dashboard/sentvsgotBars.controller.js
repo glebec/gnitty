@@ -11,7 +11,7 @@ angular.module('gnittyApp')
     $scope.latest = new Date(emails.bars.latest).toLocaleDateString();
     $scope.barCapacity = emails.bars.barCapacity;
 
-  // convert the capacity of each bar into days/hours/minutes
+  // convert the time capacity of each bar into days/hours/minutes
     var minutes = 1000 * 60;
     var hours = minutes * 60;
     var days = hours * 24;
