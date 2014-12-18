@@ -129,14 +129,9 @@ angular.module('gnittyApp')
     //Populates most common senders and recipients charts
     this.sortSenders = function () {
       var allSenders = [];
-      var allSendersSliced = [];
-      var sendersArr = [];
-
       var allRecips = [];
-      var allRecipsSliced = [];
-      var recipsArr = [];
 
-      //senders array gets inbox messages, recips array gets sent messages
+      //senders array has inbox messages, recips array has sent messages
       //NOTE: RECIPS ARRAY INCLUDES CCs, so length does not equal number of emails
       for ( var id in this.data ) {
         var sentBoolVar = 0;
@@ -146,74 +141,39 @@ angular.module('gnittyApp')
           }
         }
         if (sentBoolVar === 0) {
-          allSenders.push(this.data[id].from);
+          allSenders.push(this.data[id].from.substring(0, this.data[id].from.indexOf('<')));
         }
         if (sentBoolVar > 0) {
-          allRecips.push(this.data[id].to);
+          allRecips.push(this.data[id].to.substring(0, this.data[id].to.indexOf('<')));
           if (this.data[id].cc !== undefined) {
-            allRecips.push(this.data[id].cc);
+            allRecips.push(this.data[id].cc.substring(0, this.data[id].cc.indexOf('<')));
           }
         }
       }
 
-      //get raw email address so that duplicates can be removed
-      for ( var j=0; j < allSenders.length; j++ ) {
-        allSendersSliced[j] = allSenders[j].slice(0, allSenders[j].indexOf('<'));
-      }
-
-      for (var m=0; m < allRecips.length; m++ ) {
-        allRecipsSliced[m] = allRecips[m].slice(0, allRecips[m].indexOf('<'));
-      }
-
-      //use duplicates to get number of emails from/to each sender
-      for ( var k=0; k < allSendersSliced.length; k++ ) {
-        var tempVal = 0;
-        for ( var l=0; l < allSendersSliced.length; l++ ) {
-          if (allSendersSliced[k] === allSendersSliced[l]) {
-            tempVal++;
+      //use duplicates to get number of emails from/to each sender. Sort result from largest to smallest
+      var countMsgsAndSort = function(arrayInput) {
+        var hashCount = {};
+        var finalArr = [];
+        for ( var k=0; k < arrayInput.length; k++ ) {
+          if (!hashCount[arrayInput[k]]) {
+            hashCount[arrayInput[k]] = 0;
+          }
+          hashCount[arrayInput[k]]++;
+        }
+        for (var eAddress in hashCount) {
+          if (eAddress !== "") {
+            finalArr.push({email: eAddress, val: hashCount[eAddress]});
           }
         }
-        sendersArr[k] = {email: allSendersSliced[k], val: tempVal};
-      }
 
-      for ( var p=0; p < allRecipsSliced.length; p++ ) {
-        var tempVal = 0;
-        for ( var r=0; r < allRecipsSliced.length; r++ ) {
-          if (allRecipsSliced[p] === allRecipsSliced[r]) {
-            tempVal++;
-          }
-        }
-        recipsArr[p] = {email: allRecipsSliced[p], val: tempVal};
-      }
-
-      //sort array smallest to largest. My senders = ~700 email address objects. Recipes = ~300
-      sendersArr.sort(function(a,b) {
-        return b.val - a.val;
-      });
-
-      recipsArr.sort(function(a,b) {
-        return b.val - a.val;
-      });
-
-      //remove duplicates.  Mine was about 160 length after this
-      Array.prototype.removeDuplicates = function() {
-        var input = this;
-        var hashObject = new Object();
-
-        for (var i = input.length - 1; i >= 0; i--) {
-            var currentItem = input[i].email;
-
-            if (hashObject[currentItem] == true) {
-                input.splice(i, 1);
-            }
-
-            hashObject[currentItem] = true;
-        }
-        return input;
+        finalArr.sort(function(a,b) {
+          return b.val - a.val;
+        });
+        return finalArr;
       };
-      sendersArr.removeDuplicates();
-      recipsArr.removeDuplicates();
-      var sendersRecips = {senders: sendersArr, recips: recipsArr};
+
+      var sendersRecips = {senders: countMsgsAndSort(allSenders), recips: countMsgsAndSort(allRecips)};
       return sendersRecips;
     };
 
