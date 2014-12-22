@@ -5,22 +5,26 @@ html {
 
 $gray-font: #e5e4e2;
 $choc-brown: #1F1C19;
+$shadow: 0.5;
 @mixin box-shadow($shadow) {
     -moz-box-shadow: 0px 0px 16px 0 rgba(0, 0, 0, $shadow);
     -webkit-box-shadow: 0px 0px 16px 0 rgba(0, 0, 0, $shadow);
     box-shadow: 0px 0px 16px 0 rgba(0, 0, 0, $shadow);
 }
 
-.fader {
+div #fadeText {
   position: absolute;
-  margin: 0 0 0 500px;
-  // z-index: -1;
-  animation: fadein 2s;
-  -moz-animation: fadein 2s; /* Firefox */
-  -webkit-animation: fadein 2s; /* Safari and Chrome */
-  -o-animation: fadein 2s; /* Opera */
+  z-index: 1000;
+  text-align: center;
+  margin: -500px 0 500px 900px;
+  color: $gray-font;
+  h3 .fader {
+    animation: fadein 2s;
+    -moz-animation: fadein 2s; /* Firefox */
+    -webkit-animation: fadein 2s; /* Safari and Chrome */
+    -o-animation: fadein 2s; /* Opera */
+  }
 }
-
 
 @keyframes fadein {
     from {

@@ -1,14 +1,17 @@
 'use strict';
 
 angular.module('gnittyApp')
-.controller('MainCtrl', function ($scope, $http, gAPI, emails, postAlchemy, stats, $location, $timeout) {
+.controller('MainCtrl', function ($scope, $http, gAPI, emails, postAlchemy, stats, $location, $interval) {
 
     // initialize google api in case already signed in, etc.
     // gAPI.handleClientLoad();
-    $scope.indicator = 1;
+    $scope.indicator = 0;
 
-    $timeout(function() {
+    $interval(function() {
       $scope.indicator++;
+      if ($scope.indicator > 3) {
+        $scope.indicator = 1;
+      }
     }, 6000);
 
     // DEV TESTING ONLY, REMOVE BEFORE DEPLOYMENT
