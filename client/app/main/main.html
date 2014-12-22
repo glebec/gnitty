@@ -4,12 +4,20 @@
     <h4 class="logoText" id="subtitle">Visualize your inbox</h4>
     <nvd3 options="options" data="data" events="events" api="api"></nvd3>
     <button ng-click="fetch()" ng-class="{'btn btn-primary disabled': clicked, 'btn btn-primary': !clicked}" id="goButton" button-disable>GNITIFY!</button>
+    <p id="learnMore">Learn More >></p>
   </div>
   <div id="fadeText">
     <h3 class="fader" ng-show="indicator === 1">How much email do I get?</h3>
     <h3 class="fader" ng-show="indicator === 2">How do I come across?</h3>
     <h3 class="fader" ng-show="indicator === 3">Who do I send the most email to?</h3>
   </div>
+</section>
+<section id="mainInfoBox">
+  <ul>
+    <li>Gnitty analyzes your last 1000 Gmail messages for patterns in tone, time, and language.</li>
+    <li>Gnitty's use of Google's 2.0 Authentication protocol ensures that you remain in control of your data.</li>
+    <li>Gnitty does not use or share your data except for a short anonymous text-snippet used to determine your keyword patterns.</li>
+  </ul>
 </section>
 
 <div ng-include="'components/footer/footer.html'" class="group footer"></div>

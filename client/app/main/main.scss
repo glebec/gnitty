@@ -16,13 +16,44 @@ div #fadeText {
   position: absolute;
   z-index: 1000;
   text-align: center;
-  margin: -500px 0 500px 900px;
+  margin: -400px 0 500px 800px;
   color: $gray-font;
   h3 .fader {
     animation: fadein 2s;
     -moz-animation: fadein 2s; /* Firefox */
     -webkit-animation: fadein 2s; /* Safari and Chrome */
     -o-animation: fadein 2s; /* Opera */
+  }
+}
+
+p #learnMore {
+  font-color: #bcbd22;
+  margin: -500px 0 0 0;
+}
+
+p:hover {
+  font-color: #dbdb8d;
+}
+
+p:hover > #mainInfoBox {
+  display: block;
+}
+
+#mainInfoBox {
+  // display: none;
+  border: 1px solid #bcbd22;
+  max-width: 650px;
+  margin: -80px auto 0 auto;
+  background-color: #7f7f7f;
+  -moz-box-shadow:    inset 0 0 10px #000000;
+  -webkit-box-shadow: inset 0 0 10px #000000;
+  box-shadow:         inset 0 0 10px #000000;
+  li {
+    font-size: 18px;
+    font-weight: 700;
+    color: $choc-brown;
+    padding: 10px;
+    margin-bottom: 0px;
   }
 }
 
