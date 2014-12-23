@@ -3,58 +3,14 @@ html {
     min-height: 100%;
 }
 
+//set variables://
 $gray-font: #e5e4e2;
-$choc-brown: #1F1C19;
+$choc-brown: #001A33;
 $shadow: 0.5;
 @mixin box-shadow($shadow) {
     -moz-box-shadow: 0px 0px 16px 0 rgba(0, 0, 0, $shadow);
     -webkit-box-shadow: 0px 0px 16px 0 rgba(0, 0, 0, $shadow);
     box-shadow: 0px 0px 16px 0 rgba(0, 0, 0, $shadow);
-}
-
-div #fadeText {
-  position: absolute;
-  z-index: 1000;
-  text-align: center;
-  margin: -400px 0 500px 800px;
-  color: $gray-font;
-  h3 .fader {
-    animation: fadein 2s;
-    -moz-animation: fadein 2s; /* Firefox */
-    -webkit-animation: fadein 2s; /* Safari and Chrome */
-    -o-animation: fadein 2s; /* Opera */
-  }
-}
-
-p #learnMore {
-  font-color: #bcbd22;
-  margin: -500px 0 0 0;
-}
-
-p:hover {
-  font-color: #dbdb8d;
-}
-
-p:hover > #mainInfoBox {
-  display: block;
-}
-
-#mainInfoBox {
-  // display: none;
-  border: 1px solid #bcbd22;
-  max-width: 650px;
-  margin: -80px auto 0 auto;
-  background-color: #7f7f7f;
-  -moz-box-shadow:    inset 0 0 10px #000000;
-  -webkit-box-shadow: inset 0 0 10px #000000;
-  box-shadow:         inset 0 0 10px #000000;
-  li {
-    font-size: 18px;
-    font-weight: 700;
-    color: $choc-brown;
-    padding: 10px;
-    margin-bottom: 0px;
-  }
 }
 
 @keyframes fadein {
@@ -110,6 +66,86 @@ p, h1, h2, h3, h4, h5 {
   font-weight: 100;
 }
 
+h1 {
+  font-size: 56px;
+  font-weight: normal;
+}
+
+/*
+  ========================================
+  Home
+  ========================================
+*/
+#mainLogo {
+    color: $gray-font;
+    text-align: center;
+    font-size: 60px;
+    margin: 0 auto !important;
+    max-height: 600px !important;
+}
+
+#logoBox svg {
+  position: absolute;
+  z-index: 20;
+  margin: 0 0 0 -300px;
+}
+
+.logoText {
+  position: absolute;
+  margin: 150px 0 0 200px;
+  font-weight: 100;
+}
+
+#subtitle {
+  margin: 210px 0 0 200px !important;
+}
+
+div #fadeText {
+  position: absolute;
+  z-index: 1000;
+  text-align: center;
+  margin: -400px 0 500px 800px;
+  color: $gray-font;
+  h3 .fader {
+    animation: fadein 2s;
+    -moz-animation: fadein 2s; /* Firefox */
+    -webkit-animation: fadein 2s; /* Safari and Chrome */
+    -o-animation: fadein 2s; /* Opera */
+  }
+}
+
+p#learnMore {
+  font-size: 16px;
+  font-color: #bcbd22;
+  margin: 400px auto 0 auto;
+}
+
+p:hover {
+  font-color: #dbdb8d;
+}
+
+p:hover > #mainInfoBox {
+  display: block;
+}
+
+#mainInfoBox {
+  // display: none;
+  border: 1px solid #bcbd22;
+  max-width: 650px;
+  margin: -80px auto 0 auto;
+  background-color: #7f7f7f;
+  -moz-box-shadow:    inset 0 0 10px #000000;
+  -webkit-box-shadow: inset 0 0 10px #000000;
+  box-shadow:         inset 0 0 10px #000000;
+  li {
+    font-size: 18px;
+    font-weight: 700;
+    color: $choc-brown;
+    padding: 10px;
+    margin-bottom: 0px;
+  }
+}
+
 footer {
     position: absolute;
     top: 800px;
@@ -119,24 +155,49 @@ footer {
     padding-top: 15px;
     letter-spacing: 0.1em;
     z-index: 200;
+    margin-top: 500px;
 }
 
-.displayed {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
+.divider {
+    width: 100%;
+    height: 5px;
+    background-color: rgba(0,0,0,.75);
 }
 
-.center {
-     text-align: center;
+.boxText {
+    border-radius: 3px;
+    @include box-shadow($shadow);
+    padding-bottom: 35px;
+    margin-bottom: 20px;
 }
 
-#mainLogo {
-    color: $gray-font;
-    text-align: center;
-    font-size: 60px;
-    margin: 0 auto !important;
-    max-height: 600px !important;
+#goButton {
+  font-size: 32px;
+  padding: 10px 25px;
+  color: white;
+  background-color: #051326 !important;
+  border-color: #051326;
+  margin: 0 auto;
+  z-index: 1000;
+}
+
+#landingText {
+  padding: 50px;
+  width: 100%;
+  border-radius: 15px;
+  display: inline-block;
+}
+
+.panel {
+  border-color: $choc-brown;
+}
+
+.panel-heading {
+  background-color: $choc-brown;
+}
+
+.homeText {
+  color: $choc-brown;
 }
 
 /*
@@ -168,93 +229,7 @@ footer {
 
 }
 
-/*
-  ========================================
-  Home
-  ========================================
-*/
 
-#logoBox svg {
-  position: absolute;
-  z-index: 20;
-  margin: 0 0 0 -300px;
-}
-
-.logoText {
-  position: absolute;
-  margin: 150px 0 0 200px;
-  font-weight: 100;
-}
-
-#subtitle {
-  margin: 210px 0 0 200px !important;
-}
-
-.divider {
-    width: 100%;
-    height: 5px;
-    background-color: rgba(0,0,0,.75);
-}
-
-h1 {
-  font-size: 56px;
-  font-weight: normal;
-}
-
-.boxText {
-    border-radius: 3px;
-    @include box-shadow(0.5);
-    padding-bottom: 35px;
-    margin-bottom: 20px;
-}
-
-#goButton {
-  font-size: 32px;
-  padding: 10px 25px;
-  color: white;
-  background-color: #051326 !important;
-  border-color: #051326;
-  margin: 400px auto;
-  z-index: 1000;
-}
-
-div .carousel {
-  height: 220px;
-  margin: -350px 0 0 0;
-  color: $gray-font;
-  font-family: Roboto, sans-serif;
-  font-weight: 100;
-}
-
-div .carousel-control {
-  display: none;
-}
-
-#landingText {
-    padding: 50px;
-    width: 100%;
-    border-radius: 15px;
-    display: inline-block;
-}
-
-.panel {
-  border-color: $choc-brown;
-}
-
-.panel-heading {
-  background-color: $choc-brown;
-}
-
-.homeText {
-  color: $choc-brown;
-}
-
-.bar {
-  -webkit-transition: width 1.0s ease !important;
-     -moz-transition: width 1.0s ease !important;
-       -o-transition: width 1.0s ease !important;
-          transition: width 1.0s ease !important;
-}
 
 /*
   ========================================
@@ -293,6 +268,13 @@ div .carousel-control {
 
 .barGraph {
     display: inline-block;
+}
+
+.bar {
+  -webkit-transition: width 1.0s ease !important;
+     -moz-transition: width 1.0s ease !important;
+       -o-transition: width 1.0s ease !important;
+          transition: width 1.0s ease !important;
 }
 
 .table {
