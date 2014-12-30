@@ -117,19 +117,16 @@ div #fadeText {
 p#learnMore {
   font-size: 16px;
   font-color: #bcbd22;
-  margin: 400px auto 0 auto;
+  margin: 500px auto 0 auto;
+  z-index: 1010;
 }
 
-p:hover {
+#learnMore:hover {
   font-color: #dbdb8d;
 }
 
-p:hover > #mainInfoBox {
-  display: block;
-}
-
 #mainInfoBox {
-  // display: none;
+  display: none;
   border: 1px solid #bcbd22;
   max-width: 650px;
   margin: -80px auto 0 auto;
@@ -144,6 +141,10 @@ p:hover > #mainInfoBox {
     padding: 10px;
     margin-bottom: 0px;
   }
+}
+
+#learnMore:hover + #mainInfoBox {
+  display: block;
 }
 
 footer {
