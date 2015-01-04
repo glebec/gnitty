@@ -1,22 +1,42 @@
 'use strict';
 
 angular.module('gnittyApp')
-  .controller('D3loaderCtrl', function ($scope, $location, gAPI, emails, postAlchemy, stats) {
+  .controller('D3loaderCtrl', function ($scope, $interval, $location, gAPI, emails, postAlchemy, stats) {
 
     $scope.loadVal = $scope.loadVal || 0;
+    $scope.smoothLoad = $scope.smoothLoad || 0;
+
+    $interval(function() {
+      if ($scope.loadVal > $scope.smoothLoad) {
+        $scope.smoothLoad++;
+        $scope.data = [
+              {
+                  key: "Fetching and Analyzing: " + $scope.smoothLoad + "%",
+                  y: $scope.smoothLoad,
+                  color: '#bcbd22'
+              },
+              {
+                  key: "",
+                  y: 100 - $scope.smoothLoad,
+                  color: '#1f77b4'
+              }
+          ];
+        $scope.api.refresh();
+      }
+    }, 10);
 
 // making loading chart dynamic by watching the load val
     $scope.$watch('loadVal', function() {
       console.log('loadVal has changed', $scope.loadVal);
       $scope.data = [
             {
-                key: "Fetching and Analyzing: "+ $scope.loadVal + "%",
-                y: $scope.loadVal,
+                key: "Fetching and Analyzing: " + $scope.smoothLoad + "%",
+                y: $scope.smoothLoad,
                 color: '#bcbd22'
             },
             {
                 key: "",
-                y: 100 - $scope.loadVal,
+                y: 100 - $scope.smoothLoad,
                 color: '#1f77b4'
             }
         ];
