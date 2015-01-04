@@ -4,8 +4,12 @@
   margin: 20px auto 0px auto;
   background-color: $choc-brown !important; /*dark brown*/
   color: $gray-font !important;
+  @include box-shadow($shadow);
 };
 
+.center {
+     text-align: center;
+}
 
 /********************
  * HTML CSS

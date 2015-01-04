@@ -6,6 +6,7 @@ html {
 //set variables://
 $gray-font: #e5e4e2;
 $choc-brown: #001A33;
+$background: #001a33;
 $shadow: 0.5;
 @mixin box-shadow($shadow) {
     -moz-box-shadow: 0px 0px 16px 0 rgba(0, 0, 0, $shadow);
@@ -115,48 +116,61 @@ div #fadeText {
 }
 
 p#learnMore {
-  font-size: 16px;
-  font-color: #bcbd22;
+  font-size: 22px;
+  color: $gray-font;
   margin: 500px auto 0 auto;
   z-index: 1010;
-}
-
-#learnMore:hover {
-  font-color: #dbdb8d;
+  max-width: 200px;
+  .fa {
+    font-size: 18px;
+  }
 }
 
 #mainInfoBox {
   display: none;
-  border: 1px solid #bcbd22;
+  border: 1px solid #c49c94;
+  border-radius: 2px;
   max-width: 650px;
-  margin: -80px auto 0 auto;
+  margin: 0 auto 0 auto;
   background-color: #7f7f7f;
-  -moz-box-shadow:    inset 0 0 10px #000000;
-  -webkit-box-shadow: inset 0 0 10px #000000;
-  box-shadow:         inset 0 0 10px #000000;
-  li {
-    font-size: 18px;
-    font-weight: 700;
-    color: $choc-brown;
-    padding: 10px;
-    margin-bottom: 0px;
+  color: $background !important;
+  @include box-shadow($shadow);
+  opacity: 0.8;
+
+
+  ul {
+    list-style: none;
+    padding-left: 0;
+    li {
+      font-size: 18px;
+      font-weight: 700;
+      padding: 10px;
+      margin-bottom: 0px;
+      .fa {
+      color: $gray-font;
+      }
+    }
   }
 }
 
-#learnMore:hover + #mainInfoBox {
-  display: block;
+p#learnMore:hover + div#mainInfoBox {
+    display: block;
+}
+
+div#mainInfoBox:hover {
+    display: block;
 }
 
 footer {
+    opacity: 1;
     position: absolute;
-    top: 800px;
+    float: bottom;
     width: 100%;
     text-align: center;
     color: rgba(0,0,0,0.5);
     padding-top: 15px;
     letter-spacing: 0.1em;
-    z-index: 200;
-    margin-top: 500px;
+    z-index: 10;
 }
 
 .divider {
@@ -174,12 +188,18 @@ footer {
 
 #goButton {
   font-size: 32px;
-  padding: 10px 25px;
+  padding: 8px 20px;
   color: white;
-  background-color: #051326 !important;
-  border-color: #051326;
-  margin: 0 auto;
+  background-color: #001a33;
+  border-color: #001a33;
+  margin: 0 0 15px 425px;
   z-index: 1000;
+  @include box-shadow($shadow);
+  .fa {
+    color: $gray-font;
+    font-size: 24px;
+    vertical-align: middle;
+  }
 }
 
 #landingText {
@@ -187,18 +207,6 @@ footer {
   width: 100%;
   border-radius: 15px;
   display: inline-block;
-}
-
-.panel {
-  border-color: $choc-brown;
-}
-
-.panel-heading {
-  background-color: $choc-brown;
-}
-
-.homeText {
-  color: $choc-brown;
 }
 
 /*
@@ -303,7 +311,6 @@ footer {
     margin-left: auto;
     margin-right: auto;
 }
-
 
 /*
   ========================================

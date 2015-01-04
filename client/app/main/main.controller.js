@@ -14,23 +14,6 @@ angular.module('gnittyApp')
       }
     }, 6000);
 
-    // DEV TESTING ONLY, REMOVE BEFORE DEPLOYMENT
-    $scope.setLocal = function () {
-      emails.setLocal();
-      stats.setLocal();
-    };
-    $scope.getLocal = function () {
-      emails.getLocal();
-      stats.getLocal();
-    };
-
-    // show stored data
-    $scope.showEmails = function () {
-      console.log('data stored in email service: ', emails.data);
-      console.log('dates length: ', emails.dateLengthSentBoolSubjArr.length);
-      console.log('text length: ', emails.textArr.length);
-    };
-
     $scope.link = 'http://www.ginnabaker.com';
     $scope.clientObj = {};
     $scope.clientObj.phoneNum;
