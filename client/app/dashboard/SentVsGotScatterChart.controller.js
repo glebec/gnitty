@@ -1,9 +1,9 @@
 'use strict';
 
 angular.module('gnittyApp')
-  .controller('emailScatterChartCtrl', ['$scope', 'stats', 'emails', function($scope, emails){
+  .controller('emailScatterChartCtrl', ['$scope', 'emails', function($scope, emails){
     //get data from 'emails' service
-    $scope.dataArr = emails.data.dateLengthSentBoolArray;
+    $scope.dataArr = emails.dateLengthSentBoolArr;
     $scope.emailNumber = $scope.dataArr.length;
 
     //set x axis tick format to dates
@@ -25,6 +25,7 @@ angular.module('gnittyApp')
         showDistY: true,
         tooltips: true,
         tooltipContent: function(key, x, y, e, graph) {
+          console.log(e.series.values[e.pointIndex].subject);
           return '<h3>' + e.series.values[e.pointIndex].subject + '</h3>';
         },
         interactive: true,
