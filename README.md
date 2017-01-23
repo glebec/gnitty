@@ -20,3 +20,6 @@ AngularJS Services allow Gnitty to function primarily in the front end, with the
 - Sentiment and keyword analysis through the industry-standard Alchemy API
 
 ![alt tag](https://raw.githubusercontent.com/glebec/gnitty/master/client/assets/images/keyword%20chart.jpg)
+
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/glebec/gnitty.svg)](https://greenkeeper.io/)
